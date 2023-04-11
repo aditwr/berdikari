@@ -1,0 +1,156 @@
+/* swiperjs */
+@import "swiper/css/bundle";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+/* Landing page Styles */
+@layer base {
+    .padding-responsive {
+        @apply px-4 sm:px-4 md:px-8 lg:px-16 xl:px-16;
+    }
+    .padding-responsive-in-container {
+        @apply px-0 sm:px-4 md:px-8 lg:px-16 xl:px-16;
+    }
+    .text-dark-primary {
+        @apply text-gray-800;
+    }
+    .text-dark-secondary {
+        @apply text-gray-600;
+    }
+    .text-dark-tertiary {
+        @apply text-gray-400;
+    }
+    .text-dark-quaternary {
+        @apply text-gray-300;
+    }
+
+    .text-light-primary {
+        @apply text-gray-100;
+    }
+    .text-light-secondary {
+        @apply text-gray-200;
+    }
+    .text-light-tertiary {
+        @apply text-gray-300;
+    }
+
+    /* font size guideline */
+    .heading-1 {
+        @apply text-5xl font-bold md:text-6xl;
+    }
+    .heading-2 {
+        @apply text-4xl font-bold md:text-5xl;
+    }
+    .heading-3 {
+        @apply text-3xl font-bold md:text-4xl;
+    }
+    .heading-4 {
+        @apply text-2xl font-bold md:text-3xl;
+    }
+    .heading-5 {
+        @apply text-xl font-bold md:text-2xl;
+    }
+    .heading-6 {
+        @apply text-lg font-bold md:text-xl;
+    }
+
+    .subheading-1 {
+        @apply text-3xl md:text-4xl;
+    }
+    .subheading-2 {
+        @apply text-2xl md:text-3xl;
+    }
+    .subheading-3 {
+        @apply text-xl md:text-2xl;
+    }
+    .subheading-4 {
+        @apply text-lg md:text-xl;
+    }
+    .subheading-5 {
+        @apply text-base md:text-lg;
+    }
+    .subheading-6 {
+        @apply text-sm md:text-base;
+    }
+
+    .paragraph-1 {
+        @apply text-base md:text-lg;
+    }
+    .paragraph-2 {
+        @apply text-sm md::text-base;
+    }
+
+    .caption {
+        @apply text-xs md:text-sm;
+    }
+}
+
+@layer utilities {
+}
+
+@layer components {
+    /* Buttons Variants */
+    .btn-primary {
+        @apply inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)];
+    }
+
+    .btn-secondary {
+        @apply inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200;
+    }
+
+    .btn-tertiary {
+        @apply inline-block rounded px-2 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700;
+    }
+
+    .btn-responsive {
+        @apply md:px-7 md:pt-3 md:pb-2.5 md:text-sm md:font-medium;
+    }
+
+    .btn-primary-small {
+        @apply inline-block rounded bg-primary px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)];
+    }
+    .btn-secondary-small {
+        @apply inline-block rounded bg-primary-100 px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200;
+    }
+    .btn-tertiary-small {
+        @apply inline-block rounded px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700;
+    }
+
+    .btn-primary-large {
+        @apply inline-block rounded bg-primary px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)];
+    }
+
+    .btn-secondary-large {
+        @apply inline-block rounded bg-primary-100 px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200;
+    }
+
+    .btn-tertiary-large {
+        @apply inline-block rounded px-7 pb-2.5 pt-3 text-sm font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700;
+    }
+}
+
+/* Dashboard Styles */
+@layer base {
+    .dashboard-padding-responsive {
+        @apply px-4 sm:px-4 md:px-6 xl:pl-0;
+    }
+
+    /* custom scrollbar style */
+    /* ::-webkit-scrollbar {
+        width: 10px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: red;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    } */
+}

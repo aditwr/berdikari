@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // \App\Models\User::factory(10)->create();
+        $this->call([
+            KeuanganSeeder::class,
+            PemasukanSeeder::class,
+            PengeluaranSeeder::class,
+            RiwayatKeuanganSeeder::class,
+        ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@app.com',
+            'password' => bcrypt('password'),
+        ]);
+    }
+}
