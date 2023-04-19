@@ -21,6 +21,8 @@
 
 <body class="font-default text-slate-900 scroll-smooth">
     @yield('content')
+
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 </body>
 
 </html>

@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemasukan extends Model
 {
+    protected $fillable = [
+        'keuangan_id',
+        'tipe',
+        'judul',
+        'nominal',
+        'tanggal',
+        'keterangan',
+        'total_nominal',
+    ];
+
     use HasFactory;
 
     public function keuangan()

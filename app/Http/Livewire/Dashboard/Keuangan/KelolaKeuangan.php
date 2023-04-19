@@ -66,6 +66,7 @@ class KelolaKeuangan extends Component
         $this->dataKeuanganAktif = Keuangan::where('slug', $this->keuanganAktif)->get()->first();
         $this->refreshData();
     }
+
     public function updatedBulanAktif()
     {
         $this->refreshData();

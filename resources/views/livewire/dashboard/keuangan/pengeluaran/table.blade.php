@@ -1,7 +1,7 @@
 <div>
     <div class="mt-16 ">
         <div class="mb-3">
-            <h3 class="subheading-5 font-semibold">
+            <h3 class="font-semibold subheading-5">
                 @if ($bulanAktif == date('m') && $tahunAktif == date('Y'))
                     Riwayat Pengeluaran Bulan Ini
                 @else
@@ -41,7 +41,7 @@
                                                 </td>
                                                 <td
                                                     class="flex items-center w-32 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p class="font-medium text-danger-600">
                                                         Rp{{ number_format($pengeluaran->nominal, 0, ',', '.') }},-</p>
                                                 </td>
                                                 <td class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
@@ -124,8 +124,8 @@
                                         <tr class="w-[92vw] md:w-full h-48 flex justify-center items-center">
                                             <td class="">
                                                 <img src="{{ asset('assets/illustrations/data-not-found.png') }}"
-                                                    alt="" class="h-32 w-auto">
-                                                <p class="text-center font-medium text-gray-500">Tidak ada riwayat
+                                                    alt="" class="w-auto h-32">
+                                                <p class="font-medium text-center text-gray-500">Tidak ada riwayat
                                                     pengeluaran</p>
                                             </td>
                                         </tr>

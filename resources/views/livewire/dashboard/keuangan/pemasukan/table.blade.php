@@ -1,5 +1,5 @@
 <div>
-    <div class="mt-16 ">
+    <div class="">
         <div class="mb-3">
             <h3 class="font-semibold subheading-5">
                 @if ($bulanAktif == date('m') && $tahunAktif == date('Y'))

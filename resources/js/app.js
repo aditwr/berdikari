@@ -1,7 +1,10 @@
 import "./bootstrap";
 
-import * as te from "tw-elements";
+// import * as te from "tw-elements";
 import Swiper from "swiper/bundle";
+
+import { Datepicker, Input, initTE } from "tw-elements";
+initTE({ Datepicker, Input });
 
 window.onload = function () {
     const swiper = new Swiper(".swiper", {

@@ -3,7 +3,7 @@
         <x-dashboard.breadcrumb>
             <a href="#" class="text-gray-500 hover:text-primary-700">Keuangan</a>
             <span class="mx-2">/</span>
-            <a href="#" class="text-dark-primary hover:text-primary-700">Kelola Keuangan</a>
+            <a href="#" class="text-dark-primary hover:text-primary-700">Laporan Keuangan</a>
         </x-dashboard.breadcrumb>
 
         <div class="flex flex-col w-full mb-6 md:flex-row md:gap-x-8">
@@ -143,6 +143,7 @@
                 <div class="flex w-full gap-x-8">
                     {{-- select bulan --}}
                     <div class="">
+                        <p class="">{{ $bulanAktif }}</p>
                         <h3 class="mb-2 font-medium caption">Pilih Bulan</h3>
                         <div class="mb-3 xl:w-40">
                             <select wire:model='bulanAktif' data-te-select-init class="rounded ">

@@ -17,6 +17,8 @@ class Table extends Component
     public $bulanAktif;
     public $tahunAktif;
 
+    public $pagination = 10;
+
     protected $listeners = [
         'KeuanganAktifUpdated' => 'updateKeuanganAktif',
     ];
@@ -50,7 +52,7 @@ class Table extends Component
     {
         return Pengeluaran::where('tipe', $this->keuanganAktif)
             ->whereMonth('tanggal', $this->bulanAktif)
-            ->whereYear('tanggal', $this->tahunAktif)->paginate(5, ['*'], 'pengeluaran');
+            ->whereYear('tanggal', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pengeluaran');
     }
     public function render()
     {
