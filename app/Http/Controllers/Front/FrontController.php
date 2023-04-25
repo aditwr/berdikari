@@ -26,4 +26,9 @@ class FrontController extends Controller
     {
         return view('front.about');
     }
+
+    public function coba()
+    {
+        return view('front.coba');
+    }
 }

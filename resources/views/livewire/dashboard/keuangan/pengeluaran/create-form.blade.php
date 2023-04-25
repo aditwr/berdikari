@@ -3,7 +3,7 @@
     @if ($notification['show'])
         {{-- alert --}}
         <div class="flex items-center px-3 py-3 mb-3 bg-success-200">
-            <p class="text-sm basis-full text-dark-secondary">Pemasukan baru dengan judul " <span
+            <p class="text-sm basis-full text-dark-secondary">Pengeluaran baru dengan judul " <span
                     class="font-medium">{{ $notification['judul'] }}</span> " berhasil
                 tersimpan!</p>
             {{-- close button --}}
@@ -19,20 +19,21 @@
     @endif
 
     <div class="relative">
+        {{ $keuanganAktif->nama }}
         <div class="relative mb-4">
-            <label for="" class="block mb-2 font-medium caption text-dark-secondary">Judul Pemasukan</label>
-            <input type="text" wire:model.defer="judulPemasukan"
+            <label for="" class="block mb-2 font-medium caption text-dark-secondary">Judul Pengeluaran</label>
+            <input type="text" wire:model.defer="judulPengeluaran"
                 class="block w-full transition-all rounded border-neutral-300" />
-            @error('judulPemasukan')
+            @error('judulPengeluaran')
                 <span class="text-xs text-danger-600">{{ $message }}</span>
             @enderror
         </div>
         <div class="relative mb-4">
             <label for="" class="block mb-2 font-medium caption text-dark-secondary">Nominal
-                Pemasukan</label>
-            <input type="text" wire:model.defer="nominalPemasukan"
+                Pengeluaran</label>
+            <input type="text" wire:model.defer="nominalPengeluaran"
                 class="block w-full transition-all rounded border-neutral-300" />
-            @error('nominalPemasukan')
+            @error('nominalPengeluaran')
                 <span class="text-xs text-danger-600">{{ $message }}</span>
             @enderror
         </div>
@@ -40,8 +41,8 @@
         <div class="relative mb-4">
             <label for="" class="block mb-2 font-medium caption text-dark-secondary">Keterangan <span
                     class="font-normal">(Optional)</span></label>
-            <textarea wire:model.defer="keteranganPemasukan" class="block w-full transition-all rounded border-neutral-300"></textarea>
-            @error('keteranganPemasukan')
+            <textarea wire:model.defer="keteranganPengeluaran" class="block w-full transition-all rounded border-neutral-300"></textarea>
+            @error('keteranganPengeluaran')
                 <span class="text-xs text-danger-600">{{ $message }}</span>
             @enderror
         </div>
@@ -58,7 +59,7 @@
         <button type="button" wire:click="submit"
             class="ml-1 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
             data-te-ripple-init data-te-ripple-color="light">
-            Simpan Pemasukan
+            Simpan Pengeluaran
         </button>
     </div>
 </div>

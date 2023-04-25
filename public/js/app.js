@@ -2064,19 +2064,18 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var swiper_bundle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! swiper/bundle */ "./node_modules/swiper/swiper-bundle.esm.js");
-/* harmony import */ var tw_elements__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tw-elements */ "./node_modules/tw-elements/dist/js/tw-elements.es.min.js");
+/* harmony import */ var tw_elements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tw-elements */ "./node_modules/tw-elements/dist/js/tw-elements.es.min.js");
+/* harmony import */ var swiper_bundle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! swiper/bundle */ "./node_modules/swiper/swiper-bundle.esm.js");
 
 
-// import * as te from "tw-elements";
 
 
-(0,tw_elements__WEBPACK_IMPORTED_MODULE_2__.initTE)({
-  Datepicker: tw_elements__WEBPACK_IMPORTED_MODULE_2__.Datepicker,
-  Input: tw_elements__WEBPACK_IMPORTED_MODULE_2__.Input
+(0,tw_elements__WEBPACK_IMPORTED_MODULE_1__.initTE)({
+  Datepicker: tw_elements__WEBPACK_IMPORTED_MODULE_1__.Datepicker,
+  Input: tw_elements__WEBPACK_IMPORTED_MODULE_1__.Input
 });
 window.onload = function () {
-  var swiper = new swiper_bundle__WEBPACK_IMPORTED_MODULE_1__["default"](".swiper", {
+  var swiper = new swiper_bundle__WEBPACK_IMPORTED_MODULE_2__["default"](".swiper", {
     spaceBetween: 24,
     slidesPerView: 1,
     // Navigation arrows
@@ -2138,7 +2137,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

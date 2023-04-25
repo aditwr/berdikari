@@ -10,9 +10,7 @@
     {{-- Styles --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    {{-- Scripts --}}
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/vendor/alpine.js') }}"></script>
+
 
     @stack('styles')
     @stack('scripts')
@@ -23,6 +21,9 @@
     @yield('content')
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    {{-- Scripts --}}
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/vendor/alpine.js') }}"></script>
 </body>
 
 </html>

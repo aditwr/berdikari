@@ -9,6 +9,8 @@ class RiwayatKeuangan extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function keuangan()
     {
         return $this->belongsTo(Keuangan::class);

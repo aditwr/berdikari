@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard\Keuangan\Pemasukan;
+namespace App\Http\Livewire\Dashboard\Keuangan\Pengeluaran;
 
 use Livewire\Component;
 use App\Models\Keuangan;
-use App\Models\Pemasukan;
+use App\Models\Pengeluaran;
 use App\Models\RiwayatKeuangan;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class CreateForm extends Component
 {
     public $keuanganAktif;
 
-    public $judulPemasukan;
-    public $nominalPemasukan;
-    public $keteranganPemasukan;
+    public $judulPengeluaran;
+    public $nominalPengeluaran;
+    public $keteranganPengeluaran;
 
     public $notification = [
         'show' => false,
@@ -31,8 +30,8 @@ class CreateForm extends Component
     }
 
     protected $rules = [
-        'judulPemasukan' => 'required',
-        'nominalPemasukan' => 'required',
+        'judulPengeluaran' => 'required',
+        'nominalPengeluaran' => 'required',
     ];
 
     public function submit()
@@ -41,17 +40,17 @@ class CreateForm extends Component
         $this->validate();
 
         // hitung nominal keuangan terbaru
-        $nominal_terbaru = $this->keuanganAktif->nominal + $this->nominalPemasukan;
+        $nominal_terbaru = $this->keuanganAktif->nominal - $this->nominalPengeluaran;
 
-        // buat pemasukan baru
-        Pemasukan::create([
+        // buat pengeluaran baru
+        Pengeluaran::create([
             'keuangan_id' => $this->keuanganAktif->id,
             'tipe' => $this->keuanganAktif->slug,
-            'judul' => $this->judulPemasukan,
-            'nominal' => $this->nominalPemasukan,
+            'judul' => $this->judulPengeluaran,
+            'nominal' => $this->nominalPengeluaran,
             'tanggal' => date('Y-m-d'),
-            'keterangan' => $this->keteranganPemasukan,
-            'total_nominal' => $nominal_terbaru,
+            'keterangan' => $this->keteranganPengeluaran,
+            'sisa_nominal' => $nominal_terbaru,
         ]);
 
         // update total nominal di keuangan
@@ -59,7 +58,7 @@ class CreateForm extends Component
             'nominal' => $nominal_terbaru,
         ]);
 
-        // simpan nominal ke riwayat keuangan
+        // update riwayat keuangan
         RiwayatKeuangan::create([
             'keuangan_id' => $this->keuanganAktif->id,
             'nominal' => $nominal_terbaru,
@@ -68,12 +67,12 @@ class CreateForm extends Component
         ]);
 
         $this->notification['show'] = true;
-        $this->notification['judul'] = $this->judulPemasukan;
+        $this->notification['judul'] = $this->judulPengeluaran;
 
-        $this->emit('pemasukanCreated');
+        $this->emit('pengeluaranCreated');
         $this->emit('refreshTable');
 
-        $this->reset(['judulPemasukan', 'nominalPemasukan', 'keteranganPemasukan']);
+        $this->reset(['judulPengeluaran', 'nominalPengeluaran', 'keteranganPengeluaran']);
     }
     public function closeNotification()
     {
@@ -88,6 +87,6 @@ class CreateForm extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.keuangan.pemasukan.create-form');
+        return view('livewire.dashboard.keuangan.pengeluaran.create-form');
     }
 }

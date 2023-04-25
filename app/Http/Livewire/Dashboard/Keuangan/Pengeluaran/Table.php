@@ -21,6 +21,8 @@ class Table extends Component
 
     protected $listeners = [
         'KeuanganAktifUpdated' => 'updateKeuanganAktif',
+        'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
+        'refreshTable' => '$refresh',
     ];
 
     // untuk permulaan, ambil data pemasukan bulan ini dan tahun ini di mount
@@ -45,6 +47,11 @@ class Table extends Component
         $this->dataKeuanganAktif = $data['dataKeuanganAktif'];
         $this->bulanAktif = $data['bulanAktif'];
         $this->tahunAktif = $data['tahunAktif'];
+    }
+    public function updateKeuanganAktifFromSelect($data)
+    {
+        $this->keuanganAktif = $data['keuanganAktif'];
+        $this->dataKeuanganAktif = Keuangan::where('slug', $data['keuanganAktif'])->first();
     }
 
     // method untuk mengambil data pemasukan berdasarkan tipe keuangan, bulan, dan tahun

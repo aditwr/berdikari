@@ -19,31 +19,30 @@
     @stack('styles')
     @stack('scripts')
 
-    {{-- Scripts --}}
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/vendor/alpine.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     {{-- Livewire Style & Js --}}
     @livewireStyles
 </head>
 
-<body class="font-normal font-default text-slate-900 scroll-smooth">
-    {{-- Sidebar --}}
-    <x-dashboard.side-nav />
+<body class="font-normal font-default text-slate-900 scroll-smooth bg-gray-50">
 
-    <div class="xl:pl-64">
-        {{-- Navbar --}}
-        @include('dashboard.partials.navbar')
+    <x-dashboard.navigation></x-dashboard.navigation>
 
-
-    </div>
-    <div class="pt-[84px] xl:pl-[264px] 2xl:pl-72 bg-gray-50 pb-12">
-        {{-- Content --}}
-        @yield('content')
-    </div>
+    <!--Main layout-->
+    <main style="">
+        <div class="pt-[84px] xl:pl-[264px] 2xl:pl-72  pb-12">
+            {{-- Content --}}
+            @yield('content')
+        </div>
+    </main>
 
     @livewireScripts
-    {{-- <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+    {{-- Scripts --}}
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/vendor/alpine.js') }}"></script>
+    @include('sweetalert::alert')
 </body>
 
 </html>

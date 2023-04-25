@@ -19,9 +19,13 @@ class Table extends Component
 
     public $pagination = 10;
 
+    public $deleteId = null;
+
     protected $listeners = [
         'KeuanganAktifUpdated' => 'updateKeuanganAktif',
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
+        'refreshTable' => '$refresh',
+        'refresh' => '$refresh',
     ];
 
     // untuk permulaan, ambil data pemasukan bulan ini dan tahun ini di mount
@@ -59,6 +63,14 @@ class Table extends Component
         return Pemasukan::where('tipe', $this->keuanganAktif)
             ->whereMonth('tanggal', $this->bulanAktif)
             ->whereYear('tanggal', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pemasukan');
+    }
+
+    public function deleteItem()
+    {
+        $pemasukan = Pemasukan::find($this->deleteId);
+        $pemasukan->delete();
+        $this->emit('refreshTable');
+        // $this->emit('alert', ['type' => 'success', 'message' => 'Data berhasil dihapus']);
     }
 
     public function render()

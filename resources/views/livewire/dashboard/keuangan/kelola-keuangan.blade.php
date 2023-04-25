@@ -6,16 +6,18 @@
             <a href="#" class="text-dark-primary hover:text-primary-700">Laporan Keuangan</a>
         </x-dashboard.breadcrumb>
 
-        <div class="flex flex-col w-full mb-6 md:flex-row md:gap-x-8">
+        <div class="flex flex-col w-full mb-6 md:flex-row md:gap-x-8 xl:gap-x-12 2xl:gap-x-24">
             {{-- select --}}
             <div class="flex justify-between lg:justify-start">
                 <div class="">
                     <h3 class="mb-2 font-medium caption">Pilih Keuangan</h3>
-                    <div class="flex justify-start">
-                        <div class="mb-3 xl:w-64 2xl:w-96">
-                            <select wire:model='keuanganAktif' data-te-select-init class="rounded">
+                    <div class="flex justify-start ">
+                        <div class="w-64 mb-3 xl:w-64">
+                            <select wire:model='keuanganAktif' class="w-full overflow-hidden rounded">
                                 @foreach ($keuangans as $keuangan)
-                                    <option value="{{ $keuangan->slug }}">{{ $keuangan->nama }}</option>
+                                    <option class="" value="{{ $keuangan->slug }}">
+                                        {{ $keuangan->nama }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -23,7 +25,7 @@
                 </div>
             </div>
             {{-- info --}}
-            <div class="flex flex-col justify-between w-full gap-y-6 gap-x-6 2xl:flex-row">
+            <div class="flex flex-col flex-wrap justify-between w-full gap-y-6 2xl:flex-row">
                 <div class="flex flex-col lg:flex-row gap-x-8 gap-y-2">
                     <div class="flex px-4 py-3 bg-white rounded shadow gap-x-4">
                         <div class="flex items-center">
@@ -143,10 +145,9 @@
                 <div class="flex w-full gap-x-8">
                     {{-- select bulan --}}
                     <div class="">
-                        <p class="">{{ $bulanAktif }}</p>
                         <h3 class="mb-2 font-medium caption">Pilih Bulan</h3>
                         <div class="mb-3 xl:w-40">
-                            <select wire:model='bulanAktif' data-te-select-init class="rounded ">
+                            <select wire:model='bulanAktif' class="rounded">
                                 <option value="01">Januari</option>
                                 <option value="02">Februari</option>
                                 <option value="03">Maret</option>
@@ -166,7 +167,7 @@
                     <div class="">
                         <h3 class="mb-2 font-medium caption">Pilih Tahun</h3>
                         <div class="mb-3 xl:w-40">
-                            <select wire:model='tahunAktif' data-te-select-init class="rounded ">
+                            <select wire:model='tahunAktif' class="rounded ">
                                 {{-- buat list option tahun sekarang dan 10 tahun kebelakang --}}
                                 @for ($i = 0; $i < 10; $i++)
                                     <option value="{{ date('Y') - $i }}">{{ date('Y') - $i }}</option>

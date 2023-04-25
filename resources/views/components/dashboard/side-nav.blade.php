@@ -23,7 +23,7 @@
 
     <section class="border bg-gray-50 dark:border-zinc-900 dark:bg-zinc-700">
         <!-- Sidenav -->
-        <nav id="sidenav"
+        <nav id="sidenav-1"
             class="fixed -translate-x-full xl:translate-x-0  top-0 left-0 z-[1035] w-60 bg-white shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] dark:bg-zinc-800">
             <a href="{{ route('dashboard.index') }}"
                 class="relative z-30 flex items-center justify-center h-16 py-6 bg-white border-b-2 border-gray-100 border-solid outline-none"

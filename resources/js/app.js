@@ -1,6 +1,7 @@
 import "./bootstrap";
 
-// import * as te from "tw-elements";
+import * as te from "tw-elements";
+
 import Swiper from "swiper/bundle";
 
 import { Datepicker, Input, initTE } from "tw-elements";
