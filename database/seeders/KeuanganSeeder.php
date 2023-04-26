@@ -17,17 +17,17 @@ class KeuanganSeeder extends Seeder
         Keuangan::create([
             'nama' => 'Kas Karangtaruna',
             'slug' => 'kas-karangtaruna',
-            'nominal' => 5000000,
+            'nominal' => 0,
         ]);
         Keuangan::create([
             'nama' => 'Kas RT 12',
             'slug' => 'kas-rt-12',
-            'nominal' => 3200000,
+            'nominal' => 0,
         ]);
         Keuangan::create([
             'nama' => 'Kas RT 34',
             'slug' => 'kas-rt-34',
-            'nominal' => 4300000,
+            'nominal' => 0,
         ]);
     }
 }

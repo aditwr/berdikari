@@ -25,4 +25,9 @@ class Pengeluaran extends Model
     {
         return $this->belongsTo(Keuangan::class);
     }
+
+    public function riwayatKeuangan()
+    {
+        return $this->belongsTo(RiwayatKeuangan::class);
+    }
 }

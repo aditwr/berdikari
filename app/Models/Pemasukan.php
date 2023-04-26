@@ -7,20 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemasukan extends Model
 {
-    protected $fillable = [
-        'keuangan_id',
-        'tipe',
-        'judul',
-        'nominal',
-        'tanggal',
-        'keterangan',
-        'total_nominal',
-    ];
+    protected $guarded = [];
 
     use HasFactory;
 
     public function keuangan()
     {
         return $this->belongsTo(Keuangan::class);
+    }
+
+    public function riwayatKeuangan()
+    {
+        return $this->belongsTo(RiwayatKeuangan::class);
     }
 }

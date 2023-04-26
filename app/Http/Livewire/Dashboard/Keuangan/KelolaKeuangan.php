@@ -29,6 +29,9 @@ class KelolaKeuangan extends Component
     public $nominalPengeluaranSatuBulan;
     public $jumlahPengeluaranSatuBulan;
 
+    protected $listeners = [
+        'refresh' => 'refreshData',
+    ];
 
     public function mount()
     {
@@ -63,7 +66,7 @@ class KelolaKeuangan extends Component
     // Method ketika ada perubahan pada property
     public function updatedKeuanganAktif()
     {
-        $this->dataKeuanganAktif = Keuangan::where('slug', $this->keuanganAktif)->get()->first();
+        $this->dataKeuanganAktif = Keuangan::where('slug', $this->keuanganAktif)->first();
         $this->refreshData();
     }
 

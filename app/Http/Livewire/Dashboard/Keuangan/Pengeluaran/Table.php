@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dashboard\Keuangan\Pengeluaran;
 use Livewire\Component;
 use App\Models\Keuangan;
 use App\Models\Pengeluaran;
+use App\Models\RiwayatKeuangan;
 use Livewire\WithPagination;
 
 class Table extends Component
@@ -18,6 +19,8 @@ class Table extends Component
     public $tahunAktif;
 
     public $pagination = 10;
+
+    public $deleteId = null;
 
     protected $listeners = [
         'KeuanganAktifUpdated' => 'updateKeuanganAktif',
@@ -61,6 +64,22 @@ class Table extends Component
             ->whereMonth('tanggal', $this->bulanAktif)
             ->whereYear('tanggal', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pengeluaran');
     }
+
+    public function deleteItem()
+    {
+        $pengeluaran = Pengeluaran::find($this->deleteId);
+        $pengeluaran->riwayatKeuangan()->delete();
+        // update nominal keuangan
+        $this->dataKeuanganAktif->update([
+            'nominal' => $this->dataKeuanganAktif->nominal + $pengeluaran->nominal
+        ]);
+
+        $pengeluaran->delete();
+        $this->emit('refreshTable');
+        $this->emit('refresh');
+        // $this->emit('alert', ['type' => 'success', 'message' => 'Data berhasil dihapus']);
+    }
+
     public function render()
     {
         $pengeluarans = $this->getPengeluaran();

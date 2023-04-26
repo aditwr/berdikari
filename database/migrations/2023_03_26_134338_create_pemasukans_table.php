@@ -22,7 +22,8 @@ class CreatePemasukansTable extends Migration
             $table->bigInteger('nominal');
             $table->date('tanggal');
             $table->bigInteger('total_nominal');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
+            $table->foreignId('riwayat_keuangan_id')->nullable()->constrained('riwayat_keuangans')->onDelete('cascade');
             $table->timestamps();
         });
     }

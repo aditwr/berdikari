@@ -19,6 +19,7 @@ class Table extends Component
 
     public $pagination = 10;
 
+    public $editId = null;
     public $deleteId = null;
 
     protected $listeners = [
@@ -33,10 +34,10 @@ class Table extends Component
     {
         // atur keuangan aktif ke tipe keuangan yang pertama di database
         // tidak menggunakan find(1), untuk jaga-jaga jika ada data yang dihapus
-        $this->keuanganAktif = Keuangan::all()->first()->slug;
+        $this->keuanganAktif = Keuangan::first()->slug;
 
         // atur data keuangan aktif ke data keuangan yang pertama di database
-        $this->dataKeuanganAktif = Keuangan::all()->first();
+        $this->dataKeuanganAktif = Keuangan::first();
 
         // atur bulan dan tahun aktif ke bulan dan tahun sekarang
         $this->bulanAktif = date('m');
@@ -68,9 +69,21 @@ class Table extends Component
     public function deleteItem()
     {
         $pemasukan = Pemasukan::find($this->deleteId);
+        $pemasukan->riwayatKeuangan()->delete();
+        // update nominal keuangan
+        $this->dataKeuanganAktif->update([
+            'nominal' => $this->dataKeuanganAktif->nominal - $pemasukan->nominal,
+        ]);
         $pemasukan->delete();
         $this->emit('refreshTable');
+        $this->emit('refresh');
         // $this->emit('alert', ['type' => 'success', 'message' => 'Data berhasil dihapus']);
+    }
+
+    public function setUpdate($pemasukan)
+    {
+        $this->editId = $pemasukan['id'];
+        $this->emit('setUpdate', $pemasukan);
     }
 
     public function render()

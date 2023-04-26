@@ -15,4 +15,14 @@ class RiwayatKeuangan extends Model
     {
         return $this->belongsTo(Keuangan::class);
     }
+
+    public function pemasukan()
+    {
+        return $this->hasOne(Pemasukan::class);
+    }
+
+    public function pengeluaran()
+    {
+        return $this->hasOne(Pengeluaran::class);
+    }
 }
