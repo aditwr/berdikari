@@ -22,7 +22,8 @@
                                         <th scope="col" class="w-64 py-3 pl-1">Judul</th>
                                         <th scope="col" class="w-32 py-3 pl-2">Nominal</th>
                                         <th scope="col" class="w-32 py-3 pl-2">Tanggal</th>
-                                        <th scope="col" class="py-3 pl-2 w-36">Total Kas</th>
+                                        <th scope="col" class="py-3 pl-2 w-36">Saldo Awal</th>
+                                        <th scope="col" class="py-3 pl-2 w-36">Saldo Akhir</th>
                                         <th scope="col" class="px-2 py-3">Keterangan</th>
                                         <th scope="col" class="w-32 px-2 py-3 text-center">Aksi</th>
                                     </tr>
@@ -51,7 +52,11 @@
                                                 </td>
                                                 <td
                                                     class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
-                                                    Rp{{ number_format($pemasukan->total_nominal, 0, ',', '.') }},-
+                                                    Rp{{ number_format($pemasukan->saldo_awal, 0, ',', '.') }},-
+                                                </td>
+                                                <td
+                                                    class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
+                                                    Rp{{ number_format($pemasukan->saldo_akhir, 0, ',', '.') }},-
                                                 </td>
                                                 <td class="px-2 py-2 whitespace-nowrap">
                                                     <div class="space-y-2">
@@ -122,7 +127,7 @@
                                                 <td class="w-32 py-2 pl-2 text-sm whitespace-nowrap ">
                                                     <button type="button" wire:click="setUpdate({{ $pemasukan }})"
                                                         class="text-warning-700 bg-warning-200 btn-secondary-small"
-                                                        data-te-toggle="modal" data-te-target="#editModal"
+                                                        data-te-toggle="modal" data-te-target="#editModalPemasukan"
                                                         data-te-ripple-init data-te-ripple-color="light">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px"
                                                             y="0px" width="24" height="24"
@@ -146,7 +151,7 @@
                                                     <button type="button"
                                                         wire:click="$set('deleteId', {{ $pemasukan->id }})"
                                                         class="bg-danger-200 btn-secondary-small"
-                                                        data-te-toggle="modal" data-te-target="#deleteModal"
+                                                        data-te-toggle="modal" data-te-target="#deleteModalPemasukan"
                                                         data-te-ripple-init data-te-ripple-color="light">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px"
                                                             y="0px" width="24" height="24"
@@ -187,8 +192,9 @@
                             {{-- edit item modal --}}
                             <div data-te-modal-init wire:ignore
                                 class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                id="editModal" tabindex="-1" aria-labelledby="exampleModalCenteredScrollable"
-                                aria-modal="true" role="dialog" data-te-backdrop="static" data-te-keyboard="false">
+                                id="editModalPemasukan" tabindex="-1"
+                                aria-labelledby="exampleModalCenteredScrollable" aria-modal="true" role="dialog"
+                                data-te-backdrop="static" data-te-keyboard="false">
                                 <div data-te-modal-dialog-ref
                                     class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
                                     <div
@@ -226,7 +232,7 @@
                             {{-- delete confirm modal --}}
                             <div data-te-modal-init wire:ignore
                                 class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                id="deleteModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+                                id="deleteModalPemasukan" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
                                 aria-modal="true" role="dialog">
                                 <div data-te-modal-dialog-ref
                                     class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">

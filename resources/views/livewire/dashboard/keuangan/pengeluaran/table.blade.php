@@ -9,7 +9,7 @@
                 @endif
             </h3>
         </div>
-        <div class="w-full 2xl:w-8/12">
+        <div class="w-full 2xl:w-9/12">
             <div class="overflow-hidden bg-white rounded shadow-sm">
                 <div class="">
                     <div class="">
@@ -22,7 +22,8 @@
                                         <th scope="col" class="w-64 py-3 pl-1">Judul</th>
                                         <th scope="col" class="w-32 py-3 pl-2">Nominal</th>
                                         <th scope="col" class="w-32 py-3 pl-2">Tanggal</th>
-                                        <th scope="col" class="py-3 pl-2 w-36">Sisa Nominal</th>
+                                        <th scope="col" class="py-3 pl-2 w-36">Saldo Awal</th>
+                                        <th scope="col" class="py-3 pl-2 w-36">Sisa Saldo</th>
                                         <th scope="col" class="px-2 py-3 ">Keterangan</th>
                                         <th scope="col" class="w-32 px-2 py-3 text-center">Aksi</th>
                                     </tr>
@@ -51,7 +52,11 @@
                                                 </td>
                                                 <td
                                                     class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
-                                                    Rp{{ number_format($pengeluaran->sisa_nominal, 0, ',', '.') }},-
+                                                    Rp{{ number_format($pengeluaran->saldo_awal, 0, ',', '.') }},-
+                                                </td>
+                                                <td
+                                                    class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
+                                                    Rp{{ number_format($pengeluaran->saldo_akhir, 0, ',', '.') }},-
                                                 </td>
                                                 <td class="px-2 py-2 whitespace-nowrap">
                                                     <div class="space-y-2">
@@ -120,10 +125,9 @@
                                                     </div>
                                                 </td>
                                                 <td class="w-32 py-2 pl-2 text-sm whitespace-nowrap ">
-                                                    <button type="button"
+                                                    <button type="button" wire:click="setUpdate({{ $pengeluaran }})"
                                                         class="text-warning-700 bg-warning-200 btn-secondary-small"
-                                                        data-te-toggle="modal"
-                                                        data-te-target="#keteranganPemasukan{{ $loop->iteration }}"
+                                                        data-te-toggle="modal" data-te-target="#editModalPengeluaran"
                                                         data-te-ripple-init data-te-ripple-color="light">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px"
                                                             y="0px" width="24" height="24"
@@ -144,12 +148,11 @@
                                                             </g>
                                                         </svg>
                                                     </button>
-                                                    {{ $deleteId }}
                                                     <button type="button"
                                                         wire:click="$set('deleteId', {{ $pengeluaran->id }})"
                                                         class="bg-danger-200 btn-secondary-small"
                                                         data-te-toggle="modal"
-                                                        data-te-target="#deletePengeluaranModal" data-te-ripple-init
+                                                        data-te-target="#deleteModalPengeluaran" data-te-ripple-init
                                                         data-te-ripple-color="light">
                                                         <svg xmlns="http://www.w3.org/2000/svg" x="0px"
                                                             y="0px" width="24" height="24"
@@ -170,65 +173,6 @@
                                                             </g>
                                                         </svg>
                                                     </button>
-                                                    {{-- delete confirm modal --}}
-                                                    <div data-te-modal-init wire:ignore
-                                                        class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                                                        id="deletePengeluaranModal" tabindex="-1"
-                                                        aria-labelledby="exampleModalCenterTitle" aria-modal="true"
-                                                        role="dialog">
-                                                        <div data-te-modal-dialog-ref
-                                                            class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
-                                                            <div
-                                                                class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto bg-clip-padding dark:bg-neutral-600">
-                                                                <div
-                                                                    class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
-                                                                    <!--Modal title-->
-                                                                    <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
-                                                                        id="exampleModalScrollableLabel">
-                                                                        Konfirmasi Penghapusan
-                                                                    </h5>
-                                                                    <!--Close button-->
-                                                                    <button type="button"
-                                                                        class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                                                                        data-te-modal-dismiss aria-label="Close">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            fill="none" viewBox="0 0 24 24"
-                                                                            stroke-width="1.5" stroke="currentColor"
-                                                                            class="w-6 h-6">
-                                                                            <path stroke-linecap="round"
-                                                                                stroke-linejoin="round"
-                                                                                d="M6 18L18 6M6 6l12 12" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </div>
-
-                                                                <!--Modal body-->
-                                                                <div class="relative p-4" wire:>
-                                                                    <p>Apakah anda yakin ingin menghapus pemasukan?
-                                                                    </p>
-                                                                </div>
-                                                                <!--Modal footer-->
-                                                                <div
-                                                                    class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
-
-                                                                    <button type="button"
-                                                                        class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
-                                                                        data-te-modal-dismiss data-te-ripple-init
-                                                                        data-te-ripple-color="light">
-                                                                        Cancel
-                                                                    </button>
-                                                                    <button type="button" wire:click="deleteItem"
-                                                                        class="ml-1 inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                                                        data-te-ripple-init
-                                                                        data-te-ripple-color="light"
-                                                                        data-te-modal-dismiss>
-                                                                        Hapus
-                                                                    </button>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -244,6 +188,100 @@
                                     @endif
                                 </tbody>
                             </table>
+
+                            {{-- edit item modal --}}
+                            <div data-te-modal-init wire:ignore
+                                class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                                id="editModalPengeluaran" tabindex="-1"
+                                aria-labelledby="exampleModalCenteredScrollable" aria-modal="true" role="dialog"
+                                data-te-backdrop="static" data-te-keyboard="false">
+                                <div data-te-modal-dialog-ref
+                                    class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+                                    <div
+                                        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto bg-clip-padding dark:bg-neutral-600">
+                                        <div
+                                            class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
+                                            <!--Modal title-->
+                                            <div class="">
+                                                <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                                    id="exampleModalCenteredScrollableLabel">
+                                                    Ubah Catatan Pemasukan
+                                                </h5>
+                                                <h6 class="text-dark-secondary">untuk keuangan
+                                                    {{ $dataKeuanganAktif['nama'] }}
+                                                </h6>
+                                            </div>
+                                            <!--Close button-->
+                                            <button type="button"
+                                                class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                                data-te-modal-dismiss aria-label="Close">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <livewire:dashboard.keuangan.pengeluaran.edit-form />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- delete confirm modal --}}
+                            <div data-te-modal-init wire:ignore
+                                class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                                id="deleteModalPengeluaran" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+                                aria-modal="true" role="dialog">
+                                <div data-te-modal-dialog-ref
+                                    class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+                                    <div
+                                        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto bg-clip-padding dark:bg-neutral-600">
+                                        <div
+                                            class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
+                                            <!--Modal title-->
+                                            <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                                id="exampleModalScrollableLabel">
+                                                Konfirmasi Penghapusan
+                                            </h5>
+                                            <!--Close button-->
+                                            <button type="button"
+                                                class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                                data-te-modal-dismiss aria-label="Close">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <!--Modal body-->
+                                        <div class="relative p-4" wire:>
+                                            <p>Apakah anda yakin ingin menghapus pemasukan?
+                                            </p>
+                                        </div>
+                                        <!--Modal footer-->
+                                        <div
+                                            class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
+
+                                            <button type="button"
+                                                class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
+                                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                                                Cancel
+                                            </button>
+                                            <button type="button" wire:click="deleteItem"
+                                                class="ml-1 inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                                                data-te-ripple-init data-te-ripple-color="light" data-te-modal-dismiss>
+                                                Hapus
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

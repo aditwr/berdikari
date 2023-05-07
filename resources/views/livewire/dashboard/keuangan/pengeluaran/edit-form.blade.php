@@ -3,7 +3,7 @@
     @if ($notification['show'])
         {{-- alert --}}
         <div class="flex items-center px-3 py-3 mb-3 bg-success-200">
-            <p class="text-sm basis-full text-dark-secondary">Pemasukan baru dengan judul " <span
+            <p class="text-sm basis-full text-dark-secondary">Pengeluaran baru dengan judul " <span
                     class="font-medium">{{ $notification['judul'] }}</span> " berhasil
                 diubah!</p>
             {{-- close button --}}
@@ -21,25 +21,26 @@
     <form class="w-full" wire:submit.prevent="update">
         <div class="relative">
             <div class="relative mb-4">
-                <label for="" class="block mb-2 font-medium caption text-dark-secondary">Judul Pemasukan</label>
-                <input type="text" wire:model="judulPemasukan"
+                <label for="" class="block mb-2 font-medium caption text-dark-secondary">Judul
+                    Pengeluaran</label>
+                <input type="text" wire:model="judulPengeluaran"
                     class="block w-full transition-all rounded border-neutral-300" />
-                @error('judulPemasukan')
+                @error('judulPengeluaran')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror
             </div>
             <div class="relative mb-4">
                 <label for="" class="block mb-2 font-medium caption text-dark-secondary">Nominal
-                    Pemasukan</label>
-                <input type="text" wire:model="nominalPemasukan"
+                    Pengeluaran</label>
+                <input type="text" wire:model="nominalPengeluaran"
                     class="block w-full transition-all rounded border-neutral-300" />
 
                 {{-- <span class="block px-1 my-1 text-xs text-info-700">demi catatan keuangan yang sinkron dan konsisten,
                     nominal
-                    pemasukan
+                    Pengeluaran
                     lampau tidak dapat
                     diubah</span> --}}
-                @error('nominalPemasukan')
+                @error('nominalPengeluaran')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror
             </div>
@@ -47,8 +48,8 @@
             <div class="relative mb-4">
                 <label for="" class="block mb-2 font-medium caption text-dark-secondary">Keterangan <span
                         class="font-normal">(Optional)</span></label>
-                <textarea wire:model="keteranganPemasukan" class="block w-full transition-all rounded border-neutral-300"></textarea>
-                @error('keteranganPemasukan')
+                <textarea wire:model="keteranganPengeluaran" class="block w-full transition-all rounded border-neutral-300"></textarea>
+                @error('keteranganPengeluaran')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror
             </div>

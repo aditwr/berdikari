@@ -6,12 +6,12 @@ use Livewire\Component;
 use App\Models\Keuangan;
 use App\Models\Pemasukan;
 use App\Models\Pengeluaran;
-use App\Models\RiwayatKeuangan;
 
-class CreateForm extends Component
+class EditForm extends Component
 {
     public $keuanganAktif;
 
+    public $pengeluaranId;
     public $judulPengeluaran;
     public $nominalPengeluaran;
     public $keteranganPengeluaran;
@@ -23,6 +23,7 @@ class CreateForm extends Component
 
     protected $listeners = [
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
+        'setUpdate' => 'setUpdate',
     ];
 
     public function mount()
@@ -35,35 +36,44 @@ class CreateForm extends Component
         'nominalPengeluaran' => 'required',
     ];
 
-    public function submit()
+    public function setUpdate($pengeluaran)
     {
-        // if validation success, do
+        $this->pengeluaranId = $pengeluaran['id'];
+        $this->judulPengeluaran = $pengeluaran['judul'];
+        $this->nominalPengeluaran = $pengeluaran['nominal'];
+        $this->keteranganPengeluaran = $pengeluaran['keterangan'];
+    }
+
+    public function update()
+    {
+        // validasi
         $this->validate();
 
-        // hitung saldo terakhir
-        $totalPemasukan = Pemasukan::where('keuangan_id', $this->keuanganAktif->id)->sum('nominal');
-        $totalPengeluaran = Pengeluaran::where('keuangan_id', $this->keuanganAktif->id)->sum('nominal');
-        $saldoTerakhir = $totalPemasukan - $totalPengeluaran;
+        $pengeluaran = Pengeluaran::find($this->pengeluaranId);
+        // hitung saldo awal, akumulasi sampai pada tanggal
+        $pemasukan_sampai_tanggal = Pemasukan::where('keuangan_id', $this->keuanganAktif->id)->where('created_at', "<", $pengeluaran->created_at)->sum('nominal');
+        $pengeluaran_sampai_tanggal = Pengeluaran::where('keuangan_id', $this->keuanganAktif->id)->where('created_at', "<", $pengeluaran->created_at)->sum('nominal');
+        $saldo_awal = $pemasukan_sampai_tanggal - $pengeluaran_sampai_tanggal;
+        $saldo_akhir = $saldo_awal - $this->nominalPengeluaran;
 
-        // buat pengeluaran baru
-        Pengeluaran::create([
-            'keuangan_id' => $this->keuanganAktif->id,
-            'tipe' => $this->keuanganAktif->slug,
+
+        Pengeluaran::find($this->pengeluaranId)->update([
             'judul' => $this->judulPengeluaran,
             'nominal' => $this->nominalPengeluaran,
-            'saldo_awal' => $saldoTerakhir, // saldo awal adalah saldo terakhir
-            'saldo_akhir' => $saldoTerakhir - $this->nominalPengeluaran, // kurangi saldo terakhir dengan nominal pengeluaran
+            'saldo_awal' => $saldo_awal,
+            'saldo_akhir' => $saldo_akhir,
             'keterangan' => $this->keteranganPengeluaran,
         ]);
 
         $this->notification['show'] = true;
         $this->notification['judul'] = $this->judulPengeluaran;
 
-        $this->emit('pengeluaranCreated');
+        $this->emit('refresh');
         $this->emit('refreshTable');
 
         $this->reset(['judulPengeluaran', 'nominalPengeluaran', 'keteranganPengeluaran']);
     }
+
     public function closeNotification()
     {
         $this->notification['show'] = false;
@@ -77,6 +87,6 @@ class CreateForm extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.keuangan.pengeluaran.create-form');
+        return view('livewire.dashboard.keuangan.pengeluaran.edit-form');
     }
 }

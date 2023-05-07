@@ -17,7 +17,6 @@ class CreateKeuangansTable extends Migration
             $table->id();
             $table->string('nama');
             $table->string('slug');
-            $table->bigInteger('nominal');
             $table->timestamps();
         });
     }

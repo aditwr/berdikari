@@ -20,10 +20,9 @@ class CreatePengeluaransTable extends Migration
             // judul pengeluaran dengan maksimal 255 karakters
             $table->string('judul', 255);
             $table->bigInteger('nominal');
-            $table->date('tanggal');
-            $table->bigInteger('sisa_nominal');
+            $table->bigInteger('saldo_awal');
+            $table->bigInteger('saldo_akhir');
             $table->string('keterangan')->nullable();
-            $table->foreignId('riwayat_keuangan_id')->nullable()->constrained('riwayat_keuangans')->onDelete('cascade');
             $table->timestamps();
         });
     }

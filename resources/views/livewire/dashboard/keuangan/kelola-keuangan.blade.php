@@ -91,7 +91,7 @@
                         class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                         data-te-toggle="modal" data-te-target="#staticBackdrop" data-te-ripple-init
                         data-te-ripple-color="light">
-                        Ringkasan Keuangan Bulan ini
+                        Ringkasan Keuangan
                     </button>
 
                     <!-- Modal Ringkasan Keuangan-->
@@ -107,7 +107,7 @@
                                     class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
                                     <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
                                         id="exampleModalLabel">
-                                        Modal title
+                                        Ringkasan Keuangan
                                     </h5>
                                     <button type="button"
                                         class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
@@ -119,19 +119,52 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <div data-te-modal-body-ref class="relative p-4">...</div>
+                                <div data-te-modal-body-ref class="relative p-4">
+                                    <div class="">
+                                        <livewire:components.doughnut-chart id_chart="persentase_semua_keuangan"
+                                            container_class="w-full h-64" label="Saldo" :labels="$ringkasanKeuangan['labels']"
+                                            :data="$ringkasanKeuangan['data']">
+                                    </div>
+                                    <div class="">
+                                        <div class="text-center">
+                                            <h6 class="mt-1 font-medium caption text-dark-secondary">Total Saldo
+                                                Keuangan Karangtaruna
+                                            </h6>
+                                            <h3 class="font-semibold text-primary-800 subheading-4">
+                                                Rp{{ number_format($total_saldo_karangtaruna, 0, ',', '.') }},-</h3>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-3 ">
+                                            @foreach ($daftar_keuangan as $keuangan)
+                                                <div class="px-2 py-3 bg-white rounded-md shadow-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="w-8 h-8">
+                                                        <path
+                                                            d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
+                                                    </svg>
+                                                    <div class="mt-1">
+                                                        <h6 class="text-sm font-medium text-dark-secondary">
+                                                            {{ $keuangan->nama }}
+                                                        </h6>
+                                                        <h3 class="font-medium subheading-5 text-primary-700">
+                                                            Rp{{ number_format($keuangan->saldo, 0, ',', '.') }},-</h3>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
                                 <div
                                     class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
                                     <button type="button"
                                         class="inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                                         data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
-                                        Close
+                                        Tutup
                                     </button>
-                                    <button type="button"
+                                    {{-- <button type="button"
                                         class="ml-1 inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                                         data-te-ripple-init data-te-ripple-color="light">
                                         Understood
-                                    </button>
+                                    </button> --}}
                                 </div>
                             </div>
                         </div>
@@ -209,9 +242,9 @@
                     </div>
                     <div class="w-full">
                         <div class="flex justify-between w-full py-2">
-                            <span class="font-medium caption">Nominal Terakhir : </span>
+                            <span class="font-medium caption">Saldo Keuangan : </span>
                             <span class="font-medium subheading-5 text-cyan-600">
-                                Rp{{ number_format(end($nominal_keuangan_bulan_ini), 0, ',', '.') }},-
+                                Rp{{ number_format($saldo, 0, ',', '.') }},-
                             </span>
                         </div>
                         <hr class="mb-4">

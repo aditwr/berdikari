@@ -32,6 +32,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/laporan', [KeuanganController::class, 'laporan'])->name('dashboard.keuangan.laporan');
         Route::get('/pemasukan', [KeuanganController::class, 'pemasukan'])->name('dashboard.keuangan.pemasukan');
         Route::get('/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('dashboard.keuangan.pengeluaran');
+        Route::get('/kelola', [KeuanganController::class, 'kelola'])->name('dashboard.keuangan.kelola');
     });
 });
 

@@ -28,4 +28,9 @@ class KeuanganController extends Controller
     {
         return view('dashboard.keuangan.pengeluaran');
     }
+
+    public function kelola()
+    {
+        return view('dashboard.keuangan.kelola');
+    }
 }

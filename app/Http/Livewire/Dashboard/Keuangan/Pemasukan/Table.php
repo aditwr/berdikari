@@ -62,18 +62,13 @@ class Table extends Component
     public function getPemasukan()
     {
         return Pemasukan::where('tipe', $this->keuanganAktif)
-            ->whereMonth('tanggal', $this->bulanAktif)
-            ->whereYear('tanggal', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pemasukan');
+            ->whereMonth('created_at', $this->bulanAktif)
+            ->whereYear('created_at', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pemasukan');
     }
 
     public function deleteItem()
     {
         $pemasukan = Pemasukan::find($this->deleteId);
-        $pemasukan->riwayatKeuangan()->delete();
-        // update nominal keuangan
-        $this->dataKeuanganAktif->update([
-            'nominal' => $this->dataKeuanganAktif->nominal - $pemasukan->nominal,
-        ]);
         $pemasukan->delete();
         $this->emit('refreshTable');
         $this->emit('refresh');
@@ -82,7 +77,6 @@ class Table extends Component
 
     public function setUpdate($pemasukan)
     {
-        $this->editId = $pemasukan['id'];
         $this->emit('setUpdate', $pemasukan);
     }
 

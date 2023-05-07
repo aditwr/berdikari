@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dashboard\Keuangan\Pemasukan;
 use Livewire\Component;
 use App\Models\Keuangan;
 use App\Models\Pemasukan;
+use App\Models\Pengeluaran;
 use App\Models\RiwayatKeuangan;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -40,21 +41,10 @@ class CreateForm extends Component
         // if validation success, do
         $this->validate();
 
-        // hitung nominal keuangan terbaru
-        $nominal_terbaru = $this->keuanganAktif->nominal + $this->nominalPemasukan;
-
-        // simpan nominal ke riwayat keuangan
-        $riwayatKeuangan = RiwayatKeuangan::create([
-            'keuangan_id' => $this->keuanganAktif->id,
-            'nominal' => $nominal_terbaru,
-            'tipe' => $this->keuanganAktif->slug,
-            'tanggal' => date('Y-m-d'),
-        ]);
-
-        // update total nominal di keuangan
-        $this->keuanganAktif->update([
-            'nominal' => $nominal_terbaru,
-        ]);
+        // hitung saldo terakhir
+        $totalPemasukan = Pemasukan::where('keuangan_id', $this->keuanganAktif->id)->sum('nominal');
+        $totalPengeluaran = Pengeluaran::where('keuangan_id', $this->keuanganAktif->id)->sum('nominal');
+        $saldoTerakhir = $totalPemasukan - $totalPengeluaran;
 
         // buat pemasukan baru
         Pemasukan::create([
@@ -62,10 +52,9 @@ class CreateForm extends Component
             'tipe' => $this->keuanganAktif->slug,
             'judul' => $this->judulPemasukan,
             'nominal' => $this->nominalPemasukan,
-            'tanggal' => date('Y-m-d'),
+            'saldo_awal' => $saldoTerakhir, // saldo awal adalah saldo terakhir
+            'saldo_akhir' => $saldoTerakhir + $this->nominalPemasukan, // tambah saldo terakhir dengan nominal pemasukan
             'keterangan' => $this->keteranganPemasukan,
-            'total_nominal' => $nominal_terbaru,
-            'riwayat_keuangan_id' => $riwayatKeuangan->id,
         ]);
 
         $this->notification['show'] = true;

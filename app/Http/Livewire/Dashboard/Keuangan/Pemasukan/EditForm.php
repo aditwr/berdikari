@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Dashboard\Keuangan\Pemasukan;
 use Livewire\Component;
 use App\Models\Keuangan;
 use App\Models\Pemasukan;
-use App\Models\RiwayatKeuangan;
+use App\Models\Pengeluaran;
 
 class EditForm extends Component
 {
@@ -39,9 +39,9 @@ class EditForm extends Component
     public function setUpdate($pemasukan)
     {
         $this->pemasukanId = $pemasukan['id'];
-        // $this->judulPemasukan = $pemasukan['judul'];
+        $this->judulPemasukan = $pemasukan['judul'];
         $this->nominalPemasukan = $pemasukan['nominal'];
-        // $this->keteranganPemasukan = $pemasukan['keterangan'];
+        $this->keteranganPemasukan = $pemasukan['keterangan'];
     }
 
     public function update()
@@ -49,17 +49,25 @@ class EditForm extends Component
         // validasi
         $this->validate();
 
-        // untuk pencatatan keuangan yang sinkron dan konsisten, maka nominal pemasukan lama tidak boleh diubah
+        $pemasukan = Pemasukan::find($this->pemasukanId);
+        // hitung saldo awal, akumulasi sampai pada tanggal
+        $pemasukan_sampai_tanggal = Pemasukan::where('keuangan_id', $this->keuanganAktif->id)->where('created_at', "<", $pemasukan->created_at)->sum('nominal');
+        $pengeluaran_sampai_tanggal = Pengeluaran::where('keuangan_id', $this->keuanganAktif->id)->where('created_at', "<", $pemasukan->created_at)->sum('nominal');
+        $saldo_awal = $pemasukan_sampai_tanggal - $pengeluaran_sampai_tanggal;
+        $saldo_akhir = $saldo_awal + $this->nominalPemasukan;
+
         Pemasukan::find($this->pemasukanId)->update([
             'judul' => $this->judulPemasukan,
             'nominal' => $this->nominalPemasukan,
+            'saldo_awal' => $saldo_awal,
+            'saldo_akhir' => $saldo_akhir,
             'keterangan' => $this->keteranganPemasukan,
         ]);
 
         $this->notification['show'] = true;
         $this->notification['judul'] = $this->judulPemasukan;
 
-        // $this->emit('pemasukanCreated');
+        $this->emit('refresh');
         $this->emit('refreshTable');
 
         $this->reset(['judulPemasukan', 'nominalPemasukan', 'keteranganPemasukan']);

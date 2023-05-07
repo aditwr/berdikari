@@ -17,14 +17,13 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             KeuanganSeeder::class,
-            RiwayatKeuanganSeeder::class,
-            PemasukanSeeder::class,
-            PengeluaranSeeder::class,
+            // PemasukanSeeder::class,
+            // PengeluaranSeeder::class,
         ]);
 
         User::create([
-            'name' => 'Admin',
-            'email' => 'admin@app.com',
+            'name' => 'Developer',
+            'email' => 'developer@app.com',
             'password' => bcrypt('password'),
         ]);
     }
