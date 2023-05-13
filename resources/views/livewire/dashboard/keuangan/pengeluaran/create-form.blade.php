@@ -31,7 +31,7 @@
         <div class="relative mb-4">
             <label for="" class="block mb-2 font-medium caption text-dark-secondary">Nominal
                 Pengeluaran</label>
-            <input type="text" wire:model.defer="nominalPengeluaran"
+            <input type="number" wire:model.defer="nominalPengeluaran"
                 class="block w-full transition-all rounded border-neutral-300" />
             @error('nominalPengeluaran')
                 <span class="text-xs text-danger-600">{{ $message }}</span>

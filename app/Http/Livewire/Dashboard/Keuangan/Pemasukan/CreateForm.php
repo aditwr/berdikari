@@ -33,7 +33,7 @@ class CreateForm extends Component
 
     protected $rules = [
         'judulPemasukan' => 'required',
-        'nominalPemasukan' => 'required',
+        'nominalPemasukan' => 'required|numeric',
     ];
 
     public function submit()

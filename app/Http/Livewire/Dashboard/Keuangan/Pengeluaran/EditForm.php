@@ -16,11 +16,6 @@ class EditForm extends Component
     public $nominalPengeluaran;
     public $keteranganPengeluaran;
 
-    public $notification = [
-        'show' => false,
-        'judul' => '',
-    ];
-
     protected $listeners = [
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
         'setUpdate' => 'setUpdate',
@@ -56,8 +51,8 @@ class EditForm extends Component
         $saldo_awal = $pemasukan_sampai_tanggal - $pengeluaran_sampai_tanggal;
         $saldo_akhir = $saldo_awal - $this->nominalPengeluaran;
 
-
-        Pengeluaran::find($this->pengeluaranId)->update([
+        $judul_pengeluaran_lama = $pengeluaran->judul;
+        $pengeluaran->update([
             'judul' => $this->judulPengeluaran,
             'nominal' => $this->nominalPengeluaran,
             'saldo_awal' => $saldo_awal,
@@ -65,18 +60,10 @@ class EditForm extends Component
             'keterangan' => $this->keteranganPengeluaran,
         ]);
 
-        $this->notification['show'] = true;
-        $this->notification['judul'] = $this->judulPengeluaran;
-
         $this->emit('refresh');
         $this->emit('refreshTable');
-
+        $this->emit('notification', ['title' => 'Ubah data berhasil!', 'message' => 'Pengeluaran dengan judul "<span class="font-medium" >' . $judul_pengeluaran_lama . '</span>" telah diubah!']);
         $this->reset(['judulPengeluaran', 'nominalPengeluaran', 'keteranganPengeluaran']);
-    }
-
-    public function closeNotification()
-    {
-        $this->notification['show'] = false;
     }
 
     public function updateKeuanganAktifFromSelect($data)

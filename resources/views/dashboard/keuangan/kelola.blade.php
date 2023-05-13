@@ -13,6 +13,6 @@
                 <a href="#" class="text-dark-primary hover:text-primary-700">Kelola Keuangan</a>
             </x-dashboard.breadcrumb>
         </div>
-
+        <livewire:dashboard.keuangan.kelola.keuangan>
     </div>
 @endsection

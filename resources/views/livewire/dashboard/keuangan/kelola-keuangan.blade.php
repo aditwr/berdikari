@@ -160,11 +160,6 @@
                                         data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
                                         Tutup
                                     </button>
-                                    {{-- <button type="button"
-                                        class="ml-1 inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                                        data-te-ripple-init data-te-ripple-color="light">
-                                        Understood
-                                    </button> --}}
                                 </div>
                             </div>
                         </div>
@@ -173,9 +168,9 @@
             </div>
         </div>
         <hr>
-        <div class="flex flex-col w-full mt-12 lg:flex-row">
+        <div class="flex flex-col w-full mt-12 mb-12 lg:flex-row">
             <div class="lg:w-8/12">
-                <div class="flex w-full gap-x-8">
+                <div class="flex w-full mb-3 gap-x-8">
                     {{-- select bulan --}}
                     <div class="">
                         <h3 class="mb-2 font-medium caption">Pilih Bulan</h3>
@@ -196,7 +191,7 @@
                             </select>
                         </div>
                     </div>
-                    {{-- select bulan --}}
+                    {{-- select tahun --}}
                     <div class="">
                         <h3 class="mb-2 font-medium caption">Pilih Tahun</h3>
                         <div class="mb-3 xl:w-40">
@@ -218,6 +213,7 @@
                     @endif
                 </h3>
                 <livewire:dashboard.line-chart id_chart="grafik_keuangan_bulan_ini" :label="$dataKeuanganAktif->nama"
+                    bulanAktif="{{ $bulanAktif }}" tahunAktif="{{ $tahunAktif }}"
                     container_class="w-full h-64 lg:h-72" :daftar_tanggal_bulan_ini="$daftar_tanggal_bulan_ini" :nominal_keuangan_bulan_ini="$nominal_keuangan_bulan_ini">
 
             </div>
@@ -242,9 +238,21 @@
                     </div>
                     <div class="w-full">
                         <div class="flex justify-between w-full py-2">
-                            <span class="font-medium caption">Saldo Keuangan : </span>
+                            <span class="font-medium caption">
+                                @if ($tahunAktif == date('Y'))
+                                    @if ($bulanAktif < date('m'))
+                                        Saldo Akhir Bulan :
+                                    @elseif($bulanAktif == date('m'))
+                                        Saldo Keuangan :
+                                    @else
+                                        Saldo :
+                                    @endif
+                                @else
+                                    Saldo Akhir Bulan :
+                                @endif
+                            </span>
                             <span class="font-medium subheading-5 text-cyan-600">
-                                Rp{{ number_format($saldo, 0, ',', '.') }},-
+                                Rp{{ number_format($saldo_sampai_pada_bulan_aktif, 0, ',', '.') }},-
                             </span>
                         </div>
                         <hr class="mb-4">
@@ -279,18 +287,13 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="mt-12">
-                <livewire:dashboard.line-chart title="grafik_keuangan_tahun_ini" id_chart="grafik_keuangan_tahun_ini"
-                    container_class="w-full h-[360px]" :daftar_tanggal_bulan_ini="$daftar_tanggal_bulan_ini" :nominal_keuangan_bulan_ini="$nominal_keuangan_bulan_ini">
-            </div> --}}
-
         {{-- Tabel Pemasukan --}}
-        <div class="mb-12">
+        <div class="mb-16">
             <livewire:dashboard.keuangan.pemasukan.table />
         </div>
 
         {{-- Tabel Pengeluaran --}}
-        <div class="mb-12">
+        <div class="mb-8">
             <livewire:dashboard.keuangan.pengeluaran.table />
         </div>
     </div>

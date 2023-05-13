@@ -19,8 +19,6 @@
     @stack('styles')
     @stack('scripts')
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
     {{-- Livewire Style & Js --}}
     @livewireStyles
 </head>
@@ -42,7 +40,6 @@
     {{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/vendor/alpine.js') }}"></script>
-    @include('sweetalert::alert')
 </body>
 
 </html>

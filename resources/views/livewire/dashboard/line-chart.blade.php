@@ -35,6 +35,7 @@
                             pointHoverRadius: 8,
                             pointHoverBackgroundColor: 'rgb(48, 97, 175)',
                             cubicInterpolationMode: 'monotone',
+                            tension: 0.4,
                         }]
                     },
                     options: {
@@ -43,8 +44,6 @@
                         scales: {
                             y: {
                                 beginAtZero: true,
-                                // position top
-                                position: 'top',
                                 title: {
                                     display: true,
                                     text: 'Jumlah'
@@ -89,6 +88,27 @@
                                     bottom: 10,
                                 }
                             },
+                            tooltip: {
+                                enabled: true,
+                                displayColors: false,
+                                titleFont: {
+                                    size: 16,
+                                    weight: 'medium',
+                                },
+                                bodyFont: {
+                                    size: 15,
+                                    weight: 'regular',
+                                },
+                                callbacks: {
+                                    title: function(context) {
+                                        return context[0].label + " " + "{{ $bulan_aktif }}" + " " +
+                                            {{ $tahunAktif }};
+                                    },
+                                    label: function(context) {
+                                        return 'Saldo : Rp. ' + context.formattedValue;
+                                    },
+                                }
+                            },
                         },
                         interaction: {
                             intersect: false,
@@ -102,6 +122,12 @@
                     chart.data.datasets[0].label = event.detail.label;
                     chart.data.labels = event.detail.daftar_tanggal_bulan_ini;
                     chart.data.datasets[0].data = event.detail.nominal_keuangan_bulan_ini;
+                    // update the tooltip
+                    chart.options.plugins.tooltip.callbacks.title = function(context) {
+                        return context[0].label + " " + event.detail.bulanAktif + " " +
+                            event.detail.tahunAktif;
+                    };
+
                     chart.update();
                 });
             </script>

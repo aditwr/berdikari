@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKeuangansTable extends Migration
+class CreateAkumulasiKeuanganTahunansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateKeuangansTable extends Migration
      */
     public function up()
     {
-        Schema::create('keuangans', function (Blueprint $table) {
+        Schema::create('akumulasi_keuangan_tahunans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('slug');
-            $table->text('keterangan')->nullable();
+            $table->string('tipe');
+            $table->integer('tahun');
+            $table->bigInteger('total_pemasukan');
+            $table->bigInteger('total_pengeluaran');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateKeuangansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('keuangans');
+        Schema::dropIfExists('akumulasi_keuangan_tahunans');
     }
 }

@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Dashboard\Keuangan;
 
+use DateTime;
 use Livewire\Component;
 use App\Models\Keuangan;
 use App\Models\Pemasukan;
 use App\Models\Pengeluaran;
+use Illuminate\Support\Facades\Date;
+use App\Models\AkumulasiKeuanganTahunan;
 
 class KelolaKeuangan extends Component
 {
@@ -18,6 +21,7 @@ class KelolaKeuangan extends Component
     // bulan yang dipilih user untuk dilihat keuanganya
     public $bulanAktif;
     public $tahunAktif;
+    protected $bulan = ['01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus', '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'];
 
     // property untuk grafik satu bulan
     public $daftar_tanggal_bulan_ini;
@@ -88,11 +92,14 @@ class KelolaKeuangan extends Component
             'daftar_tanggal_bulan_ini' => $this->daftar_tanggal_bulan_ini,
             'nominal_keuangan_bulan_ini' => $this->nominal_keuangan_bulan_ini,
             'label' => $this->dataKeuanganAktif->nama,
+            'bulanAktif' => $this->bulan[$this->bulanAktif],
+            'tahunAktif' => $this->tahunAktif,
         ]);
         // make an emit to update pemasukan and pengeluaran
         $this->emit('KeuanganAktifUpdated', [
             'keuanganAktif' => $this->keuanganAktif,
             'dataKeuanganAktif' => $this->dataKeuanganAktif,
+            // get month from date
             'bulanAktif' => $this->bulanAktif,
             'tahunAktif' => $this->tahunAktif,
         ]);
@@ -124,6 +131,7 @@ class KelolaKeuangan extends Component
     }
 
     // Method untuk menghitung data grafik keuangan satu bulan
+    public $akumulasi_keuangan_sebelum_tahun_aktif;
     public function hitungDataGrafikKeuanganSatuBulan()
     {
         // get newest 10 data riwayat keuangan
@@ -156,18 +164,59 @@ class KelolaKeuangan extends Component
             }
         }
 
+        // jika hari ini adalah tanggal 1 januari, maka
+        // jumlahkan semua pemasukan dan pengeluaran di sampai tahun sebelumnya
+        if (now()->format('m-d') == '05-10') {
+            $current_year = date("Y");
+            $previous_year = date("Y", strtotime("-1 year"));
+            // jika data akumulasi pemasukan dan pengeluran tahun sebelumnya belum ada, maka buat data baru
+            $daftar_keuangan = Keuangan::all();
+            foreach ($daftar_keuangan as $keuangan) {
+                if (AkumulasiKeuanganTahunan::where('tahun', $previous_year)->where('tipe', $keuangan->slug)->doesntExist()) {
+                    $pemasukan_sampai_tahun_sebelumnya = Pemasukan::where('tipe', $keuangan->slug)->whereYear('created_at', "<", $current_year)->sum('nominal');
+                    $pengeluaran_sampai_tahun_sebelumnya = Pengeluaran::where('tipe', $keuangan->slug)->whereYear('created_at', "<", $current_year)->sum('nominal');
+                    $akumulasi_keuangan = new AkumulasiKeuanganTahunan;
+                    $akumulasi_keuangan->tipe = $keuangan->slug;
+                    $akumulasi_keuangan->tahun = $previous_year;
+                    $akumulasi_keuangan->total_pemasukan = $pemasukan_sampai_tahun_sebelumnya;
+                    $akumulasi_keuangan->total_pengeluaran = $pengeluaran_sampai_tahun_sebelumnya;
+                    $akumulasi_keuangan->save();
+                }
+            }
+        }
+        // $d = new DateTime('2021-05-07');
+        // dd($d);
+
+        // akumulasi keuangan tahun -1 tahun aktif
         $track_keuangan = [];
+        $akumulasi_keuangan_sampai_tahun_lalu = AkumulasiKeuanganTahunan::where('tipe', $this->keuanganAktif)->where('tahun', (int)$this->tahunAktif - 1)->first();
+        if ($akumulasi_keuangan_sampai_tahun_lalu) {
+            $akumulasi_pemasukan_keuangan_sampai_tahun_lalu = $akumulasi_keuangan_sampai_tahun_lalu->total_pemasukan;
+            $akumulasi_pengeluaran_keuangan_sampai_tahun_lalu = $akumulasi_keuangan_sampai_tahun_lalu->total_pengeluaran;
+            $akumulasi_saldo_keuangan_sampai_tahun_lalu = $akumulasi_pemasukan_keuangan_sampai_tahun_lalu - $akumulasi_pengeluaran_keuangan_sampai_tahun_lalu;
+        } else {
+            $akumulasi_saldo_keuangan_sampai_tahun_lalu = 0;
+        }
+        $this->akumulasi_keuangan_sebelum_tahun_aktif = $akumulasi_saldo_keuangan_sampai_tahun_lalu;
 
         // proses menghitung data grafik keuangan satu bulan, dihitung satu-satu per hari/tanggal
         for ($i = 1; $i <= $rentangTanggalKeuangan; $i++) {
-            $pemasukan_sampai_tanggal_ini = Pemasukan::where('tipe', $this->keuanganAktif)->whereDay('created_at', "<=", $i)->whereMonth('created_at', "<=", $this->bulanAktif)->whereYear('created_at', "<=", $this->tahunAktif)->sum('nominal');
-            $pengeluaran_sampai_tanggal_ini = Pengeluaran::where('tipe', $this->keuanganAktif)->whereDay('created_at', "<=", $i)->whereMonth('created_at', "<=", $this->bulanAktif)->whereYear('created_at', "<=", $this->tahunAktif)->sum('nominal');
+            // jumlahkan pemasukan tahun ini
+            if ($this->tahunAktif < date('Y')) {
+                $pemasukan_sampai_tanggal_ini = Pemasukan::where('tipe', $this->keuanganAktif)->whereYear('created_at', $this->tahunAktif)->where('created_at', "<=", date('Y-m-d', strtotime($this->tahunAktif . '-' . $this->bulanAktif . '-' . $i)))->sum('nominal');
+                $pengeluaran_sampai_tanggal_ini = Pengeluaran::where('tipe', $this->keuanganAktif)->whereYear('created_at', $this->tahunAktif)->where('created_at', "<=", date('Y-m-d', strtotime($this->tahunAktif . '-' . $this->bulanAktif . '-' . $i)))->sum('nominal');
+            } else {
+                $pemasukan_sampai_tanggal_ini = Pemasukan::where('tipe', $this->keuanganAktif)->whereDay('created_at', "<=", $i)->whereMonth('created_at', "<=", $this->bulanAktif)->whereYear('created_at', $this->tahunAktif)->sum('nominal');
+                $pengeluaran_sampai_tanggal_ini = Pengeluaran::where('tipe', $this->keuanganAktif)->whereDay('created_at', "<=", $i)->whereMonth('created_at', "<=", $this->bulanAktif)->whereYear('created_at', $this->tahunAktif)->sum('nominal');
+            }
+
+
             $saldo_pada_tanggal_ini = $pemasukan_sampai_tanggal_ini - $pengeluaran_sampai_tanggal_ini;
+            $saldo_pada_tanggal_ini += $akumulasi_saldo_keuangan_sampai_tahun_lalu;
             array_push($track_keuangan, $saldo_pada_tanggal_ini);
-        }
+        };
         $this->daftar_tanggal_bulan_ini = $daftar_tanggal_bulan_ini;
         $this->nominal_keuangan_bulan_ini = $track_keuangan;
-        // dd($track_keuangan);
 
         // hitung statistik keuangan satu bulan
     }
@@ -224,9 +273,11 @@ class KelolaKeuangan extends Component
     {
         $this->hitungStatistikKeuanganSatuBulan();
         // jumlah keuangan berdasar bulan dan tahun aktif
-        $pemasukan = Pemasukan::where('tipe', $this->keuanganAktif)->whereMonth('created_at', "<=", date($this->bulanAktif))->whereYear('created_at', "<=", date($this->tahunAktif))->sum('nominal');
-        $pengeluaran = Pengeluaran::where('tipe', $this->keuanganAktif)->whereMonth('created_at', "<=", date($this->bulanAktif))->whereYear('created_at', "<=", date($this->tahunAktif))->sum('nominal');
-        $saldo = $pemasukan - $pengeluaran;
+        $akumulasi_keuangan_sebelum_tahun_aktif = $this->akumulasi_keuangan_sebelum_tahun_aktif;
+        $pemasukan = Pemasukan::where('tipe', $this->keuanganAktif)->whereMonth("created_at", "<=", $this->bulanAktif)->whereYear('created_at', $this->tahunAktif)->sum('nominal');
+        $pengeluaran = Pengeluaran::where('tipe', $this->keuanganAktif)->whereMonth("created_at", "<=", $this->bulanAktif)->whereYear('created_at', $this->tahunAktif)->sum('nominal');
+        $saldo_sampai_pada_bulan_aktif = $pemasukan - $pengeluaran;
+        $saldo_sampai_pada_bulan_aktif += $akumulasi_keuangan_sebelum_tahun_aktif;
 
         $this->hitungRingkasanKeuangan();
         $this->emit('refreshDoughnutChart', $this->ringkasanKeuangan);
@@ -243,6 +294,6 @@ class KelolaKeuangan extends Component
         }
 
 
-        return view('livewire.dashboard.keuangan.kelola-keuangan', compact(['saldo', 'daftar_keuangan', 'total_saldo_karangtaruna']));
+        return view('livewire.dashboard.keuangan.kelola-keuangan', compact(['saldo_sampai_pada_bulan_aktif', 'daftar_keuangan', 'total_saldo_karangtaruna']));
     }
 }

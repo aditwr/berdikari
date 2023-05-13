@@ -13,6 +13,7 @@ class Table extends Component
 
     public $keuanganAktif;
     public $dataKeuanganAktif;
+    public $search;
 
     public $bulanAktif;
     public $tahunAktif;
@@ -21,12 +22,17 @@ class Table extends Component
 
     public $editId = null;
     public $deleteId = null;
+    public $notification = ['status' => false, 'title' => '', 'message' => ''];
+
 
     protected $listeners = [
         'KeuanganAktifUpdated' => 'updateKeuanganAktif',
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
         'refreshTable' => '$refresh',
         'refresh' => '$refresh',
+        'notification' => 'showNotification',
+        'bulanAktifUpdated' => 'updateBulanAktif',
+        'tahunAktifUpdated' => 'updateTahunAktif',
     ];
 
     // untuk permulaan, ambil data pemasukan bulan ini dan tahun ini di mount
@@ -57,22 +63,44 @@ class Table extends Component
         $this->keuanganAktif = $data['keuanganAktif'];
         $this->dataKeuanganAktif = Keuangan::where('slug', $data['keuanganAktif'])->first();
     }
+    public function updateBulanAktif($bulan)
+    {
+        $this->bulanAktif = $bulan;
+    }
+    public function updateTahunAktif($tahun)
+    {
+        $this->tahunAktif = $tahun;
+    }
 
     // method untuk mengambil data pemasukan berdasarkan tipe keuangan, bulan, dan tahun
     public function getPemasukan()
     {
-        return Pemasukan::where('tipe', $this->keuanganAktif)
-            ->whereMonth('created_at', $this->bulanAktif)
-            ->whereYear('created_at', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pemasukan');
+        if ($this->search == null) {
+            return Pemasukan::where('tipe', $this->keuanganAktif)
+                ->whereMonth('created_at', $this->bulanAktif)
+                ->whereYear('created_at', $this->tahunAktif)->latest()->paginate($this->pagination, ['*'], 'pemasukan');
+        } else {
+            return Pemasukan::where('tipe', $this->keuanganAktif)
+                ->where('judul', 'like', '%' . $this->search . '%')->latest()->paginate($this->pagination, ['*'], 'pemasukan');
+        }
+    }
+
+    public function showNotification($data)
+    {
+        $this->notification = [
+            'status' => true,
+            'title' => $data['title'],
+            'message' => $data['message'],
+        ];
     }
 
     public function deleteItem()
     {
         $pemasukan = Pemasukan::find($this->deleteId);
+        $this->emitSelf('notification', ['title' => 'Penghapusan berhasil', 'message' => 'Pemasukan dengan judul "<span class="font-medium" >' . $pemasukan->judul . '</span>" berhasil dihapus!']);
         $pemasukan->delete();
         $this->emit('refreshTable');
         $this->emit('refresh');
-        // $this->emit('alert', ['type' => 'success', 'message' => 'Data berhasil dihapus']);
     }
 
     public function setUpdate($pemasukan)
