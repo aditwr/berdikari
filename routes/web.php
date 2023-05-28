@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\CatatanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::get('/kegiatan', [FrontController::class, 'activity'])->name('landing-pag
 Route::get('/tulisan', [FrontController::class, 'article'])->name('landing-page.tulisan');
 Route::get('/tentang-kami', [FrontController::class, 'about'])->name('landing-page.tentang-kami');
 Route::get('/coba', [FrontController::class, 'coba'])->name('landing-page.kontak');
+Route::get('/test', [FrontController::class, 'test'])->name('landing-page.test');
+Route::post('/simpan-catatan', [FrontController::class, 'simpancatatan'])->name('landing-page.simpan-catatan');
 
 
 // Dashboard Route
@@ -34,6 +37,20 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         Route::get('/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('dashboard.keuangan.pengeluaran');
         Route::get('/kelola', [KeuanganController::class, 'kelola'])->name('dashboard.keuangan.kelola');
     });
+
+    // Route Catatan
+    Route::prefix('catatan')->middleware(['auth'])->group(
+        function () {
+            Route::get('/jenis', [CatatanController::class, 'jenis'])->name('dashboard.catatan.jenis');
+            Route::get('/catatan', [CatatanController::class, 'index'])->name('dashboard.catatan.index');
+            Route::get('/tambah', [CatatanController::class, 'tambah'])->name('dashboard.catatan.tambah');
+            Route::post('/simpan', [CatatanController::class, 'simpan'])->name('dashboard.catatan.simpan');
+            Route::get('/baca/{id}', [CatatanController::class, 'baca'])->name('dashboard.catatan.baca');
+            Route::post('/update', [CatatanController::class, 'update'])->name('dashboard.catatan.update');
+            // Route::get('/edit/{id}', [CatatanController::class, 'edit'])->name('dashboard.catatan.edit');
+            // Route::get('/hapus/{id}', [CatatanController::class, 'hapus'])->name('dashboard.catatan.hapus');
+        }
+    );
 });
 
 require __DIR__ . '/auth.php';

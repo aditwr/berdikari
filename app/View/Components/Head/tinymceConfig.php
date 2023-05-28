@@ -1,11 +1,10 @@
 <?php
 
-namespace App\View\Components\Dashboard;
+namespace App\View\Components\Head;
 
-use App\Models\Keuangan;
 use Illuminate\View\Component;
 
-class SideNav extends Component
+class tinymceConfig extends Component
 {
     /**
      * Create a new component instance.
@@ -16,6 +15,7 @@ class SideNav extends Component
     {
         //
     }
+
     /**
      * Get the view / contents that represent the component.
      *
@@ -23,6 +23,6 @@ class SideNav extends Component
      */
     public function render()
     {
-        return view('components.dashboard.side-nav', compact(['keuangans']));
+        return view('components.head.tinymce-config');
     }
 }

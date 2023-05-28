@@ -31,4 +31,14 @@ class FrontController extends Controller
     {
         return view('front.coba');
     }
+    public function test()
+    {
+        return view('dashboard.test');
+    }
+    public function simpancatatan()
+    {
+        dd(request()->all());
+        $catatan = request()->catatan;
+        return $catatan;
+    }
 }
