@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\InventarisController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,13 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
             Route::post('/update', [CatatanController::class, 'update'])->name('dashboard.catatan.update');
             // Route::get('/edit/{id}', [CatatanController::class, 'edit'])->name('dashboard.catatan.edit');
             // Route::get('/hapus/{id}', [CatatanController::class, 'hapus'])->name('dashboard.catatan.hapus');
+        }
+    );
+
+    // Route Inventaris
+    Route::prefix('inventaris')->middleware(['auth'])->group(
+        function () {
+            Route::get('/', [InventarisController::class, 'index'])->name('dashboard.inventaris.index');
         }
     );
 });
