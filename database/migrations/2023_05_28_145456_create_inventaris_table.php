@@ -21,7 +21,7 @@ class CreateInventarisTable extends Migration
             $table->string('kondisi');
             $table->string('lokasi');
             $table->string('pemegang');
-            $table->string('keterangan');
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

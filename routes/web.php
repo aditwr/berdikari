@@ -57,6 +57,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::prefix('inventaris')->middleware(['auth'])->group(
         function () {
             Route::get('/', [InventarisController::class, 'index'])->name('dashboard.inventaris.index');
+            Route::get('/daftar-barang/{id}', [InventarisController::class, 'daftarbarang'])->name('dashboard.inventaris.daftar-barang');
         }
     );
 });

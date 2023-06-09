@@ -13,6 +13,6 @@
                 <a href="#" class="text-dark-primary hover:text-primary-700">Daftar Inventaris</a>
             </x-dashboard.breadcrumb>
         </div>
-        <livewire:dashboard.inventaris.index />
+        <livewire:dashboard.inventaris.index>
     </div>
 @endsection

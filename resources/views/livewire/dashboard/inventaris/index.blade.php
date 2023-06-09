@@ -157,7 +157,8 @@
                         </p>
                     </div>
                     <div class="flex justify-between mt-4">
-                        <button class="btn-primary">Lihat</button>
+                        <a href="{{ route('dashboard.inventaris.daftar-barang', $jenis->id) }}"
+                            class="btn-primary">Lihat</a>
                         <div class="flex gap-x-2">
                             <button type="button" wire:click="showEdit({{ $jenis->id }})"
                                 class="text-warning-700 bg-warning-200 btn-secondary-small" data-te-toggle="modal"

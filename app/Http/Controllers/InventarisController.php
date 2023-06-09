@@ -10,4 +10,8 @@ class InventarisController extends Controller
     {
         return view('dashboard.inventaris.index');
     }
+    public function daftarbarang($id)
+    {
+        return view('dashboard.inventaris.daftar-barang', compact('id'));
+    }
 }
