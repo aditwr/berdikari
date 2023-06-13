@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\PengelolaanWebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,14 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         function () {
             Route::get('/', [InventarisController::class, 'index'])->name('dashboard.inventaris.index');
             Route::get('/daftar-barang/{id}', [InventarisController::class, 'daftarbarang'])->name('dashboard.inventaris.daftar-barang');
+        }
+    );
+
+    // Route Pengelolaan Web
+    Route::prefix('web')->middleware(['auth'])->group(
+        function () {
+            Route::get('/header', [PengelolaanWebController::class, 'header'])->name('dashboard.pengelolaan-web.header.index');
+            Route::get('/kegiatan', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
         }
     );
 });

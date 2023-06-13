@@ -4,7 +4,7 @@
     {{-- Navbar --}}
     @include('front.partials.landing.navbar')
     {{-- Hero Section --}}
-    @include('front.partials.landing.hero')
+    <x-front.landing-page.hero />
     {{-- Activity Section --}}
     @include('front.partials.landing.activity')
     {{-- About Section --}}

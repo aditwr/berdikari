@@ -34,13 +34,7 @@
                     <h1
                         class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
                         Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
-                    <p class="mb-4 subheading-4 text-light-secondary">Selamat datang di Karangtaruna! Kami
-                        adalah
-                        sebuah
-                        organisasi
-                        pemuda
-                        yang bertujuan untuk memperkuat solidaritas dan keterlibatan masyarakat di
-                        lingkungan sekitar.</p>
+                    <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header1 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
                         <a href="#kegiatan">
                             <button type="button" class="btn-primary btn-responsive">
@@ -62,8 +56,13 @@
         </div>
         <div class="relative h-full flex items-center justify-center float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-item style="backface-visibility: hidden">
-            <img src="{{ asset('assets/images/hero-section/hero2.jpg') }}" alt="hero-image"
-                class="object-cover w-full h-full">
+            @if (file_exists(storage_path('app/public/foto-header/foto2.jpg')))
+                <img src="{{ asset('storage/foto-header/foto2.jpg') }}" alt="hero-image"
+                    class="object-cover w-full h-full">
+            @else
+                <img src="{{ asset('assets/images/hero-section/hero2.jpg') }}" alt="hero-image"
+                    class="object-cover w-full h-full">
+            @endif
             {{-- slider content --}}
             <div class="absolute z-[2] flex justify-center items-center left-0 top-0 h-[640px] md:h-[720px] w-full">
                 <div
@@ -75,13 +74,7 @@
                     <h1
                         class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
                         Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
-                    <p class="mb-4 subheading-4 text-light-secondary">Selamat datang di Karangtaruna! Kami
-                        adalah
-                        sebuah
-                        organisasi
-                        pemuda
-                        yang bertujuan untuk memperkuat solidaritas dan keterlibatan masyarakat di
-                        lingkungan sekitar.</p>
+                    <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header2 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
                         <button type="button" class="btn-primary btn-responsive">
                             Lihat Kegiatan Kami
@@ -99,8 +92,13 @@
         </div>
         <div class="relative h-full flex items-center justify-center float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-item style="backface-visibility: hidden">
-            <img src="{{ asset('assets/images/hero-section/hero3.jpg') }}" alt="hero-image"
-                class="object-cover w-full h-full">
+            @if (file_exists(storage_path('app/public/foto-header/foto3.jpg')))
+                <img src="{{ asset('storage/foto-header/foto3.jpg') }}" alt="hero-image"
+                    class="object-cover w-full h-full">
+            @else
+                <img src="{{ asset('assets/images/hero-section/hero3.jpg') }}" alt="hero-image"
+                    class="object-cover w-full h-full">
+            @endif
             {{-- slider content --}}
             <div class="absolute z-[2] flex justify-center items-center left-0 top-0 h-[640px] md:h-[720px] w-full">
                 <div
@@ -112,13 +110,7 @@
                     <h1
                         class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
                         Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
-                    <p class="mb-4 subheading-4 text-light-secondary">Selamat datang di Karangtaruna! Kami
-                        adalah
-                        sebuah
-                        organisasi
-                        pemuda
-                        yang bertujuan untuk memperkuat solidaritas dan keterlibatan masyarakat di
-                        lingkungan sekitar.</p>
+                    <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header3 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
                         <button type="button" class="btn-primary btn-responsive">
                             Lihat Kegiatan Kami
