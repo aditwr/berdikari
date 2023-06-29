@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'landingPage'])->name('landing-page');
 Route::get('/kegiatan', [FrontController::class, 'activity'])->name('landing-page.kegiatan');
+Route::get('/kegiatan/{id}', [FrontController::class, 'activityDetail'])->name('landing-page.kegiatan.baca');
 Route::get('/tulisan', [FrontController::class, 'article'])->name('landing-page.tulisan');
 Route::get('/tentang-kami', [FrontController::class, 'about'])->name('landing-page.tentang-kami');
 Route::get('/coba', [FrontController::class, 'coba'])->name('landing-page.kontak');
@@ -66,7 +67,32 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::prefix('web')->middleware(['auth'])->group(
         function () {
             Route::get('/header', [PengelolaanWebController::class, 'header'])->name('dashboard.pengelolaan-web.header.index');
-            Route::get('/kegiatan', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
+            Route::prefix('kegiatan')->group(function () {
+                Route::get('/', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
+                Route::get('/tambah', [PengelolaanWebController::class, 'kegiatanTambah'])->name('dashboard.pengelolaan-web.kegiatan.tambah');
+                Route::post('/simpan', [PengelolaanWebController::class, 'kegiatanSimpan'])->name('dashboard.pengelolaan-web.kegiatan.simpan');
+                Route::get('/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit');
+                Route::post('/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update');
+                Route::get('/baca/{id}', [PengelolaanWebController::class, 'kegiatanBaca'])->name('dashboard.pengelolaan-web.kegiatan.baca');
+
+                //     Route::get('/kegiatan', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
+                // Route::get('/kegiatan/tambah', [PengelolaanWebController::class, 'kegiatanTambah'])->name('dashboard.pengelolaan-web.kegiatan.tambah');
+                // Route::post('/kegiatan/simpan', [PengelolaanWebController::class, 'kegiatanSimpan'])->name('dashboard.pengelolaan-web.kegiatan.simpan');
+                // Route::get('/kegiatan/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit');
+                // Route::get('/kegiatan/baca/{id}', [PengelolaanWebController::class, 'kegiatanBaca'])->name('dashboard.pengelolaan-web.kegiatan.baca');
+                // Route::post('/kegiatan/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update');
+            });
+
+            Route::prefix('artikel')->group(
+                function () {
+                    Route::get('/', [PengelolaanWebController::class, 'artikel'])->name('dashboard.pengelolaan-web.artikel.index');
+                    Route::get('/tambah', [PengelolaanWebController::class, 'artikelTambah'])->name('dashboard.pengelolaan-web.artikel.tambah');
+                    Route::post('/simpan', [PengelolaanWebController::class, 'artikelSimpan'])->name('dashboard.pengelolaan-web.artikel.simpan');
+                    Route::get('/edit/{id}', [PengelolaanWebController::class, 'artikelEdit'])->name('dashboard.pengelolaan-web.artikel.edit');
+                    Route::post('/update', [PengelolaanWebController::class, 'artikelUpdate'])->name('dashboard.pengelolaan-web.artikel.update');
+                    Route::get('/baca/{id}', [PengelolaanWebController::class, 'artikelBaca'])->name('dashboard.pengelolaan-web.artikel.baca');
+                }
+            );
         }
     );
 });

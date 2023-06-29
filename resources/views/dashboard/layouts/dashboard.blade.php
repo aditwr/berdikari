@@ -18,7 +18,6 @@
 
     @stack('styles')
     @stack('scripts')
-
     {{-- Livewire Style & Js --}}
     @livewireStyles
 </head>
@@ -35,11 +34,13 @@
         </div>
     </main>
 
-    @livewireScripts
+
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
     {{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/vendor/alpine.js') }}"></script>
+    @livewireScripts
+    @stack('script_after')
 </body>
 
 </html>

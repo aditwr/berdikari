@@ -15,6 +15,16 @@ class CreateKegiatansTable extends Migration
     {
         Schema::create('kegiatans', function (Blueprint $table) {
             $table->id();
+            // judul kegiatan
+            $table->string('judul_kegiatan');
+            // gambar kegiatan
+            $table->string('gambar');
+            // penulis kegiatan
+            $table->string('penulis');
+            // deskripsi kegiatan (kemungkinan panjang)
+            $table->text('deskripsi');
+            // jumlah views
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }

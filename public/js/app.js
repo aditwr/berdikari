@@ -2100,19 +2100,19 @@ window.onload = function () {
         spaceBetween: 28
       },
       768: {
-        slidesPerView: 3,
-        spaceBetween: 12
+        slidesPerView: 2,
+        spaceBetween: 24
       },
       1024: {
-        slidesPerView: 4,
-        spaceBetween: 12
+        slidesPerView: 3,
+        spaceBetween: 24
       },
       1280: {
         slidesPerView: 4,
         spaceBetween: 24
       },
       1536: {
-        slidesPerView: 5,
+        slidesPerView: 4,
         spaceBetween: 24
       }
     }

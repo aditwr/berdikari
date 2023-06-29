@@ -10,223 +10,43 @@
 
 
         <!-- Slider main container -->
-        <div class="swiper w-full h-auto pb-10 mt-8">
+        <div class="w-full h-auto pb-10 mt-8 swiper">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
+                @foreach ($listKegiatan as $kegiatan)
+                    <!-- Slides -->
+                    <div class="flex justify-center px-4 swiper-slide sm:px-0">
+                        {{-- activity card --}}
+                        <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
+                            <div class="flex items-center justify-center w-full h-48 md:h-40">
+                                <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt=""
+                                    class="object-cover w-full h-full">
+                            </div>
+                            <div class="px-4 pt-2 pb-4">
+                                <h3 class="text-base font-semibold text-dark-primary">
+                                    {{ $kegiatan->judul_kegiatan }}
+                                </h3>
+                                <span
+                                    class="text-xs text-dark-secondary">{{ $kegiatan->created_at->format('l, d M Y') }}</span>
 
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
+                            </div>
+                            <div class="">
+                                <a href="{{ route('landing-page.kegiatan.baca', $kegiatan->id) }}"
+                                    class="block text-center w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                                    Lihat Detail
+                                </a>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Slides -->
-                <div class="swiper-slide flex justify-center px-4 sm:px-0">
-                    {{-- activity card --}}
-                    <div class="w-full h-auto overflow-hidden bg-white rounded-md shadow-lg">
-                        <div class="flex items-center justify-center w-full h-48 md:h-40">
-                            <img src="{{ asset('assets/images/hero-section/hero1.jpg') }}" alt=""
-                                class="object-cover w-full h-full">
-                        </div>
-                        <div class="px-4 pt-2 pb-4">
-                            <h3 class="text-base font-semibold text-dark-primary">Ulang Tahun Karangtaruna 2023
-                            </h3>
-                            <span class="text-xs text-dark-secondary">23 Januari 2023</span>
-
-                        </div>
-                        <div class="">
-                            <button type="button"
-                                class="block w-full bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                                Lihat Detail
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <!-- If we need pagination -->
             <div class="swiper-pagination"></div>
 
             <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev invisible sm:visible"></div>
-            <div class="swiper-button-next invisible sm:visible"></div>
+            <div class="invisible swiper-button-prev sm:visible"></div>
+            <div class="invisible swiper-button-next sm:visible"></div>
         </div>
 
 

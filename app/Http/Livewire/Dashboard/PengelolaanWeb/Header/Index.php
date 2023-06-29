@@ -48,7 +48,7 @@ class Index extends Component
         ]);
         $this->foto1->storeAs('foto-header', 'foto1.jpg', 'public');
         // refresh component
-        redirect()->route('dashboard.pengelolaan-web.header');
+        redirect()->route('dashboard.pengelolaan-web.header.index');
     }
     public function storeFoto2()
     {
@@ -57,7 +57,7 @@ class Index extends Component
         ]);
         $this->foto2->storeAs('foto-header', 'foto2.jpg', 'public');
         // refresh component
-        redirect()->route('dashboard.pengelolaan-web.header');
+        redirect()->route('dashboard.pengelolaan-web.header.index');
     }
     public function storeFoto3()
     {
@@ -66,14 +66,14 @@ class Index extends Component
         ]);
         $this->foto3->storeAs('foto-header', 'foto3.jpg', 'public');
         // refresh component
-        redirect()->route('dashboard.pengelolaan-web.header');
+        redirect()->route('dashboard.pengelolaan-web.header.index');
     }
     public function resetFoto($nama_foto)
     {
         if (file_exists(storage_path('app/public/foto-header/' . $nama_foto . '.jpg'))) {
             unlink(storage_path('app/public/foto-header/' . $nama_foto . '.jpg'));
         }
-        redirect()->route('dashboard.pengelolaan-web.header');
+        redirect()->route('dashboard.pengelolaan-web.header.index');
     }
     public function getTulisanHeader()
     {

@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     public function landingPage()
     {
-        return view('front.landing-page');
+        // kegiatan
+        $listKegiatan = Kegiatan::latest()->take(12)->get();
+        return view('front.landing-page', compact(['listKegiatan']));
     }
 
     public function activity()
     {
         return view('front.activity');
+    }
+    public function activityDetail($id)
+    {
+        $kegiatan = Kegiatan::find($id);
+        $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
+        return view('front.partials.activity.activity-detail', compact(['kegiatan', 'kegiatanTerbaru']));
     }
 
     public function article()
