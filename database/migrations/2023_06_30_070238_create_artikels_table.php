@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKategoriArtikelsTable extends Migration
+class CreateArtikelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateKategoriArtikelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kategori_artikels', function (Blueprint $table) {
+        Schema::create('artikels', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kategori_id')->constrained('kategori_artikels')->onDelete('cascade');
+            $table->string('judul');
             $table->string('slug');
-            $table->string('nama');
+            $table->string('gambar');
+            $table->string('penulis');
+            $table->text('isi');
+            $table->integer('views')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ class CreateKategoriArtikelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_artikels');
+        Schema::dropIfExists('artikels');
     }
 }

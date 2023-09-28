@@ -4,8 +4,7 @@
     {{-- Navbar --}}
     @include('front.partials.landing.navbar')
     {{-- Konten --}}
-    @include('front.partials.activity.activity')
-    {{-- About Section --}}
-    {{-- Footer --}}
-    @include('front.partials.landing.footer')
-@endsection
+    <livewire:front.kegiatan.index>
+        {{-- Footer --}}
+        @include('front.partials.landing.footer')
+    @endsection

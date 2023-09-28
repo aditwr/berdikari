@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artikel;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,8 @@ class FrontController extends Controller
     {
         // kegiatan
         $listKegiatan = Kegiatan::latest()->take(12)->get();
-        return view('front.landing-page', compact(['listKegiatan']));
+        $listArtikel = Artikel::latest()->take(6)->get();
+        return view('front.landing-page', compact(['listKegiatan', 'listArtikel']));
     }
 
     public function activity()
@@ -29,6 +31,13 @@ class FrontController extends Controller
     public function article()
     {
         return view('front.article');
+    }
+
+    public function articleDetail($id)
+    {
+        $artikel = Artikel::find($id);
+        $artikelTerbaru = Artikel::latest()->take(5)->get();
+        return view('front.partials.article.article-detail', compact(['artikel', 'artikelTerbaru']));
     }
 
     public function about()

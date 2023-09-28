@@ -4,7 +4,7 @@
     {{-- Navbar --}}
     @include('front.partials.landing.navbar')
     {{-- Konten --}}
-    @include('front.partials.article.article')
-    {{-- Footer --}}
-    @include('front.partials.landing.footer')
-@endsection
+    <livewire:front.artikel.index>
+        {{-- Footer --}}
+        @include('front.partials.landing.footer')
+    @endsection

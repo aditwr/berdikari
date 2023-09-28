@@ -14,7 +14,7 @@
 
     @stack('styles')
     @stack('scripts')
-
+    @livewireStyles()
 </head>
 
 <body class="font-default text-slate-900 scroll-smooth">
@@ -24,6 +24,7 @@
     {{-- Scripts --}}
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/vendor/alpine.js') }}"></script>
+    @livewireScripts()
 </body>
 
 </html>
