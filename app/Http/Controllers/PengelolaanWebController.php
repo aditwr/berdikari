@@ -173,4 +173,9 @@ class PengelolaanWebController extends Controller
         ]);
         return redirect()->route('dashboard.pengelolaan-web.artikel.index');
     }
+
+    public function gallery()
+    {
+        return view('dashboard.pengelolaan-web.gallery.index');
+    }
 }

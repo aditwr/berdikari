@@ -94,6 +94,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
                     Route::get('/baca/{id}', [PengelolaanWebController::class, 'artikelBaca'])->name('dashboard.pengelolaan-web.artikel.baca');
                 }
             );
+            Route::prefix('gallery')->group(
+                function () {
+                    Route::get('/', [PengelolaanWebController::class, 'gallery'])->name('dashboard.pengelolaan-web.gallery.index');
+                }
+            );
         }
     );
 });
