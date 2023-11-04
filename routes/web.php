@@ -7,6 +7,7 @@ use App\Http\Controllers\CatatanController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\PengelolaanWebController;
 use Illuminate\Support\Facades\Route;
+use App\Helpers\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/user-helper', function () {
+    return User::getUsername(1);
+});
 
 Route::get('/', [FrontController::class, 'landingPage'])->name('landing-page');
 Route::get('/kegiatan', [FrontController::class, 'activity'])->name('landing-page.kegiatan');

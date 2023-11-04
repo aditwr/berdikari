@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artikel;
+use App\Models\Gallery;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class FrontController extends Controller
         // kegiatan
         $listKegiatan = Kegiatan::latest()->take(12)->get();
         $listArtikel = Artikel::latest()->take(6)->get();
-        return view('front.landing-page', compact(['listKegiatan', 'listArtikel']));
+        $listGallery = Gallery::where('tampilkan_di_beranda', 1)->latest()->take(6)->get();
+        return view('front.landing-page', compact(['listKegiatan', 'listArtikel', 'listGallery']));
     }
-
     public function activity()
     {
         return view('front.activity');

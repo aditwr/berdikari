@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard\PengelolaanWeb\Galeri;
 
+use App\Helpers\CollectionPagination;
+use App\Models\Gallery;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -16,23 +18,16 @@ class Index extends Component
 
     public function mount()
     {
-        $this->daftarFoto = collect(Storage::disk('public')->files('galeri'));
     }
 
-    public $foto, $tampilkanTombolUpload = true, $tampilkanMenuUpload = false, $daftarFoto;
+    public $foto, $judul_foto, $deskripsi_foto, $hapusId;
+    public $tampilkanTombolUpload = true, $tampilkanMenuUpload = false;
     public $notification = ['status' => false, 'title' => '', 'message' => ''];
 
     public function munculkanMenuUpload()
     {
         $this->tampilkanMenuUpload = !$this->tampilkanMenuUpload;
         $this->tampilkanTombolUpload = !$this->tampilkanTombolUpload;
-    }
-
-    public function fotoUpdated()
-    {
-        $this->validate([
-            'foto' => 'required|image|max:6000', // 1MB Max
-        ]);
     }
 
     public function priviewFoto($url)
@@ -42,22 +37,78 @@ class Index extends Component
 
     public function upload()
     {
+        $this->validate([
+            'foto' => 'required|image|max:6000', // 1MB Max
+            'judul_foto' => 'required|max:255',
+            'deskripsi_foto' => 'required',
+        ]);
 
+        $namaFoto = Str::slug($this->judul_foto) . '-' . rand(0, 1000) . '.' . $this->foto->getClientOriginalExtension();
+        $this->foto->storeAs('public/gallery', $namaFoto);
+        $data = Gallery::create([
+            'judul' => $this->judul_foto,
+            'deskripsi' => $this->deskripsi_foto,
+            'url_foto' => $namaFoto,
+        ]);
 
-        $this->foto->store('galeri', 'public');
-        $this->reset('foto');
         $this->munculkanMenuUpload();
         $this->notification = [
             'status' => true,
-            'title' => 'Upload berhasil!',
-            'message' => 'Foto berhasil tersimpan di galeri. Foto akan ditampilkan di halaman galeri.',
+            'title' => 'Berhasil',
+            'message' => 'Foto <b>' . $data->judul . '</b> berhasil tersimpan di galeri',
         ];
+    }
+    public function tampilkanFoto($id)
+    {
+        $jumlah_foto_tampil = Gallery::where('tampilkan_di_beranda', true)->count();
+        if ($jumlah_foto_tampil >= 6) {
+            $this->notification = [
+                'status' => false,
+                'title' => 'Gagal',
+                'message' => 'Foto yang ditampilkan di halaman utama tidak boleh lebih dari 6 foto',
+            ];
+            return;
+        }
+        $data = Gallery::findOrFail($id);
+        // update column
+        $data->update([
+            'tampilkan_di_beranda' => true,
+        ]);
+        $this->notification = [
+            'status' => true,
+            'title' => 'Berhasil',
+            'message' => 'Foto <b>' . $data->judul . '</b> Akan ditampilkan di halaman utama',
+        ];
+    }
+    public function sembunyikanFoto($id)
+    {
+        $data = Gallery::findOrFail($id);
+        // update column
+        $data->update([
+            'tampilkan_di_beranda' => false,
+        ]);
+        $this->notification = [
+            'status' => true,
+            'title' => 'Berhasil',
+            'message' => 'Foto <b>' . $data->judul . '</b> Akan disembunyikan di halaman utama',
+        ];
+    }
 
-        $this->daftarFoto = Storage::disk('public')->files('galeri');
+    public function hapusFoto()
+    {
+        $data = Gallery::findOrFail($this->hapusId);
+        Storage::delete('public/gallery/' . $data->url_foto);
+        $data->delete();
+        $this->notification = [
+            'status' => true,
+            'title' => 'Berhasil',
+            'message' => 'Foto <b>' . $data->judul . '</b> berhasil dihapus dari galeri',
+        ];
     }
 
     public function render()
     {
-        return view('livewire.dashboard.pengelolaan-web.galeri.index');
+        $listFoto = Gallery::latest()->paginate(4);
+        return view('livewire.dashboard.pengelolaan-web.galeri.index', compact('listFoto'));
     }
 }
