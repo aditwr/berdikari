@@ -46,7 +46,9 @@
         </div>
     </div>
     <div class="mb-6">
-        <livewire:dashboard.keuangan.pemasukan.create>
+        @can('buat-kategori-keuangan')
+            <livewire:dashboard.keuangan.pemasukan.create>
+            @endcan
     </div>
     <livewire:dashboard.keuangan.pemasukan.table>
 </div>

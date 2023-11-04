@@ -46,7 +46,9 @@
         </div>
     </div>
     <div class="mb-6">
-        <livewire:dashboard.keuangan.pengeluaran.create>
+        @can('buat-pengeluaran')
+            <livewire:dashboard.keuangan.pengeluaran.create>
+            @endcan
     </div>
     <livewire:dashboard.keuangan.pengeluaran.table>
 </div>

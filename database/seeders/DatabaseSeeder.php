@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             KeuanganSeeder::class,
             HeaderSeeder::class,
             KategoriArtikelSeeder::class,
+            RolePermissionSeeder::class,
         ]);
 
         User::create([

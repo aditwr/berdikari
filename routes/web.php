@@ -80,13 +80,6 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
                 Route::get('/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit');
                 Route::post('/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update');
                 Route::get('/baca/{id}', [PengelolaanWebController::class, 'kegiatanBaca'])->name('dashboard.pengelolaan-web.kegiatan.baca');
-
-                //     Route::get('/kegiatan', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
-                // Route::get('/kegiatan/tambah', [PengelolaanWebController::class, 'kegiatanTambah'])->name('dashboard.pengelolaan-web.kegiatan.tambah');
-                // Route::post('/kegiatan/simpan', [PengelolaanWebController::class, 'kegiatanSimpan'])->name('dashboard.pengelolaan-web.kegiatan.simpan');
-                // Route::get('/kegiatan/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit');
-                // Route::get('/kegiatan/baca/{id}', [PengelolaanWebController::class, 'kegiatanBaca'])->name('dashboard.pengelolaan-web.kegiatan.baca');
-                // Route::post('/kegiatan/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update');
             });
 
             Route::prefix('artikel')->group(
