@@ -53,7 +53,7 @@
                 @endif
             </div>
             <div class="">
-                <form action="{{ route('dashboard.catatan.update') }}" method="post">
+                <form action="@can('edit-catatan') {{ route('dashboard.catatan.update') }} @endcan" method="post">
                     @csrf
                     {{-- input hidden for all parameters --}}
                     <input type="hidden" name="idCatatan" value="{{ $catatan->id }}">
@@ -63,7 +63,8 @@
                             <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Judul
                                 Catatan</label>
                             <input type="text" name="judulCatatan" id="judul-catatan" value="{{ $catatan->judul }}"
-                                class="block w-full transition-all rounded border-neutral-300">
+                                class="block w-full transition-all rounded border-neutral-300"
+                                @if (!auth()->user()->can('edit-catatan')) readonly @endif>
                             @error('judulCatatan')
                                 <span class="text-xs text-danger-600">{{ $message }}</span>
                             @enderror
@@ -83,11 +84,13 @@
                         @error('isiCatatan')
                             <span class="text-xs text-danger-600">{{ $message }}</span>
                         @enderror
-                        <textarea name="isiCatatan" id="catatan" cols="30" class="text-sm h-[700px] md:h-[800px]">{{ $catatan->isi }}</textarea>
+                        <textarea name="isiCatatan" id="catatan" cols="30" class="text-sm h-[700px] md:h-[800px]" readonly>{{ $catatan->isi }}</textarea>
                     </div>
                     <div class="flex justify-between mt-4">
                         <a href="{{ route('dashboard.catatan.index') }}" class="btn-secondary">Kembali</a>
-                        <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                        @can('edit-catatan')
+                            <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                        @endcan
                     </div>
                 </form>
             </div>

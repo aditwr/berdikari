@@ -52,7 +52,7 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
         function () {
             Route::get('/jenis', [CatatanController::class, 'jenis'])->name('dashboard.catatan.jenis');
             Route::get('/catatan', [CatatanController::class, 'index'])->name('dashboard.catatan.index');
-            Route::get('/tambah', [CatatanController::class, 'tambah'])->name('dashboard.catatan.tambah');
+            Route::get('/tambah', [CatatanController::class, 'tambah'])->name('dashboard.catatan.tambah')->middleware(['can:buat-catatan']);
             Route::post('/simpan', [CatatanController::class, 'simpan'])->name('dashboard.catatan.simpan');
             Route::get('/baca/{id}', [CatatanController::class, 'baca'])->name('dashboard.catatan.baca');
             Route::post('/update', [CatatanController::class, 'update'])->name('dashboard.catatan.update');
@@ -72,23 +72,27 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     // Route Pengelolaan Web
     Route::prefix('web')->middleware(['auth'])->group(
         function () {
-            Route::get('/header', [PengelolaanWebController::class, 'header'])->name('dashboard.pengelolaan-web.header.index');
+            Route::get('/header', [PengelolaanWebController::class, 'header'])->name('dashboard.pengelolaan-web.header.index')->middleware(['can:edit-header']);
             Route::prefix('kegiatan')->group(function () {
                 Route::get('/', [PengelolaanWebController::class, 'kegiatan'])->name('dashboard.pengelolaan-web.kegiatan.index');
-                Route::get('/tambah', [PengelolaanWebController::class, 'kegiatanTambah'])->name('dashboard.pengelolaan-web.kegiatan.tambah');
-                Route::post('/simpan', [PengelolaanWebController::class, 'kegiatanSimpan'])->name('dashboard.pengelolaan-web.kegiatan.simpan');
-                Route::get('/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit');
-                Route::post('/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update');
+                Route::get('/tambah', [PengelolaanWebController::class, 'kegiatanTambah'])->name('dashboard.pengelolaan-web.kegiatan.tambah')->middleware(['can:buat-artikel-kegiatan']);
+                Route::post('/simpan', [PengelolaanWebController::class, 'kegiatanSimpan'])->name('dashboard.pengelolaan-web.kegiatan.simpan')->middleware(['can:buat-artikel-kegiatan']);
+                Route::get('/edit/{id}', [PengelolaanWebController::class, 'kegiatanEdit'])->name('dashboard.pengelolaan-web.kegiatan.edit')->middleware(['can:edit-artikel-kegiatan']);
+                Route::post('/update', [PengelolaanWebController::class, 'kegiatanUpdate'])->name('dashboard.pengelolaan-web.kegiatan.update')->middleware(['can:edit-artikel-kegiatan']);
                 Route::get('/baca/{id}', [PengelolaanWebController::class, 'kegiatanBaca'])->name('dashboard.pengelolaan-web.kegiatan.baca');
             });
 
             Route::prefix('artikel')->group(
                 function () {
                     Route::get('/', [PengelolaanWebController::class, 'artikel'])->name('dashboard.pengelolaan-web.artikel.index');
-                    Route::get('/tambah', [PengelolaanWebController::class, 'artikelTambah'])->name('dashboard.pengelolaan-web.artikel.tambah');
-                    Route::post('/simpan', [PengelolaanWebController::class, 'artikelSimpan'])->name('dashboard.pengelolaan-web.artikel.simpan');
-                    Route::get('/edit/{id}', [PengelolaanWebController::class, 'artikelEdit'])->name('dashboard.pengelolaan-web.artikel.edit');
-                    Route::post('/update', [PengelolaanWebController::class, 'artikelUpdate'])->name('dashboard.pengelolaan-web.artikel.update');
+                    Route::group(['middleware' => ['can:buat-artikel']], function () {
+                        Route::get('/tambah', [PengelolaanWebController::class, 'artikelTambah'])->name('dashboard.pengelolaan-web.artikel.tambah');
+                        Route::post('/simpan', [PengelolaanWebController::class, 'artikelSimpan'])->name('dashboard.pengelolaan-web.artikel.simpan');
+                    });
+                    Route::group(['middleware' => ['can:edit-artikel']], function () {
+                        Route::get('/edit/{id}', [PengelolaanWebController::class, 'artikelEdit'])->name('dashboard.pengelolaan-web.artikel.edit');
+                        Route::post('/update', [PengelolaanWebController::class, 'artikelUpdate'])->name('dashboard.pengelolaan-web.artikel.update');
+                    });
                     Route::get('/baca/{id}', [PengelolaanWebController::class, 'artikelBaca'])->name('dashboard.pengelolaan-web.artikel.baca');
                 }
             );

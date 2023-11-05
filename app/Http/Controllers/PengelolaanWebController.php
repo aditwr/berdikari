@@ -11,7 +11,11 @@ use App\Models\KategoriArtikel;
 class PengelolaanWebController extends Controller
 {
     public function header()
-    {
+    {   
+        if(!auth()->user()->can('edit-header')){
+            // unauthorized user
+            abort(403);
+        }
         return view('dashboard.pengelolaan-web.header.index');
     }
     public function kegiatan()

@@ -11,7 +11,10 @@
                                 <th scope="col" class="w-32 py-3 pl-2">Jumlah Catatan</th>
                                 <th scope="col" class="w-32 py-3 pl-2">Tanggal dibuat</th>
                                 <th scope="col" class="px-2 py-3">Keterangan</th>
-                                <th scope="col" class="w-32 px-2 py-3 text-center">Aksi</th>
+                                @if (auth()->user()->can('edit-kategori-catatan') ||
+                                        auth()->user()->can('hapus-kategori-catatan'))
+                                    <th scope="col" class="w-32 px-2 py-3 text-center">Aksi</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -38,8 +41,8 @@
                                                     data-te-toggle="modal"
                                                     data-te-target="#keteranganjenisCatatan{{ $jenisCatatan->id }}"
                                                     data-te-ripple-init data-te-ripple-color="light">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px"
-                                                        y="0px" width="24" height="24" fill="currentColor"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                        width="24" height="24" fill="currentColor"
                                                         viewBox="0 0 24 24">
                                                         <path
                                                             d="M12,2C6.477,2,2,6.477,2,12s4.477,10,10,10s10-4.477,10-10S17.523,2,12,2z M13,17h-2v-6h2V17z M13,9h-2V7h2V9z">
@@ -90,52 +93,52 @@
                                             </div>
                                         </div>
                                         <td class="w-32 py-2 pl-2 text-sm whitespace-nowrap ">
-                                            <button type="button" wire:click="setEdit({{ $jenisCatatan }})"
-                                                class="text-warning-700 bg-warning-200 btn-secondary-small"
-                                                data-te-toggle="modal" data-te-target="#editjenisCatatanModal"
-                                                data-te-ripple-init data-te-ripple-color="light">
-                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                                    width="24" height="24"
-                                                    class="p-1 rounded-full bg-warning-300" viewBox="0,0,256,256"
-                                                    style="fill:#000000;">
-                                                    <g fill="#7e5e00" fill-rule="nonzero" stroke="none"
-                                                        stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
-                                                        stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                                                        font-family="none" font-weight="none" font-size="none"
-                                                        text-anchor="none" style="mix-blend-mode: normal">
-                                                        <g transform="scale(10.66667,10.66667)">
-                                                            <path
-                                                                d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
-                                                            </path>
+                                            @can('edit-kategori-catatan')
+                                                <button type="button" wire:click="setEdit({{ $jenisCatatan }})"
+                                                    class="text-warning-700 bg-warning-200 btn-secondary-small"
+                                                    data-te-toggle="modal" data-te-target="#editjenisCatatanModal"
+                                                    data-te-ripple-init data-te-ripple-color="light">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                        height="24" class="p-1 rounded-full bg-warning-300"
+                                                        viewBox="0,0,256,256" style="fill:#000000;">
+                                                        <g fill="#7e5e00" fill-rule="nonzero" stroke="none"
+                                                            stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
+                                                            stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                                                            font-family="none" font-weight="none" font-size="none"
+                                                            text-anchor="none" style="mix-blend-mode: normal">
+                                                            <g transform="scale(10.66667,10.66667)">
+                                                                <path
+                                                                    d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
+                                                                </path>
+                                                            </g>
                                                         </g>
-                                                    </g>
-                                                </svg>
-                                            </button>
-                                            <button type="button" class="bg-danger-200 btn-secondary-small"
-                                                wire:click="$set('deleteId', {{ $jenisCatatan->id }})"
-                                                data-te-toggle="modal"
-                                                data-te-target="#deletejenisCatatanModal{{ $jenisCatatan->id }}"
-                                                data-te-ripple-init data-te-ripple-color="light">
-                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                                    width="24" height="24"
-                                                    class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
-                                                    style="fill:#000000;">
-                                                    <g fill="#850000" fill-rule="nonzero" stroke="none"
-                                                        stroke-width="1" stroke-linecap="butt"
-                                                        stroke-linejoin="miter" stroke-miterlimit="10"
-                                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                        font-weight="none" font-size="none" text-anchor="none"
-                                                        style="mix-blend-mode: normal">
-                                                        <g transform="scale(10.66667,10.66667)">
-                                                            <path
-                                                                d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
-                                                            </path>
+                                                    </svg>
+                                                </button>
+                                            @endcan
+                                            @can('hapus-kategori-catatan')
+                                                <button type="button" class="bg-danger-200 btn-secondary-small"
+                                                    wire:click="$set('deleteId', {{ $jenisCatatan->id }})"
+                                                    data-te-toggle="modal"
+                                                    data-te-target="#deletejenisCatatanModal{{ $jenisCatatan->id }}"
+                                                    data-te-ripple-init data-te-ripple-color="light">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                        height="24" class="p-1 rounded-full bg-danger-300"
+                                                        viewBox="0,0,256,256" style="fill:#000000;">
+                                                        <g fill="#850000" fill-rule="nonzero" stroke="none"
+                                                            stroke-width="1" stroke-linecap="butt"
+                                                            stroke-linejoin="miter" stroke-miterlimit="10"
+                                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                            font-weight="none" font-size="none" text-anchor="none"
+                                                            style="mix-blend-mode: normal">
+                                                            <g transform="scale(10.66667,10.66667)">
+                                                                <path
+                                                                    d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
+                                                                </path>
+                                                            </g>
                                                         </g>
-                                                    </g>
-                                                </svg>
-                                            </button>
-
-
+                                                    </svg>
+                                                </button>
+                                            @endcan
                                         </td>
                                         {{-- delete confirm modal --}}
                                         <div data-te-modal-init wire:ignore

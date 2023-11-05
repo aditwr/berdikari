@@ -7,9 +7,11 @@
         </x-dashboard.breadcrumb>
     </div>
     <div class="my-2">
-        <a href="{{ route('dashboard.pengelolaan-web.artikel.tambah') }}" class="btn-primary">
-            Buat Artikel
-        </a>
+        @can('buat-artikel')
+            <a href="{{ route('dashboard.pengelolaan-web.artikel.tambah') }}" class="btn-primary">
+                Buat Artikel
+            </a>
+        @endcan
     </div>
     <div class="mt-8">
         <div class="flex flex-col items-baseline justify-between mb-8 lg:flex-row lg:items-end gap-x-8 gap-y-4">
@@ -188,44 +190,49 @@
                                 <a href="{{ route('dashboard.pengelolaan-web.artikel.baca', $artikel->id) }}"
                                     class="btn-primary">Lihat Detail</a>
                                 <div class="flex gap-x-2">
-                                    <a href="{{ route('dashboard.pengelolaan-web.artikel.edit', $artikel->id) }}"
-                                        class="text-warning-700 bg-warning-200 btn-secondary-small">
-                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                            width="24" height="24" class="p-1 rounded-full bg-warning-300"
-                                            viewBox="0,0,256,256" style="fill:#000000;">
-                                            <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                                stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                                stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                font-weight="none" font-size="none" text-anchor="none"
-                                                style="mix-blend-mode: normal">
-                                                <g transform="scale(10.66667,10.66667)">
-                                                    <path
-                                                        d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
-                                                    </path>
+                                    @can('edit-artikel')
+                                        <a href="{{ route('dashboard.pengelolaan-web.artikel.edit', $artikel->id) }}"
+                                            class="text-warning-700 bg-warning-200 btn-secondary-small">
+                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                height="24" class="p-1 rounded-full bg-warning-300"
+                                                viewBox="0,0,256,256" style="fill:#000000;">
+                                                <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                                    stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                                    stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                    font-weight="none" font-size="none" text-anchor="none"
+                                                    style="mix-blend-mode: normal">
+                                                    <g transform="scale(10.66667,10.66667)">
+                                                        <path
+                                                            d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
+                                                        </path>
+                                                    </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                    </a>
-                                    <button type="button" wire:click="$set('deleteId', {{ $artikel->id }})"
-                                        class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
-                                        data-te-target="#modalDeleteartikel{{ $artikel->id }}" data-te-ripple-init
-                                        data-te-ripple-color="light">
-                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                            width="24" height="24" class="p-1 rounded-full bg-danger-300"
-                                            viewBox="0,0,256,256" style="fill:#000000;">
-                                            <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                                stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                                stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                font-weight="none" font-size="none" text-anchor="none"
-                                                style="mix-blend-mode: normal">
-                                                <g transform="scale(10.66667,10.66667)">
-                                                    <path
-                                                        d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
-                                                    </path>
+                                            </svg>
+                                        </a>
+                                    @endcan
+                                    {{-- delete button --}}
+                                    @can('hapus-artikel')
+                                        <button type="button" wire:click="$set('deleteId', {{ $artikel->id }})"
+                                            class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
+                                            data-te-target="#modalDeleteartikel{{ $artikel->id }}" data-te-ripple-init
+                                            data-te-ripple-color="light">
+                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                height="24" class="p-1 rounded-full bg-danger-300"
+                                                viewBox="0,0,256,256" style="fill:#000000;">
+                                                <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                                    stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                                    stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                    font-weight="none" font-size="none" text-anchor="none"
+                                                    style="mix-blend-mode: normal">
+                                                    <g transform="scale(10.66667,10.66667)">
+                                                        <path
+                                                            d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
+                                                        </path>
+                                                    </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                    </button>
+                                            </svg>
+                                        </button>
+                                    @endcan
                                     {{-- delete confirm modal --}}
                                     <div data-te-modal-init wire:ignore
                                         class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"

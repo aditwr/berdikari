@@ -1,11 +1,13 @@
 <div class="w-full">
     <div class="flex flex-col items-baseline mb-3 gap-y-4">
         <h3 class="heading-5 text-dark-primary">Daftar Inventaris</h3>
-        @if (!$showCreateForm)
-            <div class="">
-                <button class="btn-primary" wire:click="showCreate">Buat Inventaris Baru</button>
-            </div>
-        @endif
+        @can('buat-kategori-inventaris')
+            @if (!$showCreateForm)
+                <div class="">
+                    <button class="btn-primary" wire:click="showCreate">Buat Inventaris Baru</button>
+                </div>
+            @endif
+        @endcan
     </div>
     {{-- toast --}}
     @if ($notification['status'])
@@ -147,9 +149,11 @@
                     class="flex flex-col justify-between rounded-lg bg-white transition-all p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
                     <div class="">
                         <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                            {{-- nama kategori inventaris --}}
                             {{ $jenis->nama }}
                         </h5>
                         <p class="text-sm text-neutral-600 dark:text-neutral-200">
+                            {{-- keterangan --}}
                             {{ $jenis->keterangan }}
                         </p>
                         <p class="mt-1 text-sm">
@@ -160,46 +164,51 @@
                         <a href="{{ route('dashboard.inventaris.daftar-barang', $jenis->id) }}"
                             class="btn-primary">Lihat</a>
                         <div class="flex gap-x-2">
-                            <button type="button" wire:click="showEdit({{ $jenis->id }})"
-                                class="text-warning-700 bg-warning-200 btn-secondary-small" data-te-toggle="modal"
-                                data-te-target="#editModalPengeluaran" data-te-ripple-init
-                                data-te-ripple-color="light">
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
-                                    height="24" class="p-1 rounded-full bg-warning-300" viewBox="0,0,256,256"
-                                    style="fill:#000000;">
-                                    <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                        stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                        font-weight="none" font-size="none" text-anchor="none"
-                                        style="mix-blend-mode: normal">
-                                        <g transform="scale(10.66667,10.66667)">
-                                            <path
-                                                d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
-                                            </path>
+                            @can('edit-kategori-inventaris')
+                                <button type="button" wire:click="showEdit({{ $jenis->id }})"
+                                    class="text-warning-700 bg-warning-200 btn-secondary-small" data-te-toggle="modal"
+                                    data-te-target="#editModalPengeluaran" data-te-ripple-init
+                                    data-te-ripple-color="light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
+                                        class="p-1 rounded-full bg-warning-300" viewBox="0,0,256,256"
+                                        style="fill:#000000;">
+                                        <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                            stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                            font-weight="none" font-size="none" text-anchor="none"
+                                            style="mix-blend-mode: normal">
+                                            <g transform="scale(10.66667,10.66667)">
+                                                <path
+                                                    d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
+                                                </path>
+                                            </g>
                                         </g>
-                                    </g>
-                                </svg>
-                            </button>
-                            <button type="button" wire:click="$set('deleteId', {{ $jenis->id }})"
-                                class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
-                                data-te-target="#confirmDeleteModal{{ $jenis->id }}" data-te-ripple-init
-                                data-te-ripple-color="light">
-                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
-                                    height="24" class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
-                                    style="fill:#000000;">
-                                    <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                        stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                        font-weight="none" font-size="none" text-anchor="none"
-                                        style="mix-blend-mode: normal">
-                                        <g transform="scale(10.66667,10.66667)">
-                                            <path
-                                                d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
-                                            </path>
+                                    </svg>
+                                </button>
+                            @endcan
+                            {{-- delete button --}}
+                            @can('hapus-kategori-inventaris')
+                                <button type="button" wire:click="$set('deleteId', {{ $jenis->id }})"
+                                    class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
+                                    data-te-target="#confirmDeleteModal{{ $jenis->id }}" data-te-ripple-init
+                                    data-te-ripple-color="light">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
+                                        class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
+                                        style="fill:#000000;">
+                                        <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                            stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                            font-weight="none" font-size="none" text-anchor="none"
+                                            style="mix-blend-mode: normal">
+                                            <g transform="scale(10.66667,10.66667)">
+                                                <path
+                                                    d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
+                                                </path>
+                                            </g>
                                         </g>
-                                    </g>
-                                </svg>
-                            </button>
+                                    </svg>
+                                </button>
+                            @endcan
                         </div>
 
                         {{-- delete modal --}}

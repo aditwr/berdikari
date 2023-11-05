@@ -156,8 +156,8 @@
                                         <td class="flex w-64 py-2 pl-2 text-sm gap-x-3 whitespace-nowrap">
                                             <a href="{{ route('dashboard.catatan.baca', $Catatan->id) }}"
                                                 class="flex items-center gap-x-2 text-primary-800 bg-primary-200 btn-secondary-small">
-                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                                    width="24" height="24"
+                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                    height="24"
                                                     class="inline-block p-1 rounded-full bg-primary-400"
                                                     viewBox="0,0,256,256" style="fill:#000000;">
                                                     <g fill="#fff" fill-rule="nonzero" stroke="none"
@@ -174,31 +174,30 @@
                                                     </g>
                                                 </svg> <span class="">Baca</span>
                                             </a>
-                                            <button type="button" class="bg-danger-200 btn-secondary-small"
-                                                wire:click="$set('deleteId', {{ $Catatan->id }})"
-                                                data-te-toggle="modal"
-                                                data-te-target="#deleteCatatanModal{{ $Catatan->id }}"
-                                                data-te-ripple-init data-te-ripple-color="light">
-                                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                                                    width="24" height="24"
-                                                    class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
-                                                    style="fill:#000000;">
-                                                    <g fill="#850000" fill-rule="nonzero" stroke="none"
-                                                        stroke-width="1" stroke-linecap="butt"
-                                                        stroke-linejoin="miter" stroke-miterlimit="10"
-                                                        stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                                        font-weight="none" font-size="none" text-anchor="none"
-                                                        style="mix-blend-mode: normal">
-                                                        <g transform="scale(10.66667,10.66667)">
-                                                            <path
-                                                                d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
-                                                            </path>
+                                            @can('hapus-catatan')
+                                                <button type="button" class="bg-danger-200 btn-secondary-small"
+                                                    wire:click="$set('deleteId', {{ $Catatan->id }})"
+                                                    data-te-toggle="modal"
+                                                    data-te-target="#deleteCatatanModal{{ $Catatan->id }}"
+                                                    data-te-ripple-init data-te-ripple-color="light">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                                        height="24" class="p-1 rounded-full bg-danger-300"
+                                                        viewBox="0,0,256,256" style="fill:#000000;">
+                                                        <g fill="#850000" fill-rule="nonzero" stroke="none"
+                                                            stroke-width="1" stroke-linecap="butt"
+                                                            stroke-linejoin="miter" stroke-miterlimit="10"
+                                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                            font-weight="none" font-size="none" text-anchor="none"
+                                                            style="mix-blend-mode: normal">
+                                                            <g transform="scale(10.66667,10.66667)">
+                                                                <path
+                                                                    d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
+                                                                </path>
+                                                            </g>
                                                         </g>
-                                                    </g>
-                                                </svg>
-                                            </button>
-
-
+                                                    </svg>
+                                                </button>
+                                            @endcan
                                         </td>
                                         {{-- delete confirm modal --}}
                                         <div data-te-modal-init wire:ignore
