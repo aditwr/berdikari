@@ -25,7 +25,7 @@
     "dependencies": {
         "@glidejs/glide": "^3.6.0",
         "@tailwindcss/line-clamp": "^0.4.4",
-        "sweetalert2": "^11.7.3",
+        "sweetalert2": "^11.9.0",
         "swiper": "^9.1.1"
     }
 }

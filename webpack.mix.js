@@ -12,6 +12,7 @@ const mix = require("laravel-mix");
  */
 
 mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/app-start.js", "public/js")
     .js("resources/js/vendor/alpine.js", "public/js/vendor")
     .postCss("resources/css/app.css", "public/css", [
         //

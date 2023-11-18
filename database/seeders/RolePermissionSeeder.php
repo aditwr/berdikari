@@ -264,85 +264,88 @@ class RolePermissionSeeder extends Seeder
         // sekretaris
         $sekretaris_role = Role::create(['name' => 'sekretaris']);
         // assign multiple permissions at once
-        $sekretaris_role->givePermissionTo([
-            'lihat-kategori-keuangan',
-            'lihat-pemasukan',
-            'lihat-pengeluaran',
-            'buat-kategori-catatan',
-            'edit-kategori-catatan',
-            'hapus-kategori-catatan',
-            'lihat-kategori-catatan',
-            'buat-catatan',
-            'edit-catatan',
-            'hapus-catatan',
-            'lihat-catatan',
-            'buat-kategori-inventaris',
-            'edit-kategori-inventaris',
-            'hapus-kategori-inventaris',
-            'lihat-kategori-inventaris',
-            'buat-inventaris',
-            'edit-inventaris',
-            'hapus-inventaris',
-            'lihat-inventaris',
-            'edit-header',
-            'buat-artikel-kegiatan',
-            'edit-artikel-kegiatan',
-            'hapus-artikel-kegiatan',
-            'lihat-artikel-kegiatan',
-            'buat-artikel',
-            'edit-artikel',
-            'hapus-artikel',
-            'lihat-artikel',
-            'buat-galeri',
-            'edit-galeri',
-            'hapus-galeri',
-            'lihat-galeri'
+        $sekretaris_role->givePermissionTo(
+            [
+                'lihat-kategori-keuangan',
+                'lihat-pemasukan',
+                'lihat-pengeluaran',
+                'buat-kategori-catatan',
+                'edit-kategori-catatan',
+                'hapus-kategori-catatan',
+                'lihat-kategori-catatan',
+                'buat-catatan',
+                'edit-catatan',
+                'hapus-catatan',
+                'lihat-catatan',
+                'buat-kategori-inventaris',
+                'edit-kategori-inventaris',
+                'hapus-kategori-inventaris',
+                'lihat-kategori-inventaris',
+                'buat-inventaris',
+                'edit-inventaris',
+                'hapus-inventaris',
+                'lihat-inventaris',
+                'edit-header',
+                'buat-artikel-kegiatan',
+                'edit-artikel-kegiatan',
+                'hapus-artikel-kegiatan',
+                'lihat-artikel-kegiatan',
+                'buat-artikel',
+                'edit-artikel',
+                'hapus-artikel',
+                'lihat-artikel',
+                'buat-galeri',
+                'edit-galeri',
+                'hapus-galeri',
+                'lihat-galeri'
             ]
         );
 
         // seksi inventaris
         $seksi_inventaris_role = Role::create(['name' => 'seksi-inventaris']);
         // assign multiple permissions at once
-        $seksi_inventaris_role->givePermissionTo([
-            'lihat-kategori-keuangan',
-            'lihat-pemasukan',
-            'lihat-pengeluaran',
-            'lihat-kategori-catatan',
-            'lihat-catatan',
-            'buat-kategori-inventaris',
-            'edit-kategori-inventaris',
-            'hapus-kategori-inventaris',
-            'lihat-kategori-inventaris',
-            'buat-inventaris',
-            'edit-inventaris',
-            'hapus-inventaris',
-            'lihat-inventaris',
-            'lihat-artikel-kegiatan',
-            'buat-artikel',
-            'edit-artikel',
-            'hapus-artikel',
-            'lihat-artikel',
-            'lihat-galeri'
+        $seksi_inventaris_role->givePermissionTo(
+            [
+                'lihat-kategori-keuangan',
+                'lihat-pemasukan',
+                'lihat-pengeluaran',
+                'lihat-kategori-catatan',
+                'lihat-catatan',
+                'buat-kategori-inventaris',
+                'edit-kategori-inventaris',
+                'hapus-kategori-inventaris',
+                'lihat-kategori-inventaris',
+                'buat-inventaris',
+                'edit-inventaris',
+                'hapus-inventaris',
+                'lihat-inventaris',
+                'lihat-artikel-kegiatan',
+                'buat-artikel',
+                'edit-artikel',
+                'hapus-artikel',
+                'lihat-artikel',
+                'lihat-galeri'
             ]
         );
 
         // anggota
         $anggota_role = Role::create(['name' => 'anggota']);
         // assign multiple permissions at once
-        $anggota_role->givePermissionTo([
-            'lihat-kategori-keuangan',
-            'lihat-pemasukan',
-            'lihat-pengeluaran',
-            'lihat-kategori-catatan',
-            'lihat-catatan',
-            'lihat-kategori-inventaris',
-            'lihat-inventaris',
-            'lihat-artikel-kegiatan',
-            'buat-artikel',
-            'edit-artikel',
-            'hapus-artikel',
-            'lihat-artikel',
-            'lihat-galeri'
+        $anggota_role->givePermissionTo(
+            [
+                'lihat-kategori-keuangan',
+                'lihat-pemasukan',
+                'lihat-pengeluaran',
+                'lihat-kategori-catatan',
+                'lihat-catatan',
+                'lihat-kategori-inventaris',
+                'lihat-inventaris',
+                'lihat-artikel-kegiatan',
+                'buat-artikel',
+                'edit-artikel',
+                'hapus-artikel',
+                'lihat-artikel',
+                'lihat-galeri'
             ]
         );
 

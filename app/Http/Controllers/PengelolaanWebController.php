@@ -11,8 +11,8 @@ use App\Models\KategoriArtikel;
 class PengelolaanWebController extends Controller
 {
     public function header()
-    {   
-        if(!auth()->user()->can('edit-header')){
+    {
+        if (!auth()->user()->can('edit-header')) {
             // unauthorized user
             abort(403);
         }
@@ -181,5 +181,10 @@ class PengelolaanWebController extends Controller
     public function gallery()
     {
         return view('dashboard.pengelolaan-web.gallery.index');
+    }
+
+    public function izinAkses()
+    {
+        return view('dashboard.pengelolaan-web.izin-akses.index');
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Front\FrontController;
-use App\Http\Controllers\KeuanganController;
-use App\Http\Controllers\CatatanController;
-use App\Http\Controllers\InventarisController;
-use App\Http\Controllers\PengelolaanWebController;
-use Illuminate\Support\Facades\Route;
 use App\Helpers\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatatanController;
+use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\Front\FrontController;
+use App\Http\Controllers\PengelolaanWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +100,11 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
             Route::prefix('gallery')->group(
                 function () {
                     Route::get('/', [PengelolaanWebController::class, 'gallery'])->name('dashboard.pengelolaan-web.gallery.index');
+                }
+            );
+            Route::prefix('izin-akses')->group(
+                function () {
+                    Route::get('/', [PengelolaanWebController::class, 'izinAkses'])->name('dashboard.pengelolaan-web.izin-akses.index');
                 }
             );
         }

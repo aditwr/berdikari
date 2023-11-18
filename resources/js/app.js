@@ -1,9 +1,11 @@
 import "./bootstrap";
 
 import * as te from "tw-elements";
-
 import Swiper from "swiper/bundle";
 
+// window.Swal = require("sweetalert2");
+import Swal from "sweetalert2";
+window.Swal = Swal;
 // import { Datepicker, Input, initTE } from "tw-elements";
 // initTE({ Datepicker, Input });
 
