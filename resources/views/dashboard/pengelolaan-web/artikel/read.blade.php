@@ -8,31 +8,31 @@
     <div class="dahsboard-padding-responsive">
         <div class="w-full py-10 bg-white rounded 2xl:w-9/12">
             <div class="">
-                <h1 class="mb-4 font-semibold text-center heading-3">{{ $kegiatan->judul_kegiatan }}</h1>
+                <h1 class="mb-4 font-semibold text-center heading-3">{{ $artikel->judul }}</h1>
                 <div class="flex justify-center w-full gap-x-4">
                     <span class="flex items-center gap-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                             <path
                                 d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
                         </svg>
-                        {{ $kegiatan->penulis }}
+                        {{ $artikel->penulis }}
                     </span>
                     <span class="flex items-center gap-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
                             <path
                                 d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
                         </svg>
-                        {{ $kegiatan->created_at->format('l, d M Y') }}
+                        {{ $artikel->created_at->format('l, d M Y') }}
                     </span>
                 </div>
             </div>
             <div class="mt-8">
-                <img src="{{ asset('storage/' . $kegiatan->gambar) }}" alt="" class="object-cover w-full h-[600px]">
+                <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="" class="object-cover w-full h-[600px]">
             </div>
             <div class="2xl:flex">
                 <div class="pt-8 md:px-4 basis-8/12">
                     {{-- show tinymce content --}}
-                    {!! $kegiatan->deskripsi !!}
+                    {!! $artikel->isi !!}
 
                     {{-- Comment Section --}}
                     <div class="py-8">
@@ -40,12 +40,12 @@
                             <h5 class="font-semibold text-center heading-6">Komentar</h5>
                             <div class="w-full pt-4 md:w-8/12">
                                 <div class="mb-4">
-                                    <input type="text" wire:model="judulKegiatan" id="penulis_komentar"
+                                    <input type="text" wire:model="judulartikel" id="penulis_komentar"
                                         class="block w-full transition-all rounded border-neutral-300" placeholder="Nama"
                                         required>
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" wire:model="judulKegiatan" id="penulis_komentar"
+                                    <input type="text" wire:model="judulartikel" id="penulis_komentar"
                                         class="block w-full transition-all rounded border-neutral-300" placeholder="Email"
                                         required>
                                 </div>
@@ -66,26 +66,26 @@
                 </div>
                 {{-- Side Content --}}
                 <div class="px-4 pt-8 basis-4/12">
-                    <h5 class="font-medium subheading-4">Kegiatan Terbaru</h5>
+                    <h5 class="font-medium subheading-4">artikel Terbaru</h5>
                     <div class="mt-4">
-                        @foreach ($kegiatanTerbaru as $kegiatanBaru)
+                        @foreach ($artikelTerbaru as $artikelBaru)
                             {{-- item --}}
-                            <a href="{{ route('dashboard.pengelolaan-web.kegiatan.baca', $kegiatanBaru->id) }}"
+                            <a href="{{ route('dashboard.pengelolaan-web.artikel.baca', $artikelBaru->id) }}"
                                 class="">
                                 <div
                                     class="flex items-center w-full py-1 my-4 rounded-lg gap-x-2 hover:bg-slate-50 hover:cursor-pointer">
                                     <div class="flex-none w-28">
                                         <div class="flex w-full h-20 overflow-hidden rounded">
-                                            <img src="{{ asset('storage/' . $kegiatanBaru->gambar) }}" alt=""
+                                            <img src="{{ asset('storage/' . $artikelBaru->gambar) }}" alt=""
                                                 class="object-cover w-full h-full">
                                         </div>
                                     </div>
                                     <div class="grow">
                                         <p class="mt-2 font-medium text-dark-secondary line-clamp-3">
-                                            {{ $kegiatanBaru->judul_kegiatan }}
+                                            {{ $artikelBaru->judul }}
                                         </p>
                                         <p class="mt-1 text-xs text-dark-secondary">
-                                            {{ $kegiatanBaru->created_at->format('l, d M Y') }}
+                                            {{ $artikelBaru->created_at->format('l, d M Y') }}
                                         </p>
                                     </div>
                                 </div>

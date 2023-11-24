@@ -10,4 +10,9 @@ class Inventaris extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function jenis()
+    {
+        return $this->belongsTo(JenisInventaris::class);
+    }
 }

@@ -10,4 +10,9 @@ class JenisInventaris extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function inventaris()
+    {
+        return $this->hasMany(Inventaris::class);
+    }
 }

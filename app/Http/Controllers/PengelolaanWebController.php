@@ -121,9 +121,9 @@ class PengelolaanWebController extends Controller
     }
     public function artikelBaca($id)
     {
-        $kegiatan = Kegiatan::find($id);
-        $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
-        return view('dashboard.pengelolaan-web.artikel.read', compact(['kegiatan', 'kegiatanTerbaru']));
+        $artikel = Artikel::find($id);
+        $artikelTerbaru = Artikel::latest()->take(5)->get();
+        return view('dashboard.pengelolaan-web.artikel.read', compact(['artikel', 'artikelTerbaru']));
     }
     public function artikelUpdate(Request $request)
     {

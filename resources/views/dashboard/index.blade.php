@@ -1,9 +1,11 @@
 @extends('dashboard.layouts.dashboard')
 
 @section('title')
-    Dashboard | Ringkasan
+    Beranda
 @endsection
 
 @section('content')
-    Ini Halaman Ringkasan
+    <div class="dashboard-padding-responsive pt-2 pb-32">
+        <livewire:dashboard.index>
+    </div>
 @endsection
