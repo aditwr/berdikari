@@ -1,10 +1,10 @@
-<header class="fixed z-50 w-full bg-white shadow-lg">
+<header class="fixed z-50 w-full bg-white shadow-lg text-primary-400">
     <nav class="w-full h-16" x-data="{ hamburgerActive: false }" @click.outside="hamburgerActive = false">
         <div class="relative flex justify-between h-full padding-responsive">
             <div class="h-full">
                 {{-- logo --}}
                 <div class="flex items-center justify-center h-full">
-                    <img src="{{ asset('assets/images/logo.svg') }}" alt="logo"
+                    <img src="{{ asset('assets/logo/svg/logo-no-background.svg') }}" alt="logo"
                         class="object-center w-auto h-6 lg:h-8">
                 </div>
             </div>
@@ -14,25 +14,25 @@
                     <ul class="lg:h-full flex flex-col lg:flex-row lg:gap-x-10 lg:w-[560px] lg:justify-center">
                         <li class="h-10 lg:h-full">
                             <a href="{{ route('landing-page') }}"
-                                class="flex items-center h-full @if (Route::is('landing-page')) text-primary-700 border-primary-700 lg:border-b-2 @endif ">
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
                                 Beranda
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
                             <a href="{{ route('landing-page.kegiatan') }}"
-                                class="flex items-center h-full @if (Route::is('landing-page.kegiatan')) text-primary-700 border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Kegiatan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
                             <a href="{{ route('landing-page.tulisan') }}"
-                                class="flex items-center h-full @if (Route::is('landing-page.tulisan')) text-primary-700 border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tulisan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
                             <a href="{{ route('landing-page.tentang-kami') }}"
-                                class="flex items-center h-full @if (Route::is('landing-page.tentang-kami')) text-primary-700 border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tentang Kami
                             </a>
                         </li>
@@ -67,28 +67,31 @@
             </div>
             {{-- Mobile Navigation --}}
             <div x-show="hamburgerActive" x-transition.scale.origin.top
-                class="absolute left-0 right-0 px-4 py-4 bg-slate-50 top-16 lg:py-0 lg:px-0 lg:static lg:flex">
+                class="absolute lg:hidden left-0 right-0 px-4 py-4 bg-slate-50 top-16 lg:py-0 lg:px-0 lg:static">
                 <div class="h-full">
                     {{-- nav links --}}
                     <ul class="lg:h-full flex flex-col lg:flex-row lg:gap-x-10 lg:w-[560px] lg:justify-center">
                         <li class="h-10 lg:h-full">
-                            <a href=""
-                                class="flex items-center h-full text-primary-700 border-primary-700 lg:border-b-2">
+                            <a href="{{ route('landing-page') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
                                 Beranda
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
-                            <a href="" class="flex items-center h-full">
+                            <a href="{{ route('landing-page.kegiatan') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Kegiatan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
-                            <a href="" class="flex items-center h-full">
+                            <a href="{{ route('landing-page.tulisan') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tulisan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
-                            <a href="" class="flex items-center h-full">
+                            <a href="{{ route('landing-page.tentang-kami') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tentang Kami
                             </a>
                         </li>
@@ -97,14 +100,27 @@
                 <div class="pt-4 pb-2 lg:py-0 lg:h-full">
                     {{-- auth links --}}
                     <div class="flex items-center h-full gap-x-3">
-                        <button type="button"
-                            class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
-                            Masuk
-                        </button>
-                        <button type="button"
-                            class="inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200">
-                            Daftar
-                        </button>
+                        @auth
+                            <a href="{{ route('dashboard.index') }}" class="">
+                                <button type="button"
+                                    class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                                    Dashboard
+                                </button>
+                            </a>
+                        @else
+                            <a href="{{ route('login') }}" class="">
+                                <button type="button"
+                                    class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                                    Masuk
+                                </button>
+                            </a>
+                            <a href="{{ route('register') }}" class="">
+                                <button type="button"
+                                    class="inline-block rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200">
+                                    Daftar
+                                </button>
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </div>

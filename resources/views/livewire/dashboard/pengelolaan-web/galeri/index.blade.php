@@ -17,7 +17,7 @@
     </div>
     <div class="mt-4">
         {{-- toast --}}
-        @if ($notification['status'])
+        @if ($notification['status'] == 'success')
             <div class="pointer-events-auto mx-auto mb-2 mt-4 hidden w-full max-w-full rounded-lg bg-success-100 bg-clip-padding text-sm text-success-700 shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden"
                 id="static-example" role="alert" aria-live="assertive" aria-atomic="true" data-te-autohide="false"
                 data-te-toast-init data-te-toast-show>
@@ -48,6 +48,40 @@
                     </div>
                 </div>
                 <div class="px-4 py-4 break-words rounded-b-lg bg-success-100 text-success-700">
+                    {!! $notification['message'] !!}
+                </div>
+            </div>
+        @elseif($notification['status'] == 'failed')
+            <div class="pointer-events-auto mx-auto mb-2 mt-4 hidden w-full max-w-full rounded-lg bg-danger-100 bg-clip-padding text-sm text-danger-700 shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden"
+                id="static-example" role="alert" aria-live="assertive" aria-atomic="true" data-te-autohide="false"
+                data-te-toast-init data-te-toast-show>
+                <div
+                    class="flex items-center justify-between rounded-t-lg border-b-2 border-danger/20 bg-danger-100 bg-clip-padding px-4 pb-2 pt-2.5">
+                    <p class="flex items-center font-bold text-danger-700">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle"
+                            class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                            </path>
+                        </svg>
+                        {{ $notification['title'] }}
+                    </p>
+                    <div class="flex items-center">
+                        <button type="button" wire:click="$set('notification.status', false)"
+                            class="box-content ml-2 border-none rounded-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                            aria-label="Close">
+                            <span
+                                class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-4 py-4 break-words rounded-b-lg bg-danger-100 text-success-700">
                     {!! $notification['message'] !!}
                 </div>
             </div>

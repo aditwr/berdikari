@@ -28,6 +28,7 @@ class Index extends Component
     {
         $this->tampilkanMenuUpload = !$this->tampilkanMenuUpload;
         $this->tampilkanTombolUpload = !$this->tampilkanTombolUpload;
+        $this->reset('notification');
     }
 
     public function priviewFoto($url)
@@ -44,7 +45,7 @@ class Index extends Component
         ]);
 
         $namaFoto = Str::slug($this->judul_foto) . '-' . rand(0, 1000) . '.' . $this->foto->getClientOriginalExtension();
-        $this->foto->storeAs('public/gallery', $namaFoto);
+        $this->foto->storeAs('gallery', $namaFoto);
         $data = Gallery::create([
             'judul' => $this->judul_foto,
             'deskripsi' => $this->deskripsi_foto,
@@ -53,17 +54,19 @@ class Index extends Component
 
         $this->munculkanMenuUpload();
         $this->notification = [
-            'status' => true,
+            'status' => 'success',
             'title' => 'Berhasil',
             'message' => 'Foto <b>' . $data->judul . '</b> berhasil tersimpan di galeri',
         ];
+        // reset 
+        $this->reset(['foto', 'judul_foto', 'deskripsi_foto']);
     }
     public function tampilkanFoto($id)
     {
-        $jumlah_foto_tampil = Gallery::where('tampilkan_di_beranda', true)->count();
+        $jumlah_foto_tampil = Gallery::where('tampilkan_di_beranda', 1)->count();
         if ($jumlah_foto_tampil >= 6) {
             $this->notification = [
-                'status' => false,
+                'status' => 'failed',
                 'title' => 'Gagal',
                 'message' => 'Foto yang ditampilkan di halaman utama tidak boleh lebih dari 6 foto',
             ];
@@ -72,10 +75,10 @@ class Index extends Component
         $data = Gallery::findOrFail($id);
         // update column
         $data->update([
-            'tampilkan_di_beranda' => true,
+            'tampilkan_di_beranda' => 1,
         ]);
         $this->notification = [
-            'status' => true,
+            'status' => 'success',
             'title' => 'Berhasil',
             'message' => 'Foto <b>' . $data->judul . '</b> Akan ditampilkan di halaman utama',
         ];
@@ -88,7 +91,7 @@ class Index extends Component
             'tampilkan_di_beranda' => false,
         ]);
         $this->notification = [
-            'status' => true,
+            'status' => 'success',
             'title' => 'Berhasil',
             'message' => 'Foto <b>' . $data->judul . '</b> Akan disembunyikan di halaman utama',
         ];
@@ -97,10 +100,10 @@ class Index extends Component
     public function hapusFoto()
     {
         $data = Gallery::findOrFail($this->hapusId);
-        Storage::delete('public/gallery/' . $data->url_foto);
+        Storage::delete('gallery/' . $data->url_foto);
         $data->delete();
         $this->notification = [
-            'status' => true,
+            'status' => 'success',
             'title' => 'Berhasil',
             'message' => 'Foto <b>' . $data->judul . '</b> berhasil dihapus dari galeri',
         ];
@@ -108,7 +111,7 @@ class Index extends Component
 
     public function render()
     {
-        $listFoto = Gallery::latest()->paginate(4);
+        $listFoto = Gallery::latest()->paginate(12);
         return view('livewire.dashboard.pengelolaan-web.galeri.index', compact('listFoto'));
     }
 }

@@ -23,11 +23,11 @@
                                     class="object-cover w-full h-full">
                             </div>
                             <div class="px-4 pt-2 pb-4">
-                                <h3 class="text-base font-semibold text-dark-primary">
+                                <h3 class="text-base font-semibold text-dark-primary line-clamp-3">
                                     {{ $kegiatan->judul_kegiatan }}
                                 </h3>
-                                <span
-                                    class="text-xs text-dark-secondary">{{ $kegiatan->created_at->format('l, d M Y') }}</span>
+                                <p class="text-xs text-dark-secondary">
+                                    {{ $kegiatan->created_at->format('l, d M Y') }}</p>
 
                             </div>
                             <div class="">
@@ -51,7 +51,7 @@
 
 
         <div class="flex justify-center mt-4">
-            <button class="btn-secondary">Lihat Kegiatan Lainya</button>
+            <a href="{{ route('landing-page.kegiatan') }}" class="btn-secondary">Lihat Kegiatan Lainya</a>
         </div>
     </div>
 </div>

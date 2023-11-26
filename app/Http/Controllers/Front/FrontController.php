@@ -15,8 +15,7 @@ class FrontController extends Controller
         // kegiatan
         $listKegiatan = Kegiatan::latest()->take(12)->get();
         $listArtikel = Artikel::latest()->take(6)->get();
-        $listGallery = Gallery::where('tampilkan_di_beranda', 1)->latest()->take(6)->get();
-        return view('front.landing-page', compact(['listKegiatan', 'listArtikel', 'listGallery']));
+        return view('front.landing-page', compact(['listKegiatan', 'listArtikel']));
     }
     public function activity()
     {

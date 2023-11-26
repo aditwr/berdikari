@@ -14,6 +14,7 @@
     </div>
     {{-- carousel --}}
     <div class="relative w-full h-[650px] md:h-[720px] overflow-hidden after:clear-both after:block after:content-['']">
+        {{-- carousel item --}}
         <div class="relative h-full  float-left -mr-[100%] flex items-center justify-center w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
             data-te-carousel-active data-te-carousel-item style="backface-visibility: hidden">
             @if (file_exists(storage_path('app/public/foto-header/foto1.jpg')))
@@ -27,18 +28,23 @@
             <div class="absolute z-[2] flex justify-center items-center left-0 top-0 h-[640px] md:h-[720px] w-full">
                 <div
                     class="px-4 text-center flex items-center flex-col gap-y-4 xl:gap-y-6 text-white sm:w-[560px] xl:w-[640px]">
-                    <div class="flex items-center justify-center p-3 rounded bg-primary-100 w-14 h-14">
-                        <img src="{{ asset('assets/images/logo-small.svg') }}" alt=""
+                    <div class="flex items-center justify-center p-3 rounded bg-white w-16 h-16">
+                        {{-- logo --}}
+                        <img src="{{ asset('assets/logo/png/berdikari-favicon-color.png') }}" alt=""
                             class="object-contain w-full h-full ">
                     </div>
                     <h1
-                        class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
-                        Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
+                        class="text-transparent heading-2 font-laila bg-clip-text bg-gradient-to-r leading-tight from-blue-100 to-cyan-200">
+                        Karangtaruna <span
+                            class="text-transparent block font-laila text-6xl bg-clip-text bg-gradient-to-r leading-snug from-blue-700 to-cyan-300">
+                            "Berdikari"</span>
+                    </h1>
+
                     <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header1 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
                         <a href="#kegiatan">
                             <button type="button" class="btn-primary btn-responsive">
-                                Lihat Kegiatan Kami
+                                Kegiatan Kami
                             </button>
                         </a>
                         <a href="#siapakami">
@@ -67,21 +73,30 @@
             <div class="absolute z-[2] flex justify-center items-center left-0 top-0 h-[640px] md:h-[720px] w-full">
                 <div
                     class="px-4 text-center flex items-center flex-col gap-y-4 xl:gap-y-6 text-white sm:w-[560px] xl:w-[640px]">
-                    <div class="flex items-center justify-center p-3 rounded bg-primary-100 w-14 h-14">
-                        <img src="{{ asset('assets/images/logo-small.svg') }}" alt=""
+                    <div class="flex items-center justify-center p-3 rounded bg-white w-16 h-16">
+                        {{-- logo --}}
+                        <img src="{{ asset('assets/logo/png/berdikari-favicon-color.png') }}" alt=""
                             class="object-contain w-full h-full ">
                     </div>
                     <h1
-                        class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
-                        Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
+                        class="text-transparent heading-2 font-laila bg-clip-text bg-gradient-to-r leading-tight from-blue-100 to-cyan-200">
+                        Karangtaruna <span
+                            class="text-transparent block font-laila text-6xl bg-clip-text bg-gradient-to-r leading-snug from-blue-700 to-cyan-300">
+                            "Berdikari"</span>
+                    </h1>
+
                     <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header2 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
-                        <button type="button" class="btn-primary btn-responsive">
-                            Lihat Kegiatan Kami
-                        </button>
-                        <button type="button" class="btn-secondary btn-responsive">
-                            Siapa Kami?
-                        </button>
+                        <a href="#kegiatan">
+                            <button type="button" class="btn-primary btn-responsive">
+                                Kegiatan Kami
+                            </button>
+                        </a>
+                        <a href="#siapakami">
+                            <button type="button" class="btn-secondary btn-responsive">
+                                Siapa Kami?
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -103,21 +118,30 @@
             <div class="absolute z-[2] flex justify-center items-center left-0 top-0 h-[640px] md:h-[720px] w-full">
                 <div
                     class="px-4 text-center flex items-center flex-col gap-y-4 xl:gap-y-6 text-white sm:w-[560px] xl:w-[640px]">
-                    <div class="flex items-center justify-center p-3 rounded bg-primary-100 w-14 h-14">
-                        <img src="{{ asset('assets/images/logo-small.svg') }}" alt=""
+                    <div class="flex items-center justify-center p-3 rounded bg-white w-16 h-16">
+                        {{-- logo --}}
+                        <img src="{{ asset('assets/logo/png/berdikari-favicon-color.png') }}" alt=""
                             class="object-contain w-full h-full ">
                     </div>
                     <h1
-                        class="text-transparent heading-1 bg-clip-text bg-gradient-to-r from-primary-600 to-primary-200">
-                        Karangtaruna <span class="block sm:inline">Berdikari</span></h1>
+                        class="text-transparent heading-2 font-laila bg-clip-text bg-gradient-to-r leading-tight from-blue-100 to-cyan-200">
+                        Karangtaruna <span
+                            class="text-transparent block font-laila text-6xl bg-clip-text bg-gradient-to-r leading-snug from-blue-700 to-cyan-300">
+                            "Berdikari"</span>
+                    </h1>
+
                     <p class="mb-4 subheading-4 text-light-secondary">{{ $tulisan_header3 }}</p>
                     <div class="flex flex-col items-center sm:flex-row sm:justify-center sm:gap-x-4 gap-y-3">
-                        <button type="button" class="btn-primary btn-responsive">
-                            Lihat Kegiatan Kami
-                        </button>
-                        <button type="button" class="btn-secondary btn-responsive">
-                            Siapa Kami?
-                        </button>
+                        <a href="#kegiatan">
+                            <button type="button" class="btn-primary btn-responsive">
+                                Kegiatan Kami
+                            </button>
+                        </a>
+                        <a href="#siapakami">
+                            <button type="button" class="btn-secondary btn-responsive">
+                                Siapa Kami?
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

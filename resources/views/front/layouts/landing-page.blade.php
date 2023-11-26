@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -17,7 +17,7 @@
     @livewireStyles()
 </head>
 
-<body class="font-default text-slate-900 scroll-smooth">
+<body class="font-default text-slate-900 ">
     @yield('content')
 
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>

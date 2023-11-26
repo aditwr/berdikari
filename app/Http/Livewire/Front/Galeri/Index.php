@@ -2,12 +2,11 @@
 
 namespace App\Http\Livewire\Front\Galeri;
 
+use App\Models\Gallery;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public $listGallery;
-
 
     public function priviewFoto($gallery)
     {
@@ -23,6 +22,7 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.front.galeri.index');
+        $listGalleries = Gallery::where('tampilkan_di_beranda', 1)->latest()->take(6)->get();
+        return view('livewire.front.galeri.index', compact('listGalleries'));
     }
 }
