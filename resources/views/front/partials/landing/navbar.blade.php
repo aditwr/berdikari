@@ -31,6 +31,12 @@
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">
+                            <a href="{{ route('landing-page.galeri') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                Galeri
+                            </a>
+                        </li>
+                        <li class="h-10 lg:h-full">
                             <a href="{{ route('landing-page.tentang-kami') }}"
                                 class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tentang Kami
@@ -87,6 +93,12 @@
                             <a href="{{ route('landing-page.tulisan') }}"
                                 class="flex items-center tracking-wide h-full @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tulisan
+                            </a>
+                        </li>
+                        <li class="h-10 lg:h-full">
+                            <a href="{{ route('landing-page.galeri') }}"
+                                class="flex items-center tracking-wide h-full @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                Galeri
                             </a>
                         </li>
                         <li class="h-10 lg:h-full">

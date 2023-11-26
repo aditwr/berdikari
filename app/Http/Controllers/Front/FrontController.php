@@ -40,6 +40,11 @@ class FrontController extends Controller
         return view('front.partials.article.article-detail', compact(['artikel', 'artikelTerbaru']));
     }
 
+    public function gallery()
+    {
+        return view('front.gallery');
+    }
+
     public function about()
     {
         return view('front.about');

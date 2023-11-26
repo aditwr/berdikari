@@ -1,7 +1,13 @@
 import "./bootstrap";
 
 import * as te from "tw-elements";
+
+// import swiper bundle with all modules installed
 import Swiper from "swiper/bundle";
+// import styles bundle
+import "swiper/css/bundle";
+// make Swiper available globally
+window.Swiper = Swiper;
 
 // window.Swal = require("sweetalert2");
 import Swal from "sweetalert2";

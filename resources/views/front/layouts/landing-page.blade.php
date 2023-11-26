@@ -25,6 +25,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/vendor/alpine.js') }}"></script>
     @livewireScripts()
+    @stack('script_front_body')
 </body>
 
 </html>

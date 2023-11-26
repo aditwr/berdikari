@@ -3,8 +3,8 @@
         {{-- header --}}
         <div class="flex flex-col">
             <div class="flex flex-col text-center gap-y-2">
-                <h2 class="heading-4 text-dark-primary" id="kegiatan">Tulisan Kami</h2>
-                <p class="subheading-5 text-dark-secondary">Berikut adalah beberapa tulisan terakhir yang kami tulis</p>
+                <h2 class="heading-4 text-dark-primary" id="kegiatan">Galeri Kami</h2>
+                <p class="subheading-5 text-dark-secondary">Berikut adalah galeri kenangan kami</p>
             </div>
         </div>
 
@@ -69,50 +69,159 @@
                     </div>
                 </div>
             </div>
-            @if ($listArtikel->count() > 0)
+            @if ($listGalleries->count() > 0)
                 <div
-                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-4 gap-y-8">
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
                     {{-- card --}}
-                    @foreach ($listArtikel as $artikel)
-                        <div class="">
-                            <div class="block max-w-sm bg-white rounded-lg shadow-xl dark:bg-neutral-700">
-                                <div class="flex items-center justify-center w-full overflow-hidden rounded-t-lg h-44">
-                                    <img class="object-cover w-full h-full"
-                                        src="{{ asset('storage/' . $artikel->gambar) }}" alt="" />
-                                </div>
-                                <div class="flex flex-col justify-between w-full h-44">
-                                    <div class="px-3 pt-3">
-                                        <h5
-                                            class="mb-2 font-medium leading-tight subheading-6 text-neutral-800 dark:text-neutral-50 line-clamp-3">
-                                            {{ $artikel->judul }}
-                                        </h5>
-                                        <p class="mb-4 caption text-neutral-600 dark:text-neutral-200">
-                                            {{ $artikel->created_at->format('l, d F Y') }}
+                    @foreach ($listGalleries as $gallery)
+                        <button class="" wire:click="priviewFoto({{ $gallery }})" data-te-toggle="modal"
+                            data-te-target="#lihatFoto" data-te-ripple-init data-te-ripple-color="light">
+                            <div
+                                class="w-full h-64 rounded-lg overflow-hidden relative group hover:border border-neutral-300">
+                                <img src="{{ asset('storage/gallery/' . $gallery->url_foto) }}" alt=""
+                                    class="w-full h-full object-cover group-hover:scale-125 transition-all duration-300">
+                                {{-- overlay --}}
+                                <div
+                                    class="absolute -bottom-20 group-hover:bottom-0 transition-all duration-300 left-0 w-full h-20 bg-white">
+                                    <div class="h-full px-4 py-2">
+                                        <h1
+                                            class="text-dark-primary font-semibold text-base mb-1 line-clamp-1 capitalize">
+                                            {{ $gallery->judul }}</h1>
+                                        {{-- created_at date format --}}
+                                        <p class="text-dark-secondary text-xs">
+                                            {{ date('d F Y', strtotime($gallery->created_at)) }}
                                         </p>
-                                    </div>
-                                    <div class="px-3 pb-3">
-                                        <a href="{{ route('landing-page.tulisan.baca', $artikel->id) }}" type="button"
-                                            class="btn-secondary" data-te-ripple-init data-te-ripple-color="light">
-                                            Selengkapnya
-                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </button>
                     @endforeach
                 </div>
             @else
                 <div class="flex items-center justify-center w-full h-80">
                     <div class="flex flex-col items-center justify-center ">
                         <img src="{{ asset('assets/illustrations/data-not-found.png') }}" alt="" class="h-44 ">
-                        <h1 class="font-semibold text-gray-600 heading-5">Tidak ada kegiatan</h1>
+                        <h1 class="font-semibold text-gray-600 heading-5">Belum ada foto</h1>
                     </div>
                 </div>
             @endif
+
+            {{-- modal lihat foto --}}
+            <div data-te-modal-init wire:ignore
+                class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                id="lihatFoto" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
+                <div data-te-modal-dialog-ref
+                    class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[0px]:m-0 min-[0px]:h-full min-[0px]:max-w-none">
+                    <div
+                        class="pointer-events-auto relative flex w-full flex-col rounded-md bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600 min-[0px]:h-full min-[0px]:rounded-none min-[0px]:border-0">
+                        <div
+                            class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50 min-[0px]:rounded-none">
+                            <!-- Modal title -->
+                            <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                id="exampleModalFullscreenLabel">
+                                Lihat Foto : <span class="capitalize" id="judul-foto"></span>
+                            </h5>
+                            <!-- Close button -->
+                            <button type="button"
+                                class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                data-te-modal-dismiss aria-label="Close">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="relative py-2 min-[0px]:overflow-y-auto">
+                            <img id="img-priview-url"
+                                src="{{ asset('storage/gallery/' . $listGalleries[0]->url_foto) }}" alt=""
+                                class="flex items-center justify-center object-contain w-full h-[92%]">
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div
+                            class="mt-auto flex flex-shrink-0 flex-wrap items-center justify-between rounded-b-md border-t-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50 min-[0px]:rounded-none">
+                            <button type="button"
+                                class="inline-block rounded bg-info px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#54b4d3] transition duration-150 ease-in-out hover:bg-info-600 hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:bg-info-600 focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] focus:outline-none focus:ring-0 active:bg-info-700 active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.3),0_4px_18px_0_rgba(84,180,211,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(84,180,211,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(84,180,211,0.2),0_4px_18px_0_rgba(84,180,211,0.1)]"
+                                data-te-toggle="modal" data-te-target="#staticBackdrop" data-te-ripple-init
+                                data-te-ripple-color="light">
+                                Info Foto
+                            </button>
+
+                            <button type="button"
+                                class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                                data-te-modal-dismiss>
+                                Tutup
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Foto Modal -->
+                <div data-te-modal-init
+                    class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                    id="staticBackdrop" data-te-backdrop="static" data-te-keyboard="false" tabindex="-1"
+                    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div data-te-modal-dialog-ref
+                        class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
+                        <div
+                            class="min-[576px]:shadow-[0_0.5rem_1rem_rgba(#000, 0.15)] pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-white bg-clip-padding text-current shadow-lg outline-none dark:bg-neutral-600">
+                            <div
+                                class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
+                                <!--Modal title-->
+                                <h5 class="text-xl capitalize font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                    id="judul-foto-info">
+                                    Judul
+                                </h5>
+                                <!--Close button-->
+                                <button type="button"
+                                    class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                    data-te-modal-dismiss aria-label="Close">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!--Modal body-->
+                            <div data-te-modal-body-ref class="relative p-4">
+                                <p id="deskripsi-foto" class=""></p>
+                                <p id="tanggal" class="text-sm text-gray-500"></p>
+                            </div>
+
+                            <!--Modal footer-->
+                            <div
+                                class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
+                                <button type="button"
+                                    class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                                    data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                                    Tutup
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             {{-- pagination --}}
             <div class="mt-8">
-                {{ $listArtikel->links() }}
+                {{ $listGalleries->links() }}
             </div>
         </div>
     </div>
 </div>
+@push('script_front_body')
+    <script>
+        window.addEventListener('priviewFoto', event => {
+            document.getElementById('img-priview-url').src = event.detail.url;
+            document.getElementById('judul-foto').innerHTML = event.detail.judul;
+            document.getElementById('judul-foto-info').innerHTML = event.detail.judul;
+            document.getElementById('deskripsi-foto').innerHTML = event.detail.deskripsi;
+            document.getElementById('tanggal').innerHTML = event.detail.tanggal;
+        })
+    </script>
+@endpush

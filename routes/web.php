@@ -30,6 +30,7 @@ Route::get('/kegiatan', [FrontController::class, 'activity'])->name('landing-pag
 Route::get('/kegiatan/{id}', [FrontController::class, 'activityDetail'])->name('landing-page.kegiatan.baca');
 Route::get('/tulisan', [FrontController::class, 'article'])->name('landing-page.tulisan');
 Route::get('/tulisan/{id}', [FrontController::class, 'articleDetail'])->name('landing-page.tulisan.baca');
+Route::get('/galeri', [FrontController::class, 'gallery'])->name('landing-page.galeri');
 Route::get('/tentang-kami', [FrontController::class, 'about'])->name('landing-page.tentang-kami');
 Route::get('/coba', [FrontController::class, 'coba'])->name('landing-page.kontak');
 Route::get('/test', [FrontController::class, 'test'])->name('landing-page.test');
