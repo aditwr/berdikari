@@ -2071,6 +2071,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
 
 
+// make te available globally
+window.te = tw_elements__WEBPACK_IMPORTED_MODULE_1__;
 
 // import swiper bundle with all modules installed
 

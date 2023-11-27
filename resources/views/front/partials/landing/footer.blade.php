@@ -1,94 +1,64 @@
 <!-- component -->
 <footer class="text-gray-600 body-font">
-    <div
-        class="container flex flex-col flex-wrap px-5 py-24 mx-auto md:items-center lg:items-start md:flex-row md:flex-nowrap">
-        <div class="flex-shrink-0 w-64 mx-auto mt-10 text-center md:mx-0 md:text-left md:mt-0">
-            <a class="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
-                    stroke-linejoin="round" stroke-width="2" class="w-10 h-10 p-2 text-white bg-indigo-500 rounded-full"
-                    viewBox="0 0 24 24">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                </svg>
-                <span class="ml-3 text-xl">Berdikari</span>
+    <div class="container flex w-full flex-col gap-y-6 px-5 pt-24 mx-auto md:items-center lg:items-start md:flex-row">
+        <div class="basis-2/4 mx-auto mt-10 md:mx-0 text-left md:mt-0">
+            <a class="flex items-center justify-start font-medium text-gray-900 title-font md:justify-start">
+                <span class="">
+                    <img src="{{ asset('assets/logo/png/logo-no-background.png') }}" alt="" class="w-auto h-6">
+                </span>
             </a>
             <p class="mt-2 text-sm text-gray-500">Organisasi Sosial Kepemudaan</p>
+            <p class="mt-4 text-sm text-gray-600 lg:w-[60%]">
+                Karangtaruna Berdikari adalah organisasi sosial kepemudaan karangtaruna yang berada di Dusun Suruh
+                Kalong, Desa Pandeyan, Kec. Tasikmadu, Kab. Karanganyar, Jawa Tengah.
+            </p>
         </div>
-        <div class="flex flex-wrap flex-grow order-first -mb-10 text-center md:pr-20 md:text-left">
-            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-                <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">CATEGORIES</h2>
-                <nav class="mb-10 list-none">
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">First Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-                    </li>
-                </nav>
-            </div>
-            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-                <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">CATEGORIES</h2>
-                <nav class="mb-10 list-none">
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">First Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-                    </li>
-                </nav>
-            </div>
-            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-                <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">CATEGORIES</h2>
-                <nav class="mb-10 list-none">
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">First Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-                    </li>
-                </nav>
-            </div>
-            <div class="w-full px-4 lg:w-1/4 md:w-1/2">
-                <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">CATEGORIES</h2>
-                <nav class="mb-10 list-none">
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">First Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Second Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Third Link</a>
-                    </li>
-                    <li>
-                        <a class="text-gray-600 hover:text-gray-800">Fourth Link</a>
-                    </li>
-                </nav>
-            </div>
+        <div class="basis-1/4 ">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">Kontak</h2>
+            <nav class="mb-10 list-none flex flex-col gap-y-1">
+                <li>
+                    <a class="text-gray-600 flex gap-x-2 items-center text-sm font-medium hover:text-gray-800">
+                        <svg class="w-4 h-4 text-primary-800 dark:text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        karangtarunaberdikari@gmail.com</a>
+                </li>
+            </nav>
         </div>
+        <div class="basis-1/4">
+            <h2 class="mb-3 text-sm font-medium tracking-widest text-gray-900 title-font">Halaman</h2>
+            <nav class="mb-10 list-none flex flex-col gap-y-1">
+                <li>
+                    <a href="{{ route('landing-page') }}" class="text-gray-600 text-sm hover:text-gray-800">Beranda</a>
+                </li>
+                <li>
+                    <a href="{{ route('landing-page.kegiatan') }}"
+                        class="text-gray-600 text-sm hover:text-gray-800">Kegiatan</a>
+                </li>
+                <li>
+                    <a href="{{ route('landing-page.tulisan') }}"
+                        class="text-gray-600 text-sm hover:text-gray-800">Tulisan</a>
+                </li>
+                <li>
+                    <a href="{{ route('landing-page.galeri') }}"
+                        class="text-gray-600 text-sm hover:text-gray-800">Galeri</a>
+                </li>
+                <li>
+                    <a href="{{ route('landing-page.tentang-kami') }}"
+                        class="text-gray-600 text-sm hover:text-gray-800">Tentang Kami</a>
+                </li>
+            </nav>
+        </div>
+
+
     </div>
     <div class="bg-gray-100">
         <div class="container flex flex-col flex-wrap px-5 py-4 mx-auto sm:flex-row">
-            <p class="text-sm text-center text-gray-500 sm:text-left">© 2020 Karangtaruna Berdikari —
-                <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" class="ml-1 text-gray-600"
-                    target="_blank">@karangtaruna.berdikari</a>
+            <p class="text-sm text-center text-gray-500 sm:text-left">© 2023 Karangtaruna Berdikari
+                {{-- <a href="https://twitter.com/knyttneve" rel="noopener noreferrer" class="ml-1 text-gray-600"
+                    target="_blank">@karangtaruna.berdikari</a> --}}
             </p>
             <span class="inline-flex justify-center mt-2 sm:ml-auto sm:mt-0 sm:justify-start">
                 <a class="text-gray-500">

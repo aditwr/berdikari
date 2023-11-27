@@ -9,8 +9,8 @@
 
     {{-- Styles --}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-
+    {{-- Favicon --}}
+    <link rel="shortcut icon" href="{{ asset('assets/logo/png/berdikari-favicon-color.png') }}" type="image/x-icon">
 
     @stack('styles')
     @stack('scripts')

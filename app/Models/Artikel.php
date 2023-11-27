@@ -12,4 +12,10 @@ class Artikel extends Model
     // define table
     protected $table = 'artikels';
     protected $guarded = [];
+
+    // define relation
+    public function kategori()
+    {
+        return $this->belongsTo(KategoriArtikel::class, 'kategori_id');
+    }
 }

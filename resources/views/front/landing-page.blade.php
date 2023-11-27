@@ -13,6 +13,8 @@
     @include('front.partials.landing.gallery')
     {{-- Article Section --}}
     @include('front.partials.landing.article')
+    {{-- Contact Section --}}
+    @include('front.partials.landing.contact')
     {{-- Footer --}}
     @include('front.partials.landing.footer')
 @endsection

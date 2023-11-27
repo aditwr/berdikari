@@ -1,6 +1,8 @@
 import "./bootstrap";
 
 import * as te from "tw-elements";
+// make te available globally
+window.te = te;
 
 // import swiper bundle with all modules installed
 import Swiper from "swiper/bundle";

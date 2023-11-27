@@ -50,14 +50,11 @@ class FrontController extends Controller
         return view('front.about');
     }
 
-    public function coba()
+    public function contact()
     {
-        return view('front.coba');
+        return view('front.contact');
     }
-    public function test()
-    {
-        return view('dashboard.test');
-    }
+
     public function simpancatatan()
     {
         dd(request()->all());

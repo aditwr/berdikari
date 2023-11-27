@@ -1,22 +1,22 @@
 <div wire:ignore>
     <div class="flex flex-col">
-        <div class="flex flex-col text-center gap-y-2">
-            <h2 class="heading-4 text-dark-primary" id="kegiatan">Gallery Kami</h2>
+        <div class="flex flex-col text-center gap-y-2 px-5 sm:px-0">
+            <h2 class="heading-3 text-dark-primary tracking-tight" id="kegiatan">Gallery Kami</h2>
             <p class="subheading-5 text-dark-secondary">Berikut adalah beberapa kenangan yang telah kami buat</p>
         </div>
     </div>
 
     @if (count($listGalleries))
-        <div class="container py-2 mx-auto sm:px-5 lg:px-32 lg:pt-12">
+        <div class="container py-2 mx-auto sm:px-5 lg:px-32 pt-4 lg:pt-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($listGalleries as $gallery)
-                    <div class="w-full">
+                    <div class="w-full group ">
                         <button wire:click="priviewFoto({{ $gallery }})" data-te-toggle="modal"
                             data-te-target="#lihatFoto" data-te-ripple-init data-te-ripple-color="light" class="w-full">
                             <div class="w-full p-1 md:p-2">
-                                <div class="w-full h-48 rounded-lg shadow-md xl:h-64">
+                                <div class="w-full overflow-hidden h-48 rounded-lg shadow-md xl:h-64">
                                     <img alt="gallery"
-                                        class="block object-cover object-center w-full h-full rounded-lg"
+                                        class="block object-cover object-center w-full h-full rounded-lg group-hover:scale-125 transition-all duration-300"
                                         src="{{ asset('storage/gallery/' . $gallery->url_foto) }}" />
                                 </div>
                             </div>
@@ -38,9 +38,17 @@
                 <div
                     class="flex flex-shrink-0 items-center justify-between rounded-t-md border-b-2 border-neutral-100 border-opacity-100 p-4 dark:border-opacity-50 min-[0px]:rounded-none">
                     <!-- Modal title -->
-                    <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                    <h5 class="text-base font-medium leading-normal line-clamp-1 text-neutral-800 flex gap-x-2 items-center dark:text-neutral-200"
                         id="exampleModalFullscreenLabel">
-                        Lihat Foto : <span id="judul-foto"></span>
+                        <span class="">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                <path
+                                    d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+                            </svg>
+                        </span>
+                        <span class="hidden sm:inline">Lihat Foto : </span><span id="judul-foto"
+                            class=" capitalize"></span>
                     </h5>
                     <!-- Close button -->
                     <button type="button"
@@ -54,9 +62,9 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="relative py-2 min-[0px]:overflow-y-auto">
+                <div class="relative min-[0px]:overflow-y-auto">
                     <img id="img-priview-url" src="{{ asset('storage/gallery/' . $listGalleries[0]->url_foto) }}"
-                        alt="" class="flex items-center justify-center object-contain w-full h-[92%]">
+                        alt="" class="flex items-center justify-center object-contain w-full h-full">
                 </div>
 
                 <!-- Modal footer -->
@@ -81,8 +89,8 @@
         <!-- Info Foto Modal -->
         <div data-te-modal-init
             class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-            id="staticBackdrop" data-te-backdrop="static" data-te-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            id="staticBackdrop" data-te-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+            aria-hidden="true">
             <div data-te-modal-dialog-ref
                 class="pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:max-w-[500px]">
                 <div
@@ -90,9 +98,8 @@
                     <div
                         class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
                         <!--Modal title-->
-                        <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                        <h5 class="text-xl capitalize font-medium leading-normal text-slate-700 dark:text-neutral-200"
                             id="judul-foto-info">
-                            Judul
                         </h5>
                         <!--Close button-->
                         <button type="button"
@@ -107,18 +114,17 @@
 
                     <!--Modal body-->
                     <div data-te-modal-body-ref class="relative p-4">
-                        <p id="deskripsi-foto" class=""></p>
-                        <p id="tanggal" class="text-sm text-gray-500"></p>
-                    </div>
-
-                    <!--Modal footer-->
-                    <div
-                        class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
-                        <button type="button"
-                            class="inline-block rounded bg-primary-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                            data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
-                            Tutup
-                        </button>
+                        <p id="deskripsi-foto" class="mb-2 text-dark-secondary"></p>
+                        <p class="flex gap-x-2 items-center">
+                            <span class="items-center">
+                                <svg class="w-4 h-4 text-primary-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path fill="currentColor"
+                                        d="M6 1a1 1 0 0 0-2 0h2ZM4 4a1 1 0 0 0 2 0H4Zm7-3a1 1 0 1 0-2 0h2ZM9 4a1 1 0 1 0 2 0H9Zm7-3a1 1 0 1 0-2 0h2Zm-2 3a1 1 0 1 0 2 0h-2ZM1 6a1 1 0 0 0 0 2V6Zm18 2a1 1 0 1 0 0-2v2ZM5 11v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 11v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM10 15v-1H9v1h1Zm0 .01H9v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 15v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM15 11v-1h-1v1h1Zm0 .01h-1v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM5 15v-1H4v1h1Zm0 .01H4v1h1v-1Zm.01 0v1h1v-1h-1Zm0-.01h1v-1h-1v1ZM2 4h16V2H2v2Zm16 0h2a2 2 0 0 0-2-2v2Zm0 0v14h2V4h-2Zm0 14v2a2 2 0 0 0 2-2h-2Zm0 0H2v2h16v-2ZM2 18H0a2 2 0 0 0 2 2v-2Zm0 0V4H0v14h2ZM2 4V2a2 2 0 0 0-2 2h2Zm2-3v3h2V1H4Zm5 0v3h2V1H9Zm5 0v3h2V1h-2ZM1 8h18V6H1v2Zm3 3v.01h2V11H4Zm1 1.01h.01v-2H5v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H5v2h.01v-2ZM9 11v.01h2V11H9Zm1 1.01h.01v-2H10v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM9 15v.01h2V15H9Zm1 1.01h.01v-2H10v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H10v2h.01v-2ZM14 15v.01h2V15h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM14 11v.01h2V11h-2Zm1 1.01h.01v-2H15v2Zm1.01-1V11h-2v.01h2Zm-1-1.01H15v2h.01v-2ZM4 15v.01h2V15H4Zm1 1.01h.01v-2H5v2Zm1.01-1V15h-2v.01h2Zm-1-1.01H5v2h.01v-2Z" />
+                                </svg>
+                            </span>
+                            <span id="tanggal" class="text-sm text-gray-500"></span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -132,6 +138,7 @@
             document.getElementById('judul-foto-info').innerHTML = event.detail.judul;
             document.getElementById('deskripsi-foto').innerHTML = event.detail.deskripsi;
             document.getElementById('tanggal').innerHTML = event.detail.tanggal;
+            document.getElementById('img-priview-url').alt = event.detail.judul;
         })
     </script>
 </div>
