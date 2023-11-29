@@ -1,17 +1,38 @@
 <div>
     <div class="">
-        <div class="">
-            <!--Button trigger vertically centered scrollable modal-->
-            <button type="button"
-                class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                data-te-toggle="modal" data-te-target="#exampleModalCenteredScrollable" data-te-ripple-init
-                data-te-ripple-color="light" data-te-target="#exampleModalCenteredScrollableLabel">
-                Buat Pemasukan
-            </button>
+
+        <div class="flex flex-col gap-y-4">
+            <div class="w-fit">
+                <div class="flex w-fit px-4 py-3 bg-white rounded shadow gap-x-4">
+                    <div class="flex items-center">
+                        <img src="{{ asset('assets/icons/money.png') }}" alt="" class="h-12 w-auto">
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <h6 class="font-medium text-dark-secondary caption">
+                            {{ $keuanganAktif->nama }}
+                        </h6>
+                        <span class="text-xs text-dark-secondary">Saldo Saat ini</span>
+                        <h4 class="heading-6 text-cyan-600">
+                            <span class="text-sm font-medium">Rp</span>
+                            {{ number_format($total_saldo, 0, ',', '.') }}
+
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!--Button trigger vertically centered scrollable modal-->
+                <button type="button"
+                    class="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                    data-te-toggle="modal" data-te-target="#exampleModalCenteredScrollable" data-te-ripple-init
+                    data-te-ripple-color="light" data-te-target="#exampleModalCenteredScrollableLabel">
+                    Buat Pemasukan
+                </button>
+            </div>
         </div>
 
         <!--Verically centered scrollable modal-->
-        <div data-te-modal-init
+        <div data-te-modal-init wire:ignore
             class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
             id="exampleModalCenteredScrollable" tabindex="-1" aria-labelledby="exampleModalCenteredScrollable"
             aria-modal="true" role="dialog" data-te-backdrop="static" data-te-keyboard="false">
@@ -22,12 +43,19 @@
                     <div
                         class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
                         <!--Modal title-->
-                        <div class="">
-                            <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
-                                id="exampleModalCenteredScrollableLabel">
-                                Buat Catatan Pemasukan
-                            </h5>
-                            <h6 class="text-dark-secondary">untuk keuangan {{ $keuanganAktif->nama }}</h6>
+                        <div class="flex gap-x-2 items-center">
+                            <div class="">
+                                <img src="{{ asset('assets/icons/income.png') }}" alt="" class="h-16 w-auto">
+                            </div>
+                            <div class="">
+                                <h5 class="heading-6 font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                    id="exampleModalCenteredScrollableLabel">
+                                    Buat Pemasukan
+                                </h5>
+                                <h6 class="text-dark-secondary text-sm">
+                                    {{ $keuanganAktif->nama }}
+                                </h6>
+                            </div>
                         </div>
                         <!--Close button-->
                         <button type="button"

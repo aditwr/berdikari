@@ -6,8 +6,8 @@
             <a href="#" class="text-dark-primary hover:text-primary-700">Pemasukan</a>
         </x-dashboard.breadcrumb>
     </div>
-    <div class="flex flex-col mb-8 md:flex-row md:items-end gap-x-8 gap-y-2">
-        <div class="flex w-full flex-col sm:flex-row gap-y-4 gap-x-8">
+    <div class="mb-6">
+        <div class="flex flex-col sm:flex-row gap-y-4 gap-x-8">
             <livewire:dashboard.keuangan.partials.select classContainer="w-full">
                 <div class="flex gap-x-8">
                     {{-- select bulan --}}
@@ -46,7 +46,7 @@
         </div>
     </div>
     <div class="mb-6">
-        @can('buat-kategori-keuangan')
+        @can('buat-pemasukan')
             <livewire:dashboard.keuangan.pemasukan.create>
             @endcan
     </div>

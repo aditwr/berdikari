@@ -1,23 +1,4 @@
 <div class="relative p-4">
-    <!--Modal body-->
-    @if ($notification['show'])
-        {{-- alert --}}
-        <div class="flex items-center px-3 py-3 mb-3 bg-success-200">
-            <p class="text-sm basis-full text-dark-secondary">Pengeluaran baru dengan judul " <span
-                    class="font-medium">{{ $notification['judul'] }}</span> " berhasil
-                tersimpan!</p>
-            {{-- close button --}}
-            <button type="button" wire:click="closeNotification" class="">
-                <svg class="w-5 h-5 text-gray-400 hover:text-gray-500" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </button>
-        </div>
-    @endif
-
     <div class="relative">
         {{ $keuanganAktif->nama }}
         <div class="relative mb-4">
@@ -31,8 +12,14 @@
         <div class="relative mb-4">
             <label for="" class="block mb-2 font-medium caption text-dark-secondary">Nominal
                 Pengeluaran</label>
-            <input type="number" wire:model.defer="nominalPengeluaran"
-                class="block w-full transition-all rounded border-neutral-300" />
+            <div class="flex gap-x-2 items-center">
+                <div class="">
+                    <img src="{{ asset('assets/icons/money2.png') }}" alt="" class="h-8 w-auto">
+                </div>
+                <input type="number" wire:model.defer="nominalPengeluaran"
+                    class="block w-full transition-all rounded border-neutral-300" />
+            </div>
+
             @error('nominalPengeluaran')
                 <span class="text-xs text-danger-600">{{ $message }}</span>
             @enderror
@@ -63,3 +50,15 @@
         </button>
     </div>
 </div>
+@push('script_after')
+    <script>
+        // sweet alert
+        window.addEventListener('create-pengeluaran-success', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+            })
+        })
+    </script>
+@endpush

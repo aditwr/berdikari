@@ -17,11 +17,6 @@ class CreateForm extends Component
     public $nominalPemasukan;
     public $keteranganPemasukan;
 
-    public $notification = [
-        'show' => false,
-        'judul' => '',
-    ];
-
     protected $listeners = [
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
     ];
@@ -57,17 +52,11 @@ class CreateForm extends Component
             'keterangan' => $this->keteranganPemasukan,
         ]);
 
-        $this->notification['show'] = true;
-        $this->notification['judul'] = $this->judulPemasukan;
-
         $this->emit('pemasukanCreated');
         $this->emit('refreshTable');
 
         $this->reset(['judulPemasukan', 'nominalPemasukan', 'keteranganPemasukan']);
-    }
-    public function closeNotification()
-    {
-        $this->notification['show'] = false;
+        $this->dispatchBrowserEvent('create-pemasukan-success', ['title' => 'Sukses!', 'message' => 'Pemasukan berhasil ditambahkan!']);
     }
 
     public function updateKeuanganAktifFromSelect($data)
