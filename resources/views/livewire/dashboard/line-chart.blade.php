@@ -20,23 +20,24 @@
                             data: {{ json_encode($nominal_keuangan_bulan_ini) }},
                             fill: true,
                             borderWidth: 3,
-                            borderColor: 'rgb(48, 97, 175)',
+                            borderColor: '#16a34a',
                             // gradient backgroundColor
                             backgroundColor: (context) => {
                                 let gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
-                                gradient.addColorStop(0, 'rgba(48, 97, 175, .6)');
-                                gradient.addColorStop(1, 'rgba(48, 97, 175, 0)');
+                                gradient.addColorStop(0, 'rgba(34,197,94,0.8)');
+                                gradient.addColorStop(1, 'rgba(34,197,94,0)');
                                 return gradient;
                             },
-                            pointBackgroundColor: 'rgb(48, 97, 175)',
-                            pointBorderColor: 'rgb(255, 255, 255)',
+                            pointBackgroundColor: '#16a34a',
+                            pointBorderColor: '#fff',
                             pointBorderWidth: 2,
+                            pointHoverBorderWidth: 3,
                             pointRadius: 5,
                             pointHoverRadius: 8,
-                            pointHoverBackgroundColor: 'rgb(48, 97, 175)',
+                            pointHoverBackgroundColor: '#16a34a',
                             cubicInterpolationMode: 'monotone',
                             tension: 0.4,
-                        }]
+                        }, ]
                     },
                     options: {
                         responsive: true,

@@ -1,7 +1,7 @@
 <div>
     <div class="w-full 2xl:w-9/12">
         {{-- toast --}}
-        @if ($notification['status'])
+        {{-- @if ($notification['status'])
             <div class="pointer-events-auto mx-auto mb-4 hidden w-full max-w-full rounded-lg bg-success-100 bg-clip-padding text-sm text-success-700 shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden"
                 id="static-example" role="alert" aria-live="assertive" aria-atomic="true" data-te-autohide="false"
                 data-te-toast-init data-te-toast-show>
@@ -35,7 +35,7 @@
                     {!! $notification['message'] !!}
                 </div>
             </div>
-        @endif
+        @endif --}}
     </div>
     <div class="">
         <div class="w-full 2xl:w-9/12">
@@ -103,26 +103,51 @@
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
-                                                <td class="flex items-center w-64 py-2 pl-1 whitespace-pre-wrap">
-                                                    <p class="font-medium text-dark-secondary">{{ $pengeluaran->judul }}
+                                                <td data-te-toggle="tooltip" title="{{ $pengeluaran->judul }}"
+                                                    class="flex items-center w-64 py-2 pl-1 line-clamp-1 capitalize">
+                                                    <p class="font-medium text-dark-secondary">
+                                                        {{ $pengeluaran->judul }}
                                                     </p>
                                                 </td>
                                                 <td
-                                                    class="flex items-center w-32 py-2 pl-2 text-sm break-words whitespace-normal">
+                                                    class="flex gap-x-1 items-center w-32 py-2 pl-2 text-sm break-words whitespace-normal">
                                                     <p class="font-medium text-danger-600">
-                                                        Rp{{ number_format($pengeluaran->nominal, 0, ',', '.') }},-</p>
+                                                    <p class="font-bold text-danger-600">
+                                                        <span class="font-medium text-xs">Rp</span>
+                                                        {{ number_format($pengeluaran->nominal, 0, ',', '.') }}
+                                                    </p>
+                                                    <div class="">
+                                                        <img src="{{ asset('assets/icons/decrease.png') }}"
+                                                            alt="" class="h-5 w-auto">
+                                                    </div>
                                                 </td>
-                                                <td class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
-                                                    {{-- format date : date_format --}}
-                                                    {{ date_format(date_create($pengeluaran->created_at), 'D, d F Y') }}
+                                                <td data-te-toggle="tooltip"
+                                                    title="{{ $pengeluaran->created_at->isoFormat('dddd, D MMMM Y') }}"
+                                                    class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
+                                                    <span
+                                                        class="font-medium">{{ $pengeluaran->created_at->isoFormat('D MMMM Y') }}</span>
                                                 </td>
                                                 <td
-                                                    class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
-                                                    Rp{{ number_format($pengeluaran->saldo_awal, 0, ',', '.') }},-
+                                                    class="py-2 pl-2 flex gap-x-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
+                                                    <div class="">
+                                                        <img src="{{ asset('assets/icons/coin.png') }}" alt=""
+                                                            class="h-4 w-auto">
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="font-medium text-xs">Rp</span>
+                                                        {{ number_format($pengeluaran->perhitungan_saldo_awal, 0, ',', '.') }}
+                                                    </div>
                                                 </td>
                                                 <td
-                                                    class="py-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
-                                                    Rp{{ number_format($pengeluaran->saldo_akhir, 0, ',', '.') }},-
+                                                    class="py-2 flex gap-x-2 pl-2 text-sm font-medium w-36 whitespace-nowrap text-primary-700">
+                                                    <div class="">
+                                                        <img src="{{ asset('assets/icons/coin.png') }}" alt=""
+                                                            class="h-4 w-auto">
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="font-medium text-xs">Rp</span>
+                                                        {{ number_format($pengeluaran->perhitungan_saldo_akhir, 0, ',', '.') }}
+                                                    </div>
                                                 </td>
                                                 <td class="px-2 py-2 whitespace-nowrap">
                                                     <div class="space-y-2">
@@ -170,7 +195,22 @@
                                                                 </button>
                                                             </div>
                                                             <div class="relative p-4 text-sm">
-                                                                <p>{{ $pengeluaran->keterangan }}</p>
+                                                                <div class="w-full">
+                                                                    @isset($pengeluaran->keterangan)
+                                                                        <p class="text-dark-secondary">
+                                                                            {{ $pengeluaran->keterangan }}
+                                                                        </p>
+                                                                    @else
+                                                                        <div class="w-full flex flex-col items-center">
+                                                                            <img src="{{ asset('assets/illustrations/data-not-found.png') }}"
+                                                                                alt="" class="h-32 w-auto">
+                                                                            <p
+                                                                                class="font-medium text-center text-gray-500">
+                                                                                Tidak ada keterangan</p>
+
+                                                                        </div>
+                                                                    @endisset
+                                                                </div>
                                                             </div>
                                                             <div
                                                                 class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
@@ -280,7 +320,7 @@
                                                             <!--Modal body-->
                                                             <div class="relative p-4" wire:>
                                                                 <p>Apakah anda yakin ingin menghapus pemasukan "<span
-                                                                        class="font-medium">{{ $pengeluaran->judul }}</span>"?
+                                                                        class="font-medium text-dark-secondary">{{ $pengeluaran->judul }}</span>"?
                                                                 </p>
                                                             </div>
                                                             <!--Modal footer-->
@@ -333,14 +373,20 @@
                                         <div
                                             class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
                                             <!--Modal title-->
-                                            <div class="">
-                                                <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
-                                                    id="exampleModalCenteredScrollableLabel">
-                                                    Ubah Catatan Pemasukan
-                                                </h5>
-                                                <h6 class="text-dark-secondary">untuk keuangan
-                                                    {{ $dataKeuanganAktif['nama'] }}
-                                                </h6>
+                                            <div class="flex gap-x-2 items-center px-1">
+                                                <div class="">
+                                                    <img src="{{ asset('assets/icons/expenses.png') }}"
+                                                        alt="" class="h-16 w-auto">
+                                                </div>
+                                                <div class="">
+                                                    <h5 class="heading-6 font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                                        id="exampleModalCenteredScrollableLabel">
+                                                        Ubah Catatan Pengeluaran
+                                                    </h5>
+                                                    <h6 class="text-dark-secondary text-sm">
+                                                        {{ $dataKeuanganAktif['nama'] }}
+                                                    </h6>
+                                                </div>
                                             </div>
                                             <!--Close button-->
                                             <button type="button"
@@ -371,3 +417,26 @@
     </div>
 
 </div>
+@push('script_after')
+    <script>
+        // sweet alert
+        window.addEventListener('update-pengeluaran-success', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        })
+        window.addEventListener('delete-pengeluaran-success', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        })
+    </script>
+@endpush

@@ -1,5 +1,7 @@
-<div class="bg-white rounded-lg w-full shadow py-4 px-4 md:py-8 md:px-8">
-    <div class="mb-2">
+<div class="bg-white rounded-lg w-full h-full shadow py-6 px-4 md:py-8 md:px-8">
+    <div class="mb-4 flex gap-x-2">
+        <img src="{{ asset('assets/icons/bar-graph.png') }}" alt="" class="h-6 w-auto">
+        {{-- <img src="https://img.icons8.com/fluency/48/combo-chart--v1.png" class="h-10 w-auto" alt="combo-chart--v1" /> --}}
         <h class="heading-6">Grafik Keuangan Bulan ini</h>
     </div>
     <div class="">

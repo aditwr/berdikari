@@ -1,4 +1,4 @@
-<header class="fixed z-50 w-full bg-white shadow-lg text-primary-400">
+<header class="fixed z-50 w-full bg-white shadow-lg">
     <nav class="w-full h-16" x-data="{ hamburgerActive: false }" @click.outside="hamburgerActive = false">
         <div class="relative flex justify-between h-full padding-responsive">
             <div class="h-full">
@@ -14,37 +14,37 @@
                     <ul class="lg:h-full flex flex-col lg:flex-row lg:gap-x-4 lg:w-[560px] lg:justify-center">
                         <li class="h-10 lg:h-full @if (Route::is('landing-page')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
                                 Beranda
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.kegiatan')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page.kegiatan') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Kegiatan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.tulisan')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page.tulisan') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tulisan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.galeri')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page.galeri') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Galeri
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.tentang-kami')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page.tentang-kami') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tentang Kami
                             </a>
                         </li>
                         {{-- <li class="h-10 lg:h-full @if (Route::is('landing-page.kontak')) bg-primary-50 @endif">
                             <a href="{{ route('landing-page.kontak') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.kontak')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.kontak')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Kontak
                             </a>
                         </li> --}}
@@ -85,31 +85,31 @@
                     <ul class="lg:h-full flex flex-col lg:flex-row lg:gap-x-6 lg:w-[560px] lg:justify-center">
                         <li class="h-10 lg:h-full @if (Route::is('landing-page')) bg-primary-100 @endif">
                             <a href="{{ route('landing-page') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif ">
                                 Beranda
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.kegiatan')) bg-primary-100 @endif">
                             <a href="{{ route('landing-page.kegiatan') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.kegiatan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Kegiatan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.tulisan')) bg-primary-100 @endif">
                             <a href="{{ route('landing-page.tulisan') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.tulisan')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tulisan
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.galeri')) bg-primary-100 @endif">
                             <a href="{{ route('landing-page.galeri') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.galeri')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Galeri
                             </a>
                         </li>
                         <li class="h-10 lg:h-full @if (Route::is('landing-page.tentang-kami')) bg-primary-100 @endif">
                             <a href="{{ route('landing-page.tentang-kami') }}"
-                                class="flex items-center tracking-normal text-sm h-full px-2 @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
+                                class="flex items-center tracking-normal text-sm text-primary-500 h-full px-2 @if (Route::is('landing-page.tentang-kami')) text-primary-700 font-medium border-primary-700 lg:border-b-2 @endif">
                                 Tentang Kami
                             </a>
                         </li>

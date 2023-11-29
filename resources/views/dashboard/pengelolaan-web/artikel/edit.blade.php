@@ -54,8 +54,8 @@
             @endif
             {{-- end toast --}}
 
-            <form action="{{ route('dashboard.pengelolaan-web.artikel.update') }}" enctype="multipart/form-data"
-                method="POST" class="block w-full">
+            <form action="{{ route('dashboard.artikel.update') }}" enctype="multipart/form-data" method="POST"
+                class="block w-full">
                 @csrf
                 <input type="hidden" name="id" value="{{ $artikel->id }}">
                 <input type="hidden" name="fotoLama" value="{{ $artikel->gambar }}">

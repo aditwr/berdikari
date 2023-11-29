@@ -70,8 +70,7 @@
                     <div class="mt-4">
                         @foreach ($artikelTerbaru as $artikelBaru)
                             {{-- item --}}
-                            <a href="{{ route('dashboard.pengelolaan-web.artikel.baca', $artikelBaru->id) }}"
-                                class="">
+                            <a href="{{ route('dashboard.artikel.baca', $artikelBaru->id) }}" class="">
                                 <div
                                     class="flex items-center w-full py-1 my-4 rounded-lg gap-x-2 hover:bg-slate-50 hover:cursor-pointer">
                                     <div class="flex-none w-28">

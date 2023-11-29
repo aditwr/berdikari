@@ -9,6 +9,7 @@ class Select extends Component
 {
     public $keuangans;
     public $keuanganAktif;
+    public $classContainer;
 
     public function mount()
     {

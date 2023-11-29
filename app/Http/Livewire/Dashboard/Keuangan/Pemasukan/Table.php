@@ -3,9 +3,11 @@
 namespace App\Http\Livewire\Dashboard\Keuangan\Pemasukan;
 
 use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Keuangan;
 use App\Models\Pemasukan;
+use App\Models\Pengeluaran;
+use Livewire\WithPagination;
+use App\Models\AkumulasiKeuanganTahunan;
 
 class Table extends Component
 {
@@ -22,7 +24,6 @@ class Table extends Component
 
     public $editId = null;
     public $deleteId = null;
-    public $notification = ['status' => false, 'title' => '', 'message' => ''];
 
 
     protected $listeners = [
@@ -30,7 +31,6 @@ class Table extends Component
         'KeuanganAktifUpdatedFromSelect' => 'updateKeuanganAktifFromSelect',
         'refreshTable' => '$refresh',
         'refresh' => '$refresh',
-        'notification' => 'showNotification',
         'bulanAktifUpdated' => 'updateBulanAktif',
         'tahunAktifUpdated' => 'updateTahunAktif',
     ];
@@ -85,22 +85,13 @@ class Table extends Component
         }
     }
 
-    public function showNotification($data)
-    {
-        $this->notification = [
-            'status' => true,
-            'title' => $data['title'],
-            'message' => $data['message'],
-        ];
-    }
-
     public function deleteItem()
     {
         $pemasukan = Pemasukan::find($this->deleteId);
-        $this->emitSelf('notification', ['title' => 'Penghapusan berhasil', 'message' => 'Pemasukan dengan judul "<span class="font-medium" >' . $pemasukan->judul . '</span>" berhasil dihapus!']);
         $pemasukan->delete();
         $this->emit('refreshTable');
         $this->emit('refresh');
+        $this->dispatchBrowserEvent('delete-pemasukan-success', ['title' => 'Sukses', 'message' => 'Data pemasukan berhasil dihapus!']);
     }
 
     public function setUpdate($pemasukan)
@@ -111,6 +102,30 @@ class Table extends Component
     public function render()
     {
         $pemasukans = $this->getPemasukan();
+        // ambil tanggal dalam perulangan
+        for ($i = 0; $i < count($pemasukans); $i++) {
+            // ambil tanggal dalam format hari, 
+            $tanggal_dibuat = strtotime($pemasukans[$i]->created_at);
+            // hitung saldo awal
+            // hitung pemasukan sampai sebelum data dibuat
+            $pemasukan_sampai_sebelum_data_dibuat = Pemasukan::where('tipe', $this->keuanganAktif)
+                ->where('created_at', '<', $pemasukans[$i]->created_at)
+                ->sum('nominal');
+            // hitung pengeluaran sampai sebelum data dibuat
+            $pengeluaran_sampai_sebelum_data_dibuat = Pengeluaran::where('tipe', $this->keuanganAktif)
+                ->where('created_at', '<', $pemasukans[$i]->created_at)
+                ->sum('nominal');
+            // hitung saldo awal
+            $saldo_awal = $pemasukan_sampai_sebelum_data_dibuat - $pengeluaran_sampai_sebelum_data_dibuat;
+
+            if (AkumulasiKeuanganTahunan::where('tipe', $this->keuanganAktif)->exists()) {
+                $saldo_awal += AkumulasiKeuanganTahunan::where('tipe', $this->keuanganAktif)->sum('nominal');
+            }
+            // masukan sebagai atribut tambahan ke array pemasukans
+            $pemasukans[$i]->perhitungan_saldo_awal = $saldo_awal;
+            // hitung saldo akhir
+            $pemasukans[$i]->perhitungan_saldo_akhir = $saldo_awal + $pemasukans[$i]->nominal;
+        }
         return view('livewire.dashboard.keuangan.pemasukan.table', compact('pemasukans'));
     }
 }

@@ -7,8 +7,8 @@
         </x-dashboard.breadcrumb>
     </div>
     <div class="flex flex-col mb-8 md:flex-row md:items-end gap-x-8 gap-y-2">
-        <div class="flex flex-col md:flex-row gap-y-4 gap-x-8">
-            <livewire:dashboard.keuangan.partials.select>
+        <div class="flex w-full flex-col sm:flex-row gap-y-4 gap-x-8">
+            <livewire:dashboard.keuangan.partials.select classContainer="w-full">
                 <div class="flex gap-x-8">
                     {{-- select bulan --}}
                     <div class="">

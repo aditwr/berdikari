@@ -85,16 +85,16 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function () {
 
             Route::prefix('artikel')->group(
                 function () {
-                    Route::get('/', [PengelolaanWebController::class, 'artikel'])->name('dashboard.pengelolaan-web.artikel.index');
+                    Route::get('/', [PengelolaanWebController::class, 'artikel'])->name('dashboard.artikel.index');
                     Route::group(['middleware' => ['can:buat-artikel']], function () {
-                        Route::get('/tambah', [PengelolaanWebController::class, 'artikelTambah'])->name('dashboard.pengelolaan-web.artikel.tambah');
-                        Route::post('/simpan', [PengelolaanWebController::class, 'artikelSimpan'])->name('dashboard.pengelolaan-web.artikel.simpan');
+                        Route::get('/tambah', [PengelolaanWebController::class, 'artikelTambah'])->name('dashboard.artikel.tambah');
+                        Route::post('/simpan', [PengelolaanWebController::class, 'artikelSimpan'])->name('dashboard.artikel.simpan');
                     });
                     Route::group(['middleware' => ['can:edit-artikel']], function () {
-                        Route::get('/edit/{id}', [PengelolaanWebController::class, 'artikelEdit'])->name('dashboard.pengelolaan-web.artikel.edit');
-                        Route::post('/update', [PengelolaanWebController::class, 'artikelUpdate'])->name('dashboard.pengelolaan-web.artikel.update');
+                        Route::get('/edit/{id}', [PengelolaanWebController::class, 'artikelEdit'])->name('dashboard.artikel.edit');
+                        Route::post('/update', [PengelolaanWebController::class, 'artikelUpdate'])->name('dashboard.artikel.update');
                     });
-                    Route::get('/baca/{id}', [PengelolaanWebController::class, 'artikelBaca'])->name('dashboard.pengelolaan-web.artikel.baca');
+                    Route::get('/baca/{id}', [PengelolaanWebController::class, 'artikelBaca'])->name('dashboard.artikel.baca');
                 }
             );
             Route::prefix('gallery')->group(

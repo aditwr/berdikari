@@ -1,4 +1,4 @@
-<div class="relative p-4">
+<div class="relative p-4 sm:px-6">
     <form class="w-full" wire:submit.prevent="update">
         <div class="relative">
             <div class="relative mb-4">
@@ -13,14 +13,14 @@
             <div class="relative mb-4">
                 <label for="" class="block mb-2 font-medium caption text-dark-secondary">Nominal
                     Pengeluaran</label>
-                <input type="number" wire:model="nominalPengeluaran"
-                    class="block w-full transition-all rounded border-neutral-300" />
+                <div class="flex gap-x-2 items-center">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/money2.png') }}" alt="" class="h-8 w-auto">
+                    </div>
+                    <input type="number" wire:model="nominalPengeluaran"
+                        class="block w-full transition-all rounded border-neutral-300" />
+                </div>
 
-                {{-- <span class="block px-1 my-1 text-xs text-info-700">demi catatan keuangan yang sinkron dan konsisten,
-                    nominal
-                    Pengeluaran
-                    lampau tidak dapat
-                    diubah</span> --}}
                 @error('nominalPengeluaran')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror

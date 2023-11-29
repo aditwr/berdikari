@@ -30,7 +30,7 @@
 
     <!--Main layout-->
     <main style="">
-        <div class="pt-[84px] xl:pl-[264px] 2xl:pl-72  pb-12">
+        <div class="pt-24 xl:pt-2 xl:pl-[264px] 2xl:pl-72  pb-8">
             {{-- Content --}}
             @yield('content')
         </div>

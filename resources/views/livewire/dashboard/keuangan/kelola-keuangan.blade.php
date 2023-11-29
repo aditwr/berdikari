@@ -29,11 +29,7 @@
                 <div class="flex flex-col lg:flex-row gap-x-8 gap-y-2">
                     <div class="flex px-4 py-3 bg-white rounded shadow gap-x-4">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-8 h-8">
-                                <path
-                                    d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
-                            </svg>
+                            <img src="{{ asset('assets/icons/money.png') }}" alt="" class="h-12 w-auto">
                         </div>
                         <div class="flex flex-col justify-between">
                             <h6 class="font-medium text-dark-secondary caption">
@@ -42,18 +38,15 @@
                             </h6>
                             <span class="text-xs text-dark-secondary">Saat ini</span>
                             <h4 class="heading-6 text-cyan-600">
-                                Rp{{ number_format($statistikKeuanganAktif['totalKeuanganSaatIni'], 0, ',', '.') }},-
+                                <span class="text-sm font-medium">Rp</span>
+                                {{ number_format($statistikKeuanganAktif['totalKeuanganSaatIni'], 0, ',', '.') }}
                             </h4>
                         </div>
                     </div>
                     {{-- item --}}
                     <div class="flex px-4 py-3 bg-white rounded shadow gap-x-4">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-8 h-8">
-                                <path
-                                    d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
-                            </svg>
+                            <img src="{{ asset('assets/icons/income.png') }}" alt="" class="h-12 w-auto">
                         </div>
                         <div class="flex flex-col justify-between">
                             <h6 class="font-medium text-dark-secondary caption">Pemasukan</h6>
@@ -61,17 +54,14 @@
                                 Bulan ini
                             </span>
                             <h4 class="font-medium text-green-600 subheading-5">
-                                Rp{{ number_format($statistikKeuanganAktif['totalPemasukanSatuBulan'], 0, ',', '.') }},-
+                                <span class="text-sm font-medium">Rp</span>
+                                {{ number_format($statistikKeuanganAktif['totalPemasukanSatuBulan'], 0, ',', '.') }}
                             </h4>
                         </div>
                     </div>
                     <div class="flex px-4 py-3 bg-white rounded shadow gap-x-4">
                         <div class="flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-8 h-8">
-                                <path
-                                    d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
-                            </svg>
+                            <img src="{{ asset('assets/icons/expenses.png') }}" alt="" class="h-12 w-auto">
                         </div>
                         <div class="flex flex-col justify-between">
                             <h6 class="font-medium text-dark-secondary caption">Pengeluaran</h6>
@@ -79,7 +69,8 @@
                                 Bulan ini
                             </span>
                             <h4 class="font-medium text-red-600 subheading-5">
-                                Rp{{ number_format($statistikKeuanganAktif['totalPengeluaranSatuBulan'], 0, ',', '.') }},-
+                                <span class="text-sm font-medium">Rp</span>
+                                {{ number_format($statistikKeuanganAktif['totalPengeluaranSatuBulan'], 0, ',', '.') }}
                             </h4>
                         </div>
                     </div>
@@ -127,26 +118,36 @@
                                     </div>
                                     <div class="">
                                         <div class="text-center">
-                                            <h6 class="mt-1 font-medium caption text-dark-secondary">Total Saldo
-                                                Keuangan Karangtaruna
+                                            <h6 class="mt-2 mb-2 font-medium subheading-6 text-dark-secondary">Total
+                                                Saldo
+                                                Keuangan
                                             </h6>
-                                            <h3 class="font-semibold text-primary-800 subheading-4">
-                                                Rp{{ number_format($total_saldo_karangtaruna, 0, ',', '.') }},-</h3>
+                                            <div class="flex gap-x-1 items-center justify-center">
+                                                <div class="">
+                                                    <img src="https://img.icons8.com/fluency/48/cheap-2.png"
+                                                        alt="cheap-2" class="h-8 w-auto" />
+                                                </div>
+                                                <h3 class="">
+                                                    <span class="font-medium text-primary-500 text-lg">Rp</span>
+                                                    <span
+                                                        class="font-semibold text-cyan-700 heading-4 tracking-tight">{{ number_format($total_saldo_karangtaruna, 0, ',', '.') }}</span>
+                                                </h3>
+                                            </div>
                                         </div>
+                                        {{-- daftar keuangan --}}
                                         <div class="grid grid-cols-2 gap-4 mt-4 md:grid-cols-3 ">
                                             @foreach ($daftar_keuangan as $keuangan)
                                                 <div class="px-2 py-3 bg-white rounded-md shadow-lg">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-8 h-8">
-                                                        <path
-                                                            d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
-                                                    </svg>
+                                                    <img src="{{ asset('assets/icons/money.png') }}" alt=""
+                                                        class="h-8 w-auto">
                                                     <div class="mt-1">
-                                                        <h6 class="text-sm font-medium text-dark-secondary">
+                                                        <h6 class="text-sm font-medium text-dark">
                                                             {{ $keuangan->nama }}
                                                         </h6>
-                                                        <h3 class="font-medium subheading-5 text-primary-700">
-                                                            Rp{{ number_format($keuangan->saldo, 0, ',', '.') }},-</h3>
+                                                        <h3 class="font-medium subheading-5 text-cyan-700">
+                                                            <span class="text-sm font-medim">Rp</span>
+                                                            {{ number_format($keuangan->saldo, 0, ',', '.') }}
+                                                        </h3>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -205,27 +206,30 @@
                     </div>
                 </div>
                 {{-- chart --}}
-                <h3 class="font-semibold subheading-5">
-                    @if ($bulanAktif == date('m') && $tahunAktif == date('Y'))
-                        Grafik Keuangan Bulan Ini
-                    @else
-                        Grafik Keuangan Bulan {{ config('constants.bulan.' . $bulanAktif) }} {{ $tahunAktif }}
-                    @endif
-                </h3>
+                <div class="flex gap-x-2">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/bar-graph.png') }}" alt="" class="h-6 w-auto">
+                    </div>
+                    <h3 class="font-semibold subheading-5">
+                        @if ($bulanAktif == date('m') && $tahunAktif == date('Y'))
+                            Grafik Keuangan Bulan Ini
+                        @else
+                            Grafik Keuangan Bulan {{ config('constants.bulan.' . $bulanAktif) }} {{ $tahunAktif }}
+                        @endif
+                    </h3>
+                </div>
                 <livewire:dashboard.line-chart id_chart="grafik_keuangan_bulan_ini" :label="$dataKeuanganAktif->nama"
                     bulanAktif="{{ $bulanAktif }}" tahunAktif="{{ $tahunAktif }}"
                     container_class="w-full h-64 lg:h-72" :daftar_tanggal_bulan_ini="$daftar_tanggal_bulan_ini" :nominal_keuangan_bulan_ini="$nominal_keuangan_bulan_ini">
 
             </div>
             <div class="flex mt-4 lg:justify-end lg:w-4/12 md:mt-6 lg:mt-0 xl:pl-4">
-                <div class="px-4 py-3 bg-white border-l-2 rounded shadow-md w-96 border-primary">
+                <div class="px-4 sm:px-6 py-3 bg-white border-l-2 rounded shadow-md w-96 border-primary-400">
                     <div class="flex items-center py-4 gap-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                            class="w-8 h-8">
-                            <path
-                                d="M12.378 1.602a.75.75 0 00-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03zM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 00.372-.648V7.93zM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 00.372.648l8.628 5.033z" />
-                        </svg>
-                        <h5 class="font-semibold subheading-5 text-primary-700">
+                        <div class="">
+                            <img src="{{ asset('assets/icons/money2.png') }}" alt="" class="h-8 w-auto">
+                        </div>
+                        <h5 class="font-semibold subheading-5 text-primary-900">
                             @if ($bulanAktif == date('m') && $tahunAktif == date('Y'))
                                 Keuangan Bulan Ini
                             @else
@@ -252,15 +256,18 @@
                                 @endif
                             </span>
                             <span class="font-medium subheading-5 text-cyan-600">
-                                Rp{{ number_format($saldo_sampai_pada_bulan_aktif, 0, ',', '.') }},-
+                                <span class="text-sm font-medium">Rp</span>
+                                {{ number_format($saldo_sampai_pada_bulan_aktif, 0, ',', '.') }}
                             </span>
                         </div>
                         <hr class="mb-4">
                         <div class="py-2">
-                            <div class="flex justify-between w-full mb-3">
+                            <div class="flex justify-between w-full">
                                 <span class="font-medium caption">Pemasukan : </span>
-                                <span
-                                    class="font-medium subheading-5 text-success-600">Rp{{ number_format($nominalPemasukanSatuBulan, 0, ',', '.') }},-</span>
+                                <span class="font-medium subheading-5 text-success-600">
+                                    <span class="text-sm font-medium">Rp</span>
+                                    {{ number_format($nominalPemasukanSatuBulan, 0, ',', '.') }}
+                                </span>
                             </div>
                             <div class="flex justify-between w-full">
                                 <span class="font-medium caption">Banyak Pemasukan : </span>
@@ -273,8 +280,9 @@
                         <div class="py-2">
                             <div class="flex justify-between w-full">
                                 <span class="font-medium caption">Pengeluaran : </span>
-                                <span
-                                    class="font-medium subheading-5 text-danger-600">Rp{{ number_format($nominalPengeluaranSatuBulan, 0, ',', '.') }},-</span>
+                                <span class="font-medium subheading-5 text-danger-600">
+                                    <span class="text-sm font-medium">Rp</span>
+                                    {{ number_format($nominalPengeluaranSatuBulan, 0, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between w-full">
                                 <span class="font-medium caption">Banyak Pengeluaran : </span>

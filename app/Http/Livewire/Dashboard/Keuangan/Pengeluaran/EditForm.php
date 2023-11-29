@@ -62,8 +62,8 @@ class EditForm extends Component
 
         $this->emit('refresh');
         $this->emit('refreshTable');
-        $this->emit('notification', ['title' => 'Ubah data berhasil!', 'message' => 'Pengeluaran dengan judul "<span class="font-medium" >' . $judul_pengeluaran_lama . '</span>" telah diubah!']);
         $this->reset(['judulPengeluaran', 'nominalPengeluaran', 'keteranganPengeluaran']);
+        $this->dispatchBrowserEvent('update-pengeluaran-success', ['title' => 'Sukses', 'message' => 'Data pengeluaran berhasil diubah!']);
     }
 
     public function updateKeuanganAktifFromSelect($data)

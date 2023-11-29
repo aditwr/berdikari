@@ -8,7 +8,7 @@
     </div>
     <div class="my-2">
         @can('buat-artikel')
-            <a href="{{ route('dashboard.pengelolaan-web.artikel.tambah') }}" class="btn-primary">
+            <a href="{{ route('dashboard.artikel.tambah') }}" class="btn-primary">
                 Buat Artikel
             </a>
         @endcan
@@ -187,11 +187,11 @@
                             </div>
                             {{-- button --}}
                             <div class="flex justify-between px-4 pt-2 pb-4">
-                                <a href="{{ route('dashboard.pengelolaan-web.artikel.baca', $artikel->id) }}"
+                                <a href="{{ route('dashboard.artikel.baca', $artikel->id) }}"
                                     class="btn-primary">Lihat Detail</a>
                                 <div class="flex gap-x-2">
                                     @can('edit-artikel')
-                                        <a href="{{ route('dashboard.pengelolaan-web.artikel.edit', $artikel->id) }}"
+                                        <a href="{{ route('dashboard.artikel.edit', $artikel->id) }}"
                                             class="text-warning-700 bg-warning-200 btn-secondary-small">
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
                                                 height="24" class="p-1 rounded-full bg-warning-300"
