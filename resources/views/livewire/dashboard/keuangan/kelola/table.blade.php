@@ -30,14 +30,24 @@
                                             <p class="font-medium text-dark-secondary">{{ $keuangan->nama }}</p>
                                         </td>
                                         <td
-                                            class="flex items-center w-32 py-2 pl-2 text-sm break-words whitespace-normal">
-                                            <p class="font-medium text-success-600">
-                                                Rp{{ number_format($keuangan->saldo, 0, ',', '.') }},-
-                                            </p>
+                                            class="flex gap-x-1 items-center w-32 py-2 pl-2 text-sm break-words whitespace-normal text-success-600">
+                                            <div class="">
+                                                <img src="{{ asset('assets/icons/coin.png') }}" alt=""
+                                                    class="h-4 w-auto">
+                                            </div>
+                                            <div class="flex items-baseline ">
+                                                <span class="font-medium text-xs">Rp</span>
+                                                <p class="font-bold ">
+                                                    {{ number_format($keuangan->saldo, 0, ',', '.') }}
+                                                </p>
+                                            </div>
+
                                         </td>
-                                        <td class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
+                                        <td data-te-toggle="tooltip"
+                                            title="{{ $keuangan->created_at->isoFormat('dddd, D MMMM Y') }}"
+                                            class="w-32 py-2 pl-2 font-medium whitespace-nowrap">
                                             {{-- format date : date_format --}}
-                                            {{ date_format($keuangan->created_at, 'd M Y') }}
+                                            {{ $keuangan->created_at->isoFormat('D MMMM Y') }}
                                         </td>
                                         <td class="px-2 py-2 whitespace-nowrap">
                                             <div class="space-y-2">

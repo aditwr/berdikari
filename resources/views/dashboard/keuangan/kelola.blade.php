@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.dashboard')
 
 @section('title')
-    Dashboard | Kelola Keuangan
+    Kelola Keuangan
 @endsection
 
 @section('content')

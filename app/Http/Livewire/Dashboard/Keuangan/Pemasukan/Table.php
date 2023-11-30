@@ -7,7 +7,6 @@ use App\Models\Keuangan;
 use App\Models\Pemasukan;
 use App\Models\Pengeluaran;
 use Livewire\WithPagination;
-use App\Models\AkumulasiKeuanganTahunan;
 
 class Table extends Component
 {
@@ -117,10 +116,6 @@ class Table extends Component
                 ->sum('nominal');
             // hitung saldo awal
             $saldo_awal = $pemasukan_sampai_sebelum_data_dibuat - $pengeluaran_sampai_sebelum_data_dibuat;
-
-            if (AkumulasiKeuanganTahunan::where('tipe', $this->keuanganAktif)->exists()) {
-                $saldo_awal += AkumulasiKeuanganTahunan::where('tipe', $this->keuanganAktif)->sum('nominal');
-            }
             // masukan sebagai atribut tambahan ke array pemasukans
             $pemasukans[$i]->perhitungan_saldo_awal = $saldo_awal;
             // hitung saldo akhir

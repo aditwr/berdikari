@@ -65,9 +65,9 @@ class Table extends Component
             $item->delete();
         }
 
-        $this->emit('notification', ['title' => 'Penghapusan berhasil', 'message' => 'Data keuangan "<span class="font-medium" >' . $keuangan->nama . '</span>" berhasil dihapus!']);
         $keuangan->delete();
         $this->emit('refresh');
+        $this->dispatchBrowserEvent('delete-kategori-keuangan-success', ['title' => 'Berhasil', 'message' => 'Kategori keuangan berhasil dihapus!']);
     }
 
     public function render()

@@ -35,8 +35,8 @@ class EditForm extends Component
             'keterangan' => $this->keterangan,
         ]);
 
-        $this->emit('notification', ['title' => 'Ubah data berhasil', 'message' => 'Data keuangan "<span class="font-medium" >' . $nama_keuangan_lama . '</span>" berhasil diubah!']);
         $this->emit('refresh');
+        $this->dispatchBrowserEvent('update-kategori-keuangan-success', ['title' => 'Berhasil', 'message' => 'Kategori keuangan berhasil diubah!']);
     }
 
     public function render()

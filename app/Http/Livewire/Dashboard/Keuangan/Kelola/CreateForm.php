@@ -11,11 +11,6 @@ class CreateForm extends Component
     public $namaKeuangan;
     public $keterangan;
 
-    public $notification = [
-        'show' => false,
-        'nama' => '',
-    ];
-
     protected $rules = [
         'namaKeuangan' => 'required',
     ];
@@ -40,16 +35,9 @@ class CreateForm extends Component
             'total_pengeluaran' => 0,
         ]);
 
-        $this->notification['show'] = true;
-        $this->notification['nama'] = $this->namaKeuangan;
-
         $this->emit('refresh');
         $this->reset(['namaKeuangan', 'keterangan']);
-    }
-
-    public function closeNotification()
-    {
-        $this->notification['show'] = false;
+        $this->dispatchBrowserEvent('create-kategori-keuangan-success', ['title' => 'Berhasil', 'message' => 'Kategori keuangan berhasil ditambahkan!']);
     }
 
     public function render()
