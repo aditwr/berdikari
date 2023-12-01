@@ -278,7 +278,7 @@
 
         <!-- Navbar -->
         <nav id="main-navbar"
-            class="fixed left-0 right-0 top-0 flex w-full flex-nowrap items-center justify-between bg-white py-[0.6rem] text-gray-500 shadow-lg hover:text-gray-700 focus:text-gray-700 dark:bg-zinc-700 lg:flex-wrap lg:justify-start xl:pl-60 xl:hidden"
+            class="fixed z-[99999] left-0 right-0 top-0 flex w-full flex-nowrap items-center justify-between bg-white py-[0.6rem] text-gray-500 shadow-lg hover:text-gray-700 focus:text-gray-700 dark:bg-zinc-700 lg:flex-wrap lg:justify-start xl:pl-60 xl:hidden"
             data-te-navbar-ref>
             <!-- Container wrapper -->
             <div class="flex items-center justify-between w-full px-4 py-3">

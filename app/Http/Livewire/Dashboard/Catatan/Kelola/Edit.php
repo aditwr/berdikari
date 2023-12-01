@@ -41,8 +41,8 @@ class Edit extends Component
         //     'keterangan' => $this->keterangan,
         // ]);
 
-        $this->emit('notification', ['title' => 'Ubah data berhasil', 'message' => 'Data keuangan "<span class="font-medium" >' . $nama_jenis_catatan_lama . '</span>" berhasil diubah!']);
         $this->emit('refresh');
+        $this->dispatchBrowserEvent('ubah-kategori-catatan-berhasil', ["title" => "Berhasil", "message" => "Kategori catatan berhasil diubah!"]);
     }
     public function render()
     {

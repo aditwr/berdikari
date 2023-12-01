@@ -80,7 +80,7 @@ class Create extends Component
             'title' => 'Berhasil',
             'message' => 'Artikel <b>' . $artikel->judul . '</b> berhasil ditambahkan!'
         ]);
-        return redirect()->route('dashboard.pengelolaan-web.artikel.index');
+        return redirect()->route('dashboard.artikel.index');
     }
     public function render()
     {

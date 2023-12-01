@@ -1,5 +1,5 @@
-<div class="">
-    <div class="dashboard-padding-responsive">
+<div class="dashboard-padding-responsive">
+    <div class="">
         <div class="">
             <x-dashboard.breadcrumb>
                 <a href="#" class="text-gray-500 hover:text-primary-700">Inventaris</a>
@@ -315,7 +315,7 @@
                                         <td class="">
                                             <img src="{{ asset('assets/illustrations/data-not-found.png') }}"
                                                 alt="" class="w-auto h-32">
-                                            <p class="font-medium text-center text-gray-500">Tidak ada Catatan</p>
+                                            <p class="font-medium text-center text-gray-500">Tidak ada Barang</p>
                                         </td>
                                     </tr>
                                 @endif

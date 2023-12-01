@@ -11,7 +11,7 @@ class Index extends Component
 {
     use WithPagination;
     public $search, $bulan = null, $tahun = null, $kategori = null;
-    public $perPage = 4, $notification = [
+    public $perPage = 8, $notification = [
         'status' => false,
         'title' => '',
         'message' => ''

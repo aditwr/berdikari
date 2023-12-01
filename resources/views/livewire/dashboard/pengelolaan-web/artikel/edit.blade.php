@@ -52,8 +52,16 @@
             <div class="mb-4">
                 <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Judul
                     Artikel</label>
-                <input type="text" name="judul" wire:model="judul" id="judul-catatan"
-                    class="block w-full transition-all rounded border-neutral-300" required>
+                <div class="flex w-full gap-x-2 items-center">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/article.png') }}" alt="" class="h-10 w-auto">
+                    </div>
+                    <div class="flex-grow">
+                        <input type="text" name="judul" wire:model="judul" id="judul-catatan"
+                            class="block w-full transition-all rounded border-neutral-300" required>
+                    </div>
+                </div>
+
                 @error('judul')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror

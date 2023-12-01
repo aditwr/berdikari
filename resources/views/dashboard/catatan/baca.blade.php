@@ -59,39 +59,72 @@
                     <input type="hidden" name="idCatatan" value="{{ $catatan->id }}">
                     {{-- judul catatan --}}
                     <div class="">
-                        <div class="">
-                            <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Judul
+                        <div class="flex gap-x-2 w-full items-center">
+                            <div class="">
+                                <img src="{{ asset('assets/icons/notepad.png') }}" alt="" class="h-12 w-auto">
+                            </div>
+                            <div class="w-full">
+                                <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-tertiary">Judul
+                                    Catatan</label>
+                                <input data-te-toggle="tooltip" title="{{ $catatan->judul }}" type="text"
+                                    name="judulCatatan" id="judul-catatan" value="{{ $catatan->judul }}"
+                                    class="block font-medium w-full transition-all rounded border-neutral-300"
+                                    @if (!auth()->user()->can('edit-catatan')) readonly @endif>
+                                @error('judulCatatan')
+                                    <span class="text-xs text-danger-600">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="px-2 py-2 mt-2">
+                            {{-- kategori catatan --}}
+                            <div class="flex flex-col sm:flex-row gap-y-2 gap-x-8 sm:items-center">
+                                <div class="flex gap-x-2">
+                                    <div class="">
+                                        <img src="{{ asset('assets/icons/note.png') }}" alt="" class="h-5 w-auto">
+                                    </div>
+                                    <h5 class="text-sm text-dark-secondary">
+                                        <span
+                                            class="inline-block whitespace-nowrap rounded-full bg-neutral-800 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-neutral-50 dark:bg-neutral-900">
+                                            {{ $catatan->jenisCatatan->nama }}
+                                        </span>
+                                    </h5>
+                                </div>
+                                {{-- pembuat --}}
+                                <div class="flex gap-x-2 items-center">
+                                    <div class="">
+                                        <img src="{{ asset('assets/icons/user.png') }}" alt="" class="h-5 w-auto">
+                                    </div>
+                                    <h5 class="text-xs text-dark-secondary">
+                                        <span class="font-medium text-dark-secondary">{{ $catatan->pembuat }}</span>
+                                    </h5>
+                                </div>
+                                {{-- tanggal pembuatan --}}
+                                <div class="text-sm text-dark-secondary items-center flex gap-x-2">
+                                    <div class="">
+                                        <img src="{{ asset('assets/icons/calendar.png') }}" alt=""
+                                            class="h-5 w-auto">
+                                    </div>
+                                    <span class="text-xs font-medium text-dark-tertiary">
+                                        {{ $catatan->created_at->isoFormat('dddd, D MMMM Y') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-4">
+                            {{-- isi catatan --}}
+                            <label for="catatan" class="block mb-2 font-medium caption text-dark-secondary">Isi
                                 Catatan</label>
-                            <input type="text" name="judulCatatan" id="judul-catatan" value="{{ $catatan->judul }}"
-                                class="block w-full transition-all rounded border-neutral-300"
-                                @if (!auth()->user()->can('edit-catatan')) readonly @endif>
-                            @error('judulCatatan')
+                            @error('isiCatatan')
                                 <span class="text-xs text-danger-600">{{ $message }}</span>
                             @enderror
+                            <textarea name="isiCatatan" id="catatan" cols="30" class="text-sm h-[700px] md:h-[800px]" readonly>{{ $catatan->isi }}</textarea>
                         </div>
-                        <div class="px-2 py-2">
-                            {{-- pembuat --}}
-                            <h5 class="text-sm text-dark-secondary">ditulis oleh : <span
-                                    class="font-medium text-dark-primary">{{ $catatan->pembuat }}</span></h5>
-                            {{-- tanggal pembuatan --}}
-                            <span class="text-sm text-dark-secondary">pada <span
-                                    class="text-sm font-medium text-dark-primary">{{ date_format(date_create($catatan->created_at), 'D, d F Y') }}</span></span>
+                        <div class="flex justify-between mt-4">
+                            <a href="{{ route('dashboard.catatan.index') }}" class="btn-secondary">Kembali</a>
+                            @can('edit-catatan')
+                                <button type="submit" class="btn-primary">Simpan Perubahan</button>
+                            @endcan
                         </div>
-                    </div>
-                    <div class="mt-6 mb-4">
-                        {{-- isi catatan --}}
-                        <label for="catatan" class="block mb-2 font-medium caption text-dark-secondary">Isi Catatan</label>
-                        @error('isiCatatan')
-                            <span class="text-xs text-danger-600">{{ $message }}</span>
-                        @enderror
-                        <textarea name="isiCatatan" id="catatan" cols="30" class="text-sm h-[700px] md:h-[800px]" readonly>{{ $catatan->isi }}</textarea>
-                    </div>
-                    <div class="flex justify-between mt-4">
-                        <a href="{{ route('dashboard.catatan.index') }}" class="btn-secondary">Kembali</a>
-                        @can('edit-catatan')
-                            <button type="submit" class="btn-primary">Simpan Perubahan</button>
-                        @endcan
-                    </div>
                 </form>
             </div>
             <script src="https://cdn.tiny.cloud/1/9fdxmwc8bgyw07t5mlpf6rt09hdcxgln0ce5e3jniqd1emb0/tinymce/6/tinymce.min.js"

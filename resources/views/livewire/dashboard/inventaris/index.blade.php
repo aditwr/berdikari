@@ -1,13 +1,18 @@
 <div class="w-full">
-    <div class="flex flex-col items-baseline mb-3 gap-y-4">
-        <h3 class="heading-5 text-dark-primary">Daftar Inventaris</h3>
-        @can('buat-kategori-inventaris')
-            @if (!$showCreateForm)
-                <div class="">
-                    <button class="btn-primary" wire:click="showCreate">Buat Inventaris Baru</button>
-                </div>
-            @endif
-        @endcan
+    <div class="flex flex-col sm:flex-row gap-y-2 sm:gap-x-3 mt-6 ">
+        <div class="flex justify-center">
+            <img src="{{ asset('assets/icons/inventory.png') }}" alt="" class="h-20 w-auto">
+        </div>
+        <div class="flex flex-col items-center sm:items-start mb-3 gap-y-4">
+            <h3 class="heading-5 text-dark-primary">Daftar Inventaris</h3>
+            @can('buat-kategori-inventaris')
+                @if (!$showCreateForm)
+                    <div class="">
+                        <button class="btn-primary" wire:click="showCreate">Buat Inventaris Baru</button>
+                    </div>
+                @endif
+            @endcan
+        </div>
     </div>
     {{-- toast --}}
     @if ($notification['status'])
@@ -144,131 +149,138 @@
     <hr class="my-6">
     <div class="mt-6">
         <div class="grid grid-cols-1 mt-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-3">
-            @foreach ($jenisInventaris as $jenis)
-                <div
-                    class="flex flex-col justify-between rounded-lg bg-white transition-all p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-                    <div class="">
-                        <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-                            {{-- nama kategori inventaris --}}
-                            {{ $jenis->nama }}
-                        </h5>
-                        <p class="text-sm text-neutral-600 dark:text-neutral-200">
-                            {{-- keterangan --}}
-                            {{ $jenis->keterangan }}
-                        </p>
-                        <p class="mt-1 text-sm">
-                            Penanggung Jawab : <span class="font-semibold">{{ $jenis->penanggung_jawab }}</span>
-                        </p>
-                    </div>
-                    <div class="flex justify-between mt-4">
-                        <a href="{{ route('dashboard.inventaris.daftar-barang', $jenis->id) }}"
-                            class="btn-primary">Lihat</a>
-                        <div class="flex gap-x-2">
-                            @can('edit-kategori-inventaris')
-                                <button type="button" wire:click="showEdit({{ $jenis->id }})"
-                                    class="text-warning-700 bg-warning-200 btn-secondary-small" data-te-toggle="modal"
-                                    data-te-target="#editModalPengeluaran" data-te-ripple-init
-                                    data-te-ripple-color="light">
-                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
-                                        class="p-1 rounded-full bg-warning-300" viewBox="0,0,256,256"
-                                        style="fill:#000000;">
-                                        <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                            stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                            font-weight="none" font-size="none" text-anchor="none"
-                                            style="mix-blend-mode: normal">
-                                            <g transform="scale(10.66667,10.66667)">
-                                                <path
-                                                    d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </button>
-                            @endcan
-                            {{-- delete button --}}
-                            @can('hapus-kategori-inventaris')
-                                <button type="button" wire:click="$set('deleteId', {{ $jenis->id }})"
-                                    class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
-                                    data-te-target="#confirmDeleteModal{{ $jenis->id }}" data-te-ripple-init
-                                    data-te-ripple-color="light">
-                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
-                                        class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
-                                        style="fill:#000000;">
-                                        <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
-                                            stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
-                                            font-weight="none" font-size="none" text-anchor="none"
-                                            style="mix-blend-mode: normal">
-                                            <g transform="scale(10.66667,10.66667)">
-                                                <path
-                                                    d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
-                                                </path>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                </button>
-                            @endcan
+            @if ($jenisInventaris->count() > 0)
+                @foreach ($jenisInventaris as $jenis)
+                    <div
+                        class="flex flex-col justify-between rounded-lg bg-white transition-all p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                        <div class="">
+                            <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+                                {{-- nama kategori inventaris --}}
+                                {{ $jenis->nama }}
+                            </h5>
+                            <p class="text-sm text-neutral-600 dark:text-neutral-200">
+                                {{-- keterangan --}}
+                                {{ $jenis->keterangan }}
+                            </p>
+                            <p class="mt-1 text-sm">
+                                Penanggung Jawab : <span class="font-semibold">{{ $jenis->penanggung_jawab }}</span>
+                            </p>
                         </div>
+                        <div class="flex justify-between mt-4">
+                            <a href="{{ route('dashboard.inventaris.daftar-barang', $jenis->id) }}"
+                                class="btn-primary">Lihat</a>
+                            <div class="flex gap-x-2">
+                                @can('edit-kategori-inventaris')
+                                    <button type="button" wire:click="showEdit({{ $jenis->id }})"
+                                        class="text-warning-700 bg-warning-200 btn-secondary-small" data-te-toggle="modal"
+                                        data-te-target="#editModalPengeluaran" data-te-ripple-init
+                                        data-te-ripple-color="light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                            height="24" class="p-1 rounded-full bg-warning-300" viewBox="0,0,256,256"
+                                            style="fill:#000000;">
+                                            <g fill="#7e5e00" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                                stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                                stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                font-weight="none" font-size="none" text-anchor="none"
+                                                style="mix-blend-mode: normal">
+                                                <g transform="scale(10.66667,10.66667)">
+                                                    <path
+                                                        d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                @endcan
+                                {{-- delete button --}}
+                                @can('hapus-kategori-inventaris')
+                                    <button type="button" wire:click="$set('deleteId', {{ $jenis->id }})"
+                                        class="bg-danger-200 btn-secondary-small" data-te-toggle="modal"
+                                        data-te-target="#confirmDeleteModal{{ $jenis->id }}" data-te-ripple-init
+                                        data-te-ripple-color="light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24"
+                                            height="24" class="p-1 rounded-full bg-danger-300" viewBox="0,0,256,256"
+                                            style="fill:#000000;">
+                                            <g fill="#850000" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                                stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                                stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                font-weight="none" font-size="none" text-anchor="none"
+                                                style="mix-blend-mode: normal">
+                                                <g transform="scale(10.66667,10.66667)">
+                                                    <path
+                                                        d="M10,2l-1,1h-6v2h18v-2h-6l-1,-1zM4.36523,7l1.52734,13.26367c0.132,0.99 0.98442,1.73633 1.98242,1.73633h8.24805c0.998,0 1.85138,-0.74514 1.98438,-1.74414l1.52734,-13.25586z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                @endcan
+                            </div>
 
-                        {{-- delete modal --}}
-                        <div data-te-modal-init wire:ignore
-                            class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
-                            id="confirmDeleteModal{{ $jenis->id }}" tabindex="-1"
-                            aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
-                            <div data-te-modal-dialog-ref
-                                class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
-                                <div
-                                    class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto bg-clip-padding dark:bg-neutral-600">
+                            {{-- delete modal --}}
+                            <div data-te-modal-init wire:ignore
+                                class="fixed left-0 top-0 z-[1055] hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none"
+                                id="confirmDeleteModal{{ $jenis->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
+                                <div data-te-modal-dialog-ref
+                                    class="pointer-events-none relative flex min-h-[calc(100%-1rem)] w-auto translate-y-[-50px] items-center opacity-0 transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:min-h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
                                     <div
-                                        class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
-                                        <!--Modal title-->
-                                        <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
-                                            id="exampleModalScrollableLabel">
-                                            Konfirmasi Penghapusan
-                                        </h5>
-                                        <!--Close button-->
-                                        <button type="button"
-                                            class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
-                                            data-te-modal-dismiss aria-label="Close">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M6 18L18 6M6 6l12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                        class="relative flex flex-col w-full text-current bg-white border-none rounded-md shadow-lg outline-none pointer-events-auto bg-clip-padding dark:bg-neutral-600">
+                                        <div
+                                            class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
+                                            <!--Modal title-->
+                                            <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                                id="exampleModalScrollableLabel">
+                                                Konfirmasi Penghapusan
+                                            </h5>
+                                            <!--Close button-->
+                                            <button type="button"
+                                                class="box-content border-none rounded-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none"
+                                                data-te-modal-dismiss aria-label="Close">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
 
-                                    <!--Modal body-->
-                                    <div class="relative p-4" wire:>
-                                        <p>Apakah anda yakin ingin menghapus inventoris "<span
-                                                class="font-medium">{{ $jenis->nama }}</span>"?
-                                        </p>
-                                    </div>
-                                    <!--Modal footer-->
-                                    <div
-                                        class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
+                                        <!--Modal body-->
+                                        <div class="relative p-4" wire:>
+                                            <p>Apakah anda yakin ingin menghapus inventoris "<span
+                                                    class="font-medium">{{ $jenis->nama }}</span>"?
+                                            </p>
+                                        </div>
+                                        <!--Modal footer-->
+                                        <div
+                                            class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
 
-                                        <button type="button"
-                                            class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
-                                            data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
-                                            Cancel
-                                        </button>
-                                        <button type="button" wire:click="deleteItem"
-                                            class="ml-1 inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
-                                            data-te-ripple-init data-te-ripple-color="light" data-te-modal-dismiss>
-                                            Hapus
-                                        </button>
+                                            <button type="button"
+                                                class="inline-block rounded bg-danger-100 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-danger-700 transition duration-150 ease-in-out hover:bg-danger-accent-100 focus:bg-danger-accent-100 focus:outline-none focus:ring-0 active:bg-danger-accent-200"
+                                                data-te-modal-dismiss data-te-ripple-init data-te-ripple-color="light">
+                                                Cancel
+                                            </button>
+                                            <button type="button" wire:click="deleteItem"
+                                                class="ml-1 inline-block rounded bg-danger px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
+                                                data-te-ripple-init data-te-ripple-color="light" data-te-modal-dismiss>
+                                                Hapus
+                                            </button>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {{-- end delete modal --}}
                         </div>
-                        {{-- end delete modal --}}
                     </div>
+                @endforeach
+            @else
+                <div class="flex flex-col justify-center items-center w-full h-full">
+                    <img src="{{ asset('assets/icons/empty-box.png') }}" alt="" class="h-36 mb-2 w-auto">
+                    <h3 class="heading-4 text-dark-secondary">Belum ada inventaris</h3>
                 </div>
-            @endforeach
+            @endif
         </div>
     </div>
 </div>

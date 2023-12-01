@@ -175,7 +175,7 @@ class PengelolaanWebController extends Controller
             'title' => 'Berhasil',
             'message' => 'Artikel ' .   $artikel->judul . ' berhasil diubah!'
         ]);
-        return redirect()->route('dashboard.pengelolaan-web.artikel.index');
+        return redirect()->route('dashboard.artikel.index');
     }
 
     public function gallery()

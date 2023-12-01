@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.dashboard')
 
 @section('title')
-    Dashboard | Jenis Catatan
+    Jenis Catatan
 @endsection
 
 @section('content')

@@ -50,7 +50,7 @@
     <div class="mt-6">
         <div class="w-full 2xl:w-9/12">
             {{-- toast --}}
-            @if ($notification['status'])
+            {{-- @if ($notification['status'])
                 <div class="pointer-events-auto mx-auto mb-4 hidden w-full max-w-full rounded-lg bg-success-100 bg-clip-padding text-sm text-success-700 shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden"
                     id="static-example" role="alert" aria-live="assertive" aria-atomic="true" data-te-autohide="false"
                     data-te-toast-init data-te-toast-show>
@@ -84,12 +84,15 @@
                         {!! $notification['message'] !!}
                     </div>
                 </div>
-            @endif
+            @endif --}}
 
-            <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="">
+            <div class="flex flex-col items-center mb-3 md:justify-between md:flex-row">
+                <div class="flex gap-x-2 items-center mb-3">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/note.png') }}" alt="" class="h-8 w-auto">
+                    </div>
                     <h3 class="font-semibold subheading-5">
-                        Daftar Catatan Karangtaruna Berdikari
+                        Daftar Kategori Catatan Karangtaruna
                     </h3>
                 </div>
                 <div class="flex w-full md:max-w-min gap-x-8">
@@ -122,3 +125,35 @@
         </div>
     </div>
 </div>
+@push('script_after')
+    <script>
+        // sweet alert
+        window.addEventListener('hapus-kategori-catatan-berhasil', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        })
+        window.addEventListener('ubah-kategori-catatan-berhasil', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        })
+        window.addEventListener('tambah-kategori-catatan-berhasil', event => {
+            window.Swal.fire({
+                icon: 'success',
+                title: event.detail.title,
+                text: event.detail.message,
+                // showConfirmButton: false,
+                // timer: 1500
+            })
+        })
+    </script>
+@endpush

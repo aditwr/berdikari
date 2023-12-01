@@ -63,32 +63,45 @@
                 <div class="mb-4">
                     <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Judul
                         Artikel</label>
-                    <input type="text" name="judul" value="{{ $artikel->judul }}" id="judul-catatan"
-                        class="block w-full transition-all rounded border-neutral-300" required>
+                    <div class="flex w-full gap-x-2 items-center">
+                        <div class="">
+                            <img src="{{ asset('assets/icons/article.png') }}" alt="" class="h-10 w-auto">
+                        </div>
+                        <div class="flex-grow">
+                            <input type="text" name="judul" value="{{ $artikel->judul }}" id="judul-catatan"
+                                class="block w-full transition-all rounded border-neutral-300" required>
+                        </div>
+                    </div>
                     @error('judul')
                         <span class="text-xs text-danger-600">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="mb-4">
                     <h3 class="mb-2 font-medium caption">Kategori</h3>
-                    <div class="">
-                        <select name="kategori_id" class="rounded">
-                            @foreach ($kategoriArtikel as $kategori)
-                                <option value="{{ $kategori->id }}" @if ($kategori->id == $artikel->kategori_id) selected @endif>
-                                    {{ $kategori->nama }}</option>
-                            @endforeach
-                        </select>
+                    <div class="flex w-full gap-x-2 items-center">
+                        <div class="">
+                            <img src="{{ asset('assets/icons/folder.png') }}" alt="" class="h-10 w-auto">
+                        </div>
+                        <div class="flex-grow">
+                            <select name="kategori_id" class="rounded">
+                                @foreach ($kategoriArtikel as $kategori)
+                                    <option value="{{ $kategori->id }}" @if ($kategori->id == $artikel->kategori_id) selected @endif>
+                                        {{ $kategori->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="mb-4 w-96">
+                <div class="mb-4 w-full sm:w-96">
                     <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Gambar</label>
                     {{-- image preview --}}
-                    <div id="previous-img" class="flex items-center justify-center mb-4 overflow-hidden rounded w-96 h-52">
+                    <div id="previous-img"
+                        class="flex items-center justify-center mb-4 overflow-hidden rounded w-full h-52">
 
                         <img src="{{ asset('storage/' . $artikel->gambar) }}" alt=""
                             class="object-cover w-full h-full">
                     </div>
-                    <div class="items-center justify-center hidden mb-4 overflow-hidden rounded w-96 h-52"
+                    <div class="items-center justify-center hidden mb-4 overflow-hidden rounded w-full h-52"
                         id="img-preview-container">
                         <div class="">
                             <img id="img-preview" src="#" alt="image-preview" class="object-cover w-full h-full">
@@ -103,8 +116,17 @@
                     @error('gambar')
                         <span class="text-xs text-danger-600">{{ $message }}</span>
                     @enderror
-                    <div id="notif-upload-foto" class="px-2 py-1 mt-2 rounded bg-warning-300">
-                        <span class="text-sm font-medium">Upload foto baru untuk mengganti foto lama!</span>
+                    <div id="notif-upload-foto" class="flex gap-x-2 px-2 py-2 mt-2 rounded bg-warning-100">
+                        <span class="">
+                            <svg class="w-4 h-4 text-warning-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </span>
+                        <span class="text-xs text-warning-800 font-medium">Upload foto baru untuk mengganti foto
+                            lama!</span>
                     </div>
                     <div id="notif-upload-foto-success" class="hidden px-2 py-1 mt-2 rounded bg-success-300">
                         <span class="text-sm font-medium">Foto baru berhasil diupload!</span>

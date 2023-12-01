@@ -52,8 +52,8 @@ class Table extends Component
         $nama = $jenisCatatan->nama;
         $jenisCatatan->delete();
 
-        $this->emit('notification', ['title' => 'Penghapusan berhasil', 'message' => 'Data keuangan "<span class="font-medium" >' . $nama . '</span>" berhasil dihapus!']);
         $this->emit('refresh');
+        $this->dispatchBrowserEvent('hapus-kategori-catatan-berhasil', ["title" => "Berhasil", "message" => "Kategori catatan berhasil dihapus!"]);
     }
 
     public function render()

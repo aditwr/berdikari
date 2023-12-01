@@ -138,20 +138,37 @@
                                             {{ $loop->iteration }}
                                         </td>
                                         {{-- judul --}}
-                                        <td class="flex items-center w-64 py-2 pl-1 whitespace-pre-wrap">
+                                        <td data-te-toggle="tooltip" title="{{ $Catatan->judul }}"
+                                            class="flex items-center w-64 py-2 pl-1 whitespace-pre-wrap">
                                             <p class="font-medium text-dark-secondary">{{ $Catatan->judul }}</p>
                                         </td>
                                         {{-- kateogri --}}
-                                        <th scope="col" class="w-48 py-3 pl-2">{{ $Catatan->jenisCatatan->nama }}
+                                        <th scope="col" class="w-48 py-3 pl-2 flex items-center gap-x-1">
+                                            <div class="">
+                                                <img src="{{ asset('assets/icons/notepad.png') }}" alt=""
+                                                    class="h-6 w-auto">
+                                            </div>
+                                            <span class="text-dark-secondary">
+                                                {{ $Catatan->jenisCatatan->nama }}
+                                            </span>
                                         </th>
                                         {{-- tanggal dibuat --}}
-                                        <td class="w-40 py-2 pl-2 font-normal whitespace-nowrap">
+                                        <td data-te-toggle="tooltip"
+                                            title="{{ $Catatan->created_at->isoFormat('dddd, D MMMM Y') }}"
+                                            class="w-40 py-2 pl-2 font-normal whitespace-nowrap">
                                             {{-- format date : date_format --}}
-                                            {{ date_format($Catatan->created_at, 'd M Y') }}
+                                            <span
+                                                class="font-medium text-dark-tertiary">{{ $Catatan->created_at->isoFormat('D MMMM Y') }}</span>
                                         </td>
                                         {{-- pembuat --}}
-                                        <td class="w-40 px-2 py-2 whitespace-nowrap">
-                                            {{ $Catatan->pembuat }}
+                                        <td class="w-40 px-2 py-2 whitespace-nowrap flex gap-x-1 items-center">
+                                            <div class="">
+                                                <img src="{{ asset('assets/icons/user.png') }}" alt=""
+                                                    class="h-5 w-auto">
+                                            </div>
+                                            <span class="font-medium text-dark-secondary">
+                                                {{ $Catatan->pembuat }}
+                                            </span>
                                         </td>
                                         <td class="flex w-64 py-2 pl-2 text-sm gap-x-3 whitespace-nowrap">
                                             <a href="{{ route('dashboard.catatan.baca', $Catatan->id) }}"

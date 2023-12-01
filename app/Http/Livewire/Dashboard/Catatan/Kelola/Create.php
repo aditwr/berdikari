@@ -11,11 +11,6 @@ class Create extends Component
     public $namaCatatan;
     public $keterangan;
 
-    public $notification = [
-        'show' => false,
-        'nama' => '',
-    ];
-
     protected $rules = [
         'namaCatatan' => 'required|unique:jenis_catatans,nama',
     ];
@@ -32,16 +27,9 @@ class Create extends Component
         $catatan->keterangan = $this->keterangan;
         $catatan->save();
 
-        $this->notification['show'] = true;
-        $this->notification['nama'] = $this->namaCatatan;
-
         $this->emit('refresh');
         $this->reset(['namaCatatan', 'keterangan']);
-    }
-
-    public function closeNotification()
-    {
-        $this->notification['show'] = false;
+        $this->dispatchBrowserEvent('tambah-kategori-catatan-berhasil', ["title" => "Berhasil", "message" => "Kategori catatan berhasil ditambahkan!"]);
     }
 
     public function render()

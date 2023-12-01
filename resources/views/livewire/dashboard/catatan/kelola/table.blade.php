@@ -26,14 +26,28 @@
                                             class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                             {{ $loop->iteration }}
                                         </td>
-                                        <td class="flex items-center w-64 py-2 pl-1 whitespace-pre-wrap">
+                                        <td data-te-toggle="tooltip" title="{{ $jenisCatatan->nama }}"
+                                            class="flex items-center w-64 py-2 pl-1 whitespace-pre-wrap">
                                             <p class="font-medium text-dark-secondary">{{ $jenisCatatan->nama }}</p>
                                         </td>
-                                        <th scope="col" class="w-32 py-3 pl-2">{{ $jenisCatatan->jumlah_item }}
-                                            catatan</th>
-                                        <td class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
+                                        <th scope="col" class="flex gap-x-1 items-center w-32 py-3 pl-2">
+                                            <div class="">
+                                                <img src="{{ asset('assets/icons/notepad.png') }}" alt=""
+                                                    class="h-6 w-auto">
+                                            </div>
+                                            <span class="text-lg text-primary-700">
+                                                {{ $jenisCatatan->jumlah_item }}
+                                                <span class="text-sm font-medium text-dark-secondary">
+                                                    catatan
+                                                </span>
+                                            </span>
+                                        </th>
+                                        <td data-te-toggle="tooltip"
+                                            title="{{ $jenisCatatan->created_at->isoFormat('dddd, D MMMM Y') }}"
+                                            class="w-32 py-2 pl-2 font-normal whitespace-nowrap">
                                             {{-- format date : date_format --}}
-                                            {{ date_format($jenisCatatan->created_at, 'd M Y') }}
+                                            <span
+                                                class="font-medium text-dark-secondary">{{ $jenisCatatan->created_at->isoFormat('D MMMM Y') }}</span>
                                         </td>
                                         <td class="px-2 py-2 whitespace-nowrap">
                                             <div class="space-y-2">
@@ -78,7 +92,21 @@
                                                         </button>
                                                     </div>
                                                     <div class="relative p-4 text-sm">
-                                                        <p>{{ $jenisCatatan->keterangan }}</p>
+                                                        <div class="w-full">
+                                                            @isset($jenisCatatan->keterangan)
+                                                                <p class="text-dark-secondary">
+                                                                    {{ $jenisCatatan->keterangan }}
+                                                                </p>
+                                                            @else
+                                                                <div class="w-full flex flex-col items-center">
+                                                                    <img src="{{ asset('assets/illustrations/data-not-found.png') }}"
+                                                                        alt="" class="h-32 w-auto">
+                                                                    <p class="font-medium text-center text-gray-500">
+                                                                        Tidak ada keterangan</p>
+
+                                                                </div>
+                                                            @endisset
+                                                        </div>
                                                     </div>
                                                     <div
                                                         class="flex flex-wrap items-center justify-end flex-shrink-0 p-4 border-t-2 border-opacity-100 rounded-b-md border-neutral-100 dark:border-opacity-50">
@@ -102,10 +130,11 @@
                                                         height="24" class="p-1 rounded-full bg-warning-300"
                                                         viewBox="0,0,256,256" style="fill:#000000;">
                                                         <g fill="#7e5e00" fill-rule="nonzero" stroke="none"
-                                                            stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
-                                                            stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                                                            font-family="none" font-weight="none" font-size="none"
-                                                            text-anchor="none" style="mix-blend-mode: normal">
+                                                            stroke-width="1" stroke-linecap="butt"
+                                                            stroke-linejoin="miter" stroke-miterlimit="10"
+                                                            stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                                            font-weight="none" font-size="none" text-anchor="none"
+                                                            style="mix-blend-mode: normal">
                                                             <g transform="scale(10.66667,10.66667)">
                                                                 <path
                                                                     d="M18.41406,2c-0.25587,0 -0.51203,0.09747 -0.70703,0.29297l-1.70703,1.70703l4,4l1.70703,-1.70703c0.391,-0.391 0.391,-1.02406 0,-1.41406l-2.58594,-2.58594c-0.1955,-0.1955 -0.45116,-0.29297 -0.70703,-0.29297zM14.5,5.5l-11.5,11.5v4h4l11.5,-11.5z">
@@ -224,13 +253,17 @@
                                 <div
                                     class="flex items-center justify-between flex-shrink-0 p-4 border-b-2 border-opacity-100 rounded-t-md border-neutral-100 dark:border-opacity-50">
                                     <!--Modal title-->
-                                    <div class="">
-                                        <h5 class="text-xl font-medium leading-normal text-neutral-800 dark:text-neutral-200"
-                                            id="exampleModalCenteredScrollableLabel">
-                                            Ubah Data Jenis Catatan
-                                        </h5>
-                                        {{-- <h6 class="text-dark-secondary">untuk jenisCatatan nama jenisCatatan --}}
-                                        </h6>
+                                    <div class="flex gap-x-2 items-center">
+                                        <div class="">
+                                            <img src="{{ asset('assets/icons/notepad.png') }}" alt=""
+                                                class="h-12 w-auto">
+                                        </div>
+                                        <div class="">
+                                            <h5 class="heading-6 font-medium leading-normal text-neutral-800 dark:text-neutral-200"
+                                                id="exampleModalCenteredScrollableLabel">
+                                                Ubah Data Jenis Catatan
+                                            </h5>
+                                        </div>
                                     </div>
                                     <!--Close button-->
                                     <button type="button"

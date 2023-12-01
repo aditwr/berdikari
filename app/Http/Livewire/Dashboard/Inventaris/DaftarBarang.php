@@ -40,7 +40,7 @@ class DaftarBarang extends Component
             $daftarBarang = $daftarBarang->where('nama_inventaris', 'like', '%' . $this->search . '%')->orWhere('lokasi', 'like', '%' . $this->search . '%')->orWhere('pemegang', 'like', '%' . $this->search . '%')->orWhere('kondisi', 'like', '%' . $this->search . '%')->orWhere('keterangan', 'like', '%' . $this->search . '%');
         }
 
-        return $daftarBarang->latest()->paginate(10);
+        return $daftarBarang->latest()->paginate(12);
     }
     public function search($search)
     {

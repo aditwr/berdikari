@@ -1,4 +1,4 @@
-<div>
+<div class="dashboard-padding-responsive">
     <div class="">
         <x-dashboard.breadcrumb>
             <a href="#" class="text-gray-500 hover:text-primary-700">Pengelolaan Web</a>
@@ -49,41 +49,64 @@
 
         <form action="" wire:submit.prevent='store' method="POST" class="block w-full">
             @csrf
-            <div class="mb-4">
+            <div class="mb-6">
                 <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Judul
                     Artikel</label>
-                <input type="text" name="judul" wire:model="judul" id="judul-catatan"
-                    class="block w-full transition-all rounded border-neutral-300" required>
+                <div class="flex w-full gap-x-2 items-center">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/article.png') }}" alt="" class="h-10 w-auto">
+                    </div>
+                    <div class="flex-grow">
+                        <input type="text" name="judul" wire:model="judul" id="judul-catatan"
+                            class="block w-full transition-all rounded border-neutral-300" required>
+                    </div>
+                </div>
                 @error('judul')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="mb-4">
+            <div class="mb-6">
                 <h3 class="mb-2 font-medium caption">Kategori</h3>
-                <div class="">
-                    <select wire:model='kategori' class="rounded">
-                        <option value="">-- Pilih --</option>
-                        @foreach ($kategoriArtikel as $kategori)
-                            <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
-                        @endforeach
-                    </select>
+                <div class="flex w-full gap-x-2 items-center">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/folder.png') }}" alt="" class="h-10 w-auto">
+                    </div>
+                    <div class="flex-grow">
+                        <select required wire:model='kategori' class="rounded">
+                            <option value="">-- Pilih --</option>
+                            @foreach ($kategoriArtikel as $kategori)
+                                <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="mb-4">
+            <div class="mb-6">
                 <label for="judul-catatan" class="block mb-2 font-medium caption text-dark-secondary">Gambar</label>
                 {{-- image preview --}}
                 @if ($gambar)
-                    <img src="{{ $gambar->temporaryUrl() }}" alt="" class="h-auto my-2 rounded w-96">
+                    <div class="w-full sm:w-96 h-52 flex justify-center items-center overflow-hidden mb-2">
+                        <img src="{{ $gambar->temporaryUrl() }}" alt=""
+                            class="h-full my-2 rounded w-full object-cover">
+                    </div>
                 @endif
                 <div x-data="{ isUploading: false, progress: 0, finish: false }" x-on:livewire-upload-start="isUploading = true"
                     x-on:livewire-upload-finish="finish = true; isUploading = false"
                     x-on:livewire-upload-error="isUploading = false"
                     x-on:livewire-upload-progress="progress = $event.detail.progress">
-                    <div class="w-full sm:w-96">
-                        <input type="file" name="gambar" wire:model="gambar" id="fotoKegiatan"
-                            class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
-                            id="formFile" required />
+                    <div class="flex w-full gap-x-2 items-center">
+                        <div class="">
+                            <img src="{{ asset('assets/icons/image.png') }}" alt="" class="h-10 w-auto">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="w-full sm:w-96">
+                                <input type="file" name="gambar" wire:model="gambar" id="fotoKegiatan"
+                                    class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                                    id="formFile" required />
+                            </div>
+                        </div>
                     </div>
+
                     {{-- Progress Bar --}}
                     <div x-show="isUploading" class="my-2 w-96">
                         <div class="bg-grayy-200 h-[2px]">
@@ -105,7 +128,7 @@
                     <span class="text-xs text-danger-600">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="mb-4">
+            <div class="mb-4 mt-8">
                 <label for="catatan" class="block mb-2 font-medium caption text-dark-secondary">Isi Artikel</label>
                 @error('isi')
                     <span class="text-xs text-danger-600">{{ $message }}</span>
