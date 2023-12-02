@@ -8,12 +8,17 @@
     </div>
     <div class="w-full 2xl:w-9/12">
         <div class="">
-            <div class="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4">
+            <div class="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4">
                 {{-- card-container --}}
                 <div class="">
                     {{-- card --}}
                     <div class="px-4 py-4 bg-white rounded">
-                        <h5 class="mb-4 font-medium subheading-5">Foto 1</h5>
+                        <div class="flex gap-x-2">
+                            <div class="">
+                                <img src="{{ asset('assets/icons/image.png') }}" alt="" class="h-6 w-auto">
+                            </div>
+                            <h5 class="mb-4 font-medium subheading-5">Foto 1</h5>
+                        </div>
                         {{-- image --}}
                         <div class="mb-4">
                             @if (file_exists('storage/foto-header/foto1.jpg'))
@@ -32,9 +37,19 @@
                         {{-- action --}}
                         <div class="">
                             <form wire:submit.prevent="storeFoto1">
-                                <label for="formFile"
-                                    class="inline-block mb-2 text-neutral-700 dark:text-neutral-200">Upload
-                                    Foto untuk mengubah Foto</label>
+                                <div class="flex gap-x-2">
+                                    <div class="">
+                                        <svg class="w-4 h-4 text-dark-secondary dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </div>
+                                    <label for="formFile"
+                                        class="inline-block mb-2 text-dark-tertiary text-sm font-medium dark:text-neutral-200">Upload
+                                        Foto untuk mengubah Foto</label>
+                                </div>
                                 <div class="">
                                     @if ($foto1)
                                         <img src="{{ $foto1->temporaryUrl() }}" alt=""
@@ -145,7 +160,12 @@
                 <div class="">
                     {{-- card --}}
                     <div class="px-4 py-4 bg-white rounded">
-                        <h5 class="mb-4 font-medium subheading-5">Foto 2</h5>
+                        <div class="flex gap-x-2">
+                            <div class="">
+                                <img src="{{ asset('assets/icons/image.png') }}" alt="" class="h-6 w-auto">
+                            </div>
+                            <h5 class="mb-4 font-medium subheading-5">Foto 2</h5>
+                        </div>
                         {{-- image --}}
                         <div class="mb-4">
                             @if (file_exists('storage/foto-header/foto2.jpg'))
@@ -164,9 +184,19 @@
                         {{-- action --}}
                         <div class="">
                             <form wire:submit.prevent="storeFoto2">
-                                <label for="formFile"
-                                    class="inline-block mb-2 text-neutral-700 dark:text-neutral-200">Upload
-                                    Foto untuk mengubah Foto</label>
+                                <div class="flex gap-x-2">
+                                    <div class="">
+                                        <svg class="w-4 h-4 text-dark-secondary dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </div>
+                                    <label for="formFile"
+                                        class="inline-block mb-2 text-dark-tertiary text-sm font-medium dark:text-neutral-200">Upload
+                                        Foto untuk mengubah Foto</label>
+                                </div>
                                 <div class="">
                                     @if ($foto2)
                                         <img src="{{ $foto2->temporaryUrl() }}" alt=""
@@ -276,7 +306,12 @@
                 <div class="">
                     {{-- card --}}
                     <div class="px-4 py-4 bg-white rounded">
-                        <h5 class="mb-4 font-medium subheading-5">Foto 3</h5>
+                        <div class="flex gap-x-2">
+                            <div class="">
+                                <img src="{{ asset('assets/icons/image.png') }}" alt="" class="h-6 w-auto">
+                            </div>
+                            <h5 class="mb-4 font-medium subheading-5">Foto 3</h5>
+                        </div>
                         {{-- image --}}
                         <div class="mb-4">
                             @if (file_exists('storage/foto-header/foto3.jpg'))
@@ -295,9 +330,19 @@
                         {{-- action --}}
                         <div class="">
                             <form wire:submit.prevent="storeFoto3">
-                                <label for="formFile"
-                                    class="inline-block mb-2 text-neutral-700 dark:text-neutral-200">Upload
-                                    Foto untuk mengubah Foto</label>
+                                <div class="flex gap-x-2">
+                                    <div class="">
+                                        <svg class="w-4 h-4 text-dark-secondary dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round"
+                                                stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9h2v5m-2 0h4M9.408 5.5h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                    </div>
+                                    <label for="formFile"
+                                        class="inline-block mb-2 text-dark-tertiary text-sm font-medium dark:text-neutral-200">Upload
+                                        Foto untuk mengubah Foto</label>
+                                </div>
                                 <div class="">
                                     @if ($foto2)
                                         <img src="{{ $foto2->temporaryUrl() }}" alt=""

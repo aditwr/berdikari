@@ -185,6 +185,9 @@ class PengelolaanWebController extends Controller
 
     public function izinAkses()
     {
+        if (!auth()->user()->hasRole(['developer', 'admin'])) {
+            abort(403);
+        }
         return view('dashboard.pengelolaan-web.izin-akses.index');
     }
 }

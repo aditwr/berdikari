@@ -5,9 +5,12 @@
     <div class="">
         <div class="w-full 2xl:w-9/12 mb-10">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-3">
+                <div class="mb-3 w-full flex gap-x-3 items-center">
+                    <div class="">
+                        <img src="{{ asset('assets/icons/permission.png') }}" alt="" class="h-8 w-auto">
+                    </div>
                     <h3 class="font-semibold subheading-5">
-                        Beri Izin Akses
+                        Beri Izin Akses Akun Tamu
                     </h3>
                 </div>
                 <div class="flex w-full md:max-w-min gap-x-8">
@@ -54,24 +57,33 @@
                                     @if ($users->count() > 0)
                                         @foreach ($users as $user)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-72 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $user->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}" alt=""
+                                                            class="h-5 w-auto">
                                                         {{ $user->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $user->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}" alt=""
+                                                            class="h-5 w-auto">
                                                         {{ $user->email }}
+                                                    </p>
                                                 </td>
-                                                <td class="w-40 py-2 pl-2 font-normal whitespace-nowrap">
+                                                <td data-te-toggle="tooltip"
+                                                    title="{{ $user->created_at->isoFormat('dddd, D MMMM Y') }}"
+                                                    class="w-40 py-2 pl-2 font-medium text-dark-secondary whitespace-nowrap">
                                                     {{-- format date : date_format --}}
-                                                    {{ date_format(date_create($user->created_at), 'D, d F Y') }}
+                                                    {{ $user->created_at->isoFormat('D MMMM Y') }}
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -90,8 +102,8 @@
                                             <td class="">
                                                 <img src="{{ asset('assets/illustrations/data-not-found.png') }}"
                                                     alt="" class="w-auto h-32">
-                                                <p class="font-medium text-center text-gray-500">Belum ada user dengan
-                                                    hak akses ini!</p>
+                                                <p class="font-medium text-center text-gray-500">User tidak ditemukan!
+                                                </p>
                                             </td>
                                         </tr>
                                     @endif
@@ -129,12 +141,28 @@
 
                                         <!--Modal body-->
                                         <div data-te-modal-body-ref class="relative p-4">
-                                            <div class="">
-                                                <p id="user-name" class="text-md font-medium">...</p>
-                                                <p id="user-email" class="text-md font-medium">...</p>
-                                                <input id="user-id" type="hidden">
+                                            <div class="flex justify-center w-full mb-8">
+                                                <img src="{{ asset('assets/icons/stamp.png') }}" alt=""
+                                                    class="h-32 w-auto">
                                             </div>
                                             <div class="">
+                                                <div class="flex gap-x-2 items-center mb-2">
+                                                    <img src="{{ asset('assets/icons/user.png') }}" alt=""
+                                                        class="h-6 w-auto">
+                                                    <p id="user-name" class="text-md font-medium">...</p>
+                                                </div>
+                                                <div class="flex gap-x-2 items-center mb-4">
+                                                    <img src="{{ asset('assets/icons/gmail.png') }}" alt=""
+                                                        class="h-6 w-auto">
+                                                    <p id="user-email"
+                                                        class="text-sm text-dark-secondary font-medium">...</p>
+                                                </div>
+                                                <input id="user-id" type="hidden">
+                                            </div>
+                                            <div class="mt-4">
+                                                <label for="chosed_role"
+                                                    class="block text-sm font-medium text-dark-secondary mb-2">Pilih
+                                                    Peran</label>
                                                 <select id="chosed_role"
                                                     onchange="Livewire.emit('roleSelected', this.value)"
                                                     data-te-select-init>
@@ -173,8 +201,8 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $users->links() }}
             </div>
         </div>
 
@@ -182,10 +210,61 @@
         {{-- table admin --}}
         <div class="w-full md:w-min">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Admin
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Admin
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Memberi Izin Akses</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mencabut Izin Akses</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Galeri</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -207,20 +286,27 @@
                                     @if ($admins->count() > 0)
                                         @foreach ($admins as $admin)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $admin->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $admin->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $admin->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $admin->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -252,18 +338,61 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $admins->links() }}
             </div>
         </div>
 
         {{-- table ketua --}}
-        <div class="w-full md:w-min">
+        <div class="w-full md:w-min mt-8">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Ketua
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Ketua
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Galeri</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -285,20 +414,27 @@
                                     @if ($ketuas->count() > 0)
                                         @foreach ($ketuas as $ketua)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $ketua->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $ketua->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $ketua->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $ketua->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -330,18 +466,61 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $ketuas->links() }}
             </div>
         </div>
 
         {{-- table bendahara --}}
-        <div class="w-full md:w-min">
+        <div class="w-full md:w-min mt-8">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Bendahara
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Bendahara
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Galeri</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -350,8 +529,7 @@
                         <div class="flex flex-col w-full overflow-x-auto">
                             <table class="w-full overflow-x-auto text-sm font-normal text-left">
                                 <thead class="overflow-hidden rounded">
-                                    <tr
-                                        class="flex items-center justify-between text-xs border-b-2 border-neutral-100 lg:px-2">
+                                    <tr class="flex items-center justify-between text-xs lg:px-2">
                                         <th scope="col" class="w-8 py-3 text-center ">No</th>
                                         <th scope="col" class="w-56 py-3 pl-2 ">Nama</th>
                                         <th scope="col" class="w-56 py-3 pl-2 ">Email</th>
@@ -369,14 +547,21 @@
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $bendahara->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $bendahara->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $bendahara->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $bendahara->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -408,18 +593,65 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $bendaharas->links() }}
             </div>
         </div>
 
         {{-- table sekretarus --}}
-        <div class="w-full md:w-min">
+        <div class="w-full md:w-min mt-8">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Sekretaris
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Sekretaris
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Galeri</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengedit Header Landing Page</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -428,8 +660,7 @@
                         <div class="flex flex-col w-full overflow-x-auto">
                             <table class="w-full overflow-x-auto text-sm font-normal text-left">
                                 <thead class="overflow-hidden rounded">
-                                    <tr
-                                        class="flex items-center justify-between text-xs border-b-2 border-neutral-100 lg:px-2">
+                                    <tr class="flex items-center justify-between text-xs lg:px-2">
                                         <th scope="col" class="w-8 py-3 text-center ">No</th>
                                         <th scope="col" class="w-56 py-3 pl-2 ">Nama</th>
                                         <th scope="col" class="w-56 py-3 pl-2 ">Email</th>
@@ -441,20 +672,27 @@
                                     @if ($sekretariss->count() > 0)
                                         @foreach ($sekretariss as $sekretaris)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $sekretaris->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $sekretaris->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $sekretaris->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $sekretaris->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -486,18 +724,61 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $sekretariss->links() }}
             </div>
         </div>
 
         {{-- table seksi-inventaris --}}
-        <div class="w-full md:w-min">
+        <div class="w-full md:w-min mt-8">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Seksi Inventaris
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Seksi Inventaris
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Galeri</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -519,20 +800,28 @@
                                     @if ($seksi_inventariss->count() > 0)
                                         @foreach ($seksi_inventariss as $seksi_inventaris)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $seksi_inventaris->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $seksi_inventaris->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip"
+                                                        title="{{ $seksi_inventaris->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $seksi_inventaris->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -564,19 +853,62 @@
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $seksi_inventariss->links() }}
             </div>
         </div>
 
 
         {{-- table anggota --}}
-        <div class="w-full md:w-min">
+        <div class="w-full md:w-min mt-8">
             <div class="flex flex-col items-baseline mb-3 md:justify-between md:flex-row">
-                <div class="mb-1">
+                <div class="mb-1 w-full flex flex-col sm:flex-row sm:justify-between sm:items-center gap-y-2">
                     <h3 class="font-semibold subheading-5">
                         Anggota
                     </h3>
+                    <div class="relative" data-te-dropdown-ref>
+                        <button
+                            class="flex items-center whitespace-nowrap rounded bg-neutral-100 border border-neutral-200 px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none"
+                            type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false"
+                            data-te-ripple-init data-te-ripple-color="light">
+                            Lihat Hak Anggota
+                            <span class="ml-2 w-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                    class="h-5 w-5">
+                                    <path fill-rule="evenodd"
+                                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </span>
+                        </button>
+                        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Keuangan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Catatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Inventaris</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Artikel Kegiatan</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Mengelola Artikel</p>
+                            </li>
+                            <li>
+                                <p class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                                    data-te-dropdown-item-ref>Melihat Galeri</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="overflow-hidden bg-white rounded shadow-sm">
@@ -598,20 +930,27 @@
                                     @if ($anggotas->count() > 0)
                                         @foreach ($anggotas as $anggota)
                                             <tr
-                                                class="flex my-1 items-center justify-between  text-xs border-b-2 border-neutral-100 dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
+                                                class="flex my-1 items-center justify-between  text-xs dark:border-neutral-500 hover:bg-neutral-50 lg:px-2">
                                                 <td
                                                     class="flex items-center justify-center w-8 py-2 font-medium text-center whitespace-nowrap text-dark-secondary">
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td class="flex items-center w-56 py-2 ">
-                                                    <p class="font-medium text-dark-secondary line-clamp-1">
+                                                    <p data-te-toggle="tooltip" title="{{ $anggota->name }}"
+                                                        class="font-medium text-dark-secondary line-clamp-1 flex items-center gap-x-2">
+                                                        <img src="{{ asset('assets/icons/user.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $anggota->name }}
                                                     </p>
                                                 </td>
                                                 <td
                                                     class="flex items-center w-56 py-2 pl-2 text-sm break-words whitespace-normal">
-                                                    <p class="font-medium text-success-600">
+                                                    <p data-te-toggle="tooltip" title="{{ $anggota->email }}"
+                                                        class="flex items-center text-xs tracking-wide gap-x-2 font-medium text-dark-secondary">
+                                                        <img src="{{ asset('assets/icons/gmail.png') }}"
+                                                            alt="" class="h-5 w-auto">
                                                         {{ $anggota->email }}
+                                                    </p>
                                                 </td>
                                                 <td class="w-52 py-2 pl-2 text-sm flex justify-center gap-x-3">
                                                     <!-- Button trigger modal -->
@@ -640,11 +979,12 @@
                         </div>
                     </div>
 
+
                 </div>
             </div>
             {{-- pagination --}}
-            <div class="px-2 mt-4 mb-3">
-                {{-- {{ $pemasukans->links() }} --}}
+            <div class="px-2 mt-2 mb-3">
+                {{ $anggotas->links() }}
             </div>
         </div>
 

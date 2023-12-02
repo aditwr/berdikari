@@ -14,6 +14,7 @@ class Index extends Component
 {
     use WithFileUploads, WithPagination;
 
+    public $search;
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function mount()
@@ -111,7 +112,11 @@ class Index extends Component
 
     public function render()
     {
-        $listFoto = Gallery::latest()->paginate(12);
+        $listFoto = Gallery::latest();
+        if ($this->search) {
+            $listFoto = $listFoto->where('judul', 'like', '%' . $this->search . '%');
+        }
+        $listFoto = $listFoto->paginate(12);
         return view('livewire.dashboard.pengelolaan-web.galeri.index', compact('listFoto'));
     }
 }

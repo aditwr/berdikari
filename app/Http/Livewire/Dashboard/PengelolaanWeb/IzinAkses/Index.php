@@ -15,7 +15,7 @@ class Index extends Component
         'hapusHakAkses' => 'hapusHakAkses',
     ];
 
-    public $user;
+    public $user, $search;
 
 
     public function updatedUser()
@@ -39,13 +39,17 @@ class Index extends Component
     public function render()
     {
         // return users who don't hanve any role
-        $users = User::doesntHave('roles')->latest()->paginate(10);
-        $admins = User::role('admin')->latest()->get();
-        $ketuas = User::role('ketua')->latest()->get();
-        $bendaharas = User::role('bendahara')->latest()->paginate(10);
-        $sekretariss = User::role('sekretaris')->latest()->paginate(10);
-        $seksi_inventariss = User::role('seksi-inventaris')->latest()->paginate(10);
-        $anggotas = User::role('anggota')->latest()->paginate(10);
+        $users = User::doesntHave('roles')->latest();
+        if ($this->search) {
+            $users = $users->where('name', 'like', '%' . $this->search . '%');
+        }
+        $users = $users->paginate(10, pageName: 'user');
+        $admins = User::role('admin')->latest()->paginate(10, pageName: 'admin');
+        $ketuas = User::role('ketua')->latest()->paginate(10, pageName: 'ketua');
+        $bendaharas = User::role('bendahara')->latest()->paginate(10, pageName: 'bendahara');
+        $sekretariss = User::role('sekretaris')->latest()->paginate(10, pageName: 'sekretaris');
+        $seksi_inventariss = User::role('seksi-inventaris')->latest()->paginate(10, pageName: 'seksi_inventaris');
+        $anggotas = User::role('anggota')->latest()->paginate(10, pageName: 'anggota');
         return view('livewire.dashboard.pengelolaan-web.izin-akses.index', compact(['users', 'admins', 'ketuas', 'bendaharas', 'sekretariss', 'seksi_inventariss', 'anggotas']));
     }
 }

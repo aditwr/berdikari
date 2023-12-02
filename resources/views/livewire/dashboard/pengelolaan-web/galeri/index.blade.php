@@ -89,7 +89,7 @@
 
         @if ($tampilkanMenuUpload)
             {{-- card-container --}}
-            <div class="w-96">
+            <div class="w-full sm:w-96">
                 {{-- card --}}
                 <div class="px-4 py-4 bg-white rounded">
                     {{-- action --}}
@@ -108,8 +108,10 @@
                             </label>
                             <div class="">
                                 @if ($foto)
-                                    <img src="{{ $foto->temporaryUrl() }}" alt=""
-                                        class="h-auto my-2 rounded w-96">
+                                    <div class="w-full h-52 flex justify-center items-center overflow-hidden mb-2">
+                                        <img src="{{ $foto->temporaryUrl() }}" alt=""
+                                            class="h-full rounded w-full object-cover">
+                                    </div>
                                 @endif
                             </div>
                             <div x-data="{ isUploading: false, progress: 0, finish: false }" x-on:livewire-upload-start="isUploading = true"
@@ -182,63 +184,103 @@
         @endif
     </div>
 
-    <div class="w-full mt-6 mb-4">
-        <h3 class="subheading-2 text-dark">Galeri Karangtaruna</h3>
+    <div class="w-full flex-col md:flex-row gap-y-2 flex justify-between mt-6 mb-4 items-center">
+        <div class="flex gap-x-3 items-center">
+            <span class="">
+                <img src="{{ asset('assets/icons/image.png') }}" alt="" class="h-12 w-auto">
+            </span>
+            <h3 class="heading-4 md:heading-3 tracking-tight text-dark">Galeri Karangtaruna</h3>
+        </div>
+        <div class="w-full md:w-96">
+            <div class="relative flex flex-wrap items-stretch w-full bg-white">
+                <input type="search" wire:model="search"
+                    class="relative m-0 -mr-0.5 block w-[1px] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary"
+                    placeholder="Cari" aria-label="Search" aria-describedby="button-addon1" />
+
+                <!--Search button-->
+                <button
+                    class="relative z-[2] flex items-center rounded-r bg-primary px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
+                    type="button" id="button-addon1" data-te-ripple-init data-te-ripple-color="light">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </div>
     </div>
     {{-- list gallery item --}}
     @if (count($listFoto) > 0)
         <div class="">
             <div
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-x-4 md:gap-x-2 lg:gap-x-3">
+                class="grid grid-cols-1 gap-y-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-x-4 md:gap-x-2 lg:gap-x-3">
                 @foreach ($listFoto as $foto)
                     <div
-                        class="relative bg-white shadow-lg group @if ($foto->tampilkan_di_beranda) border-4 border-success-500 @endif">
-                        <div class="">
-                            {{-- image --}}
+                        class="border-4 border-neutral-200 @if ($foto->tampilkan_di_beranda) border-4 border-success-500 @endif">
+                        <div class="relative bg-white shadow-lg group  ">
                             <div class="">
-                                <div class="flex items-center justify-center w-full h-48 overflow-hidden ">
+                                {{-- image --}}
+                                <div class="flex items-center justify-center w-full h-52 overflow-hidden">
                                     <img src="{{ asset('storage/gallery/' . $foto->url_foto) }}" alt=""
-                                        class="object-cover w-full h-full transition-all group-hover:scale-125">
+                                        class="object-cover w-full h-full ">
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="absolute bottom-0 w-full px-4 py-4 bg-opacity-60 bg-slate-950">
-                            <div class="mb-2">
-                                <h3 class="text-sm font-semibold text-white">{{ $foto->judul }}</h3>
-                                <p class="mb-1 text-xs text-white">{{ $foto->deskripsi }}</p>
-                                <p class="text-xs text-white">{{ $foto->created_at }}</p>
-                                {{ $hapusId }}
-                            </div>
-                            <div class="">
-                                <button type="button"
-                                    wire:click="priviewFoto('{{ asset('storage/gallery/' . $foto->url_foto) }}')"
-                                    class="inline-block rounded bg-primary-100 px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                                    data-te-toggle="modal" data-te-target="#lihatFoto" data-te-ripple-init
-                                    data-te-ripple-color="light">
-                                    Lihat
-                                </button>
-                                @can('hapus-galeri')
-                                    <button type="button" wire:click="$set('hapusId', {{ $foto->id }})"
-                                        data-te-toggle="modal" data-te-target="#modalKonfirmasiHapusFoto"
-                                        data-te-ripple-init data-te-ripple-color="light"
-                                        class="inline-block rounded bg-danger px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
-                                        Hapus
+                            <div class="absolute bottom-0 w-full px-4 py-4 bg-opacity-60 bg-slate-950">
+                                <div class="mb-2">
+                                    <h3 data-te-toggle="tooltip" title="{{ $foto->judul }}"
+                                        class="text-sm font-semibold text-white line-clamp-1 capitalize">
+                                        {{ $foto->judul }}</h3>
+                                    <p data-te-toggle="tooltip" title="{{ $foto->deskripsi }}"
+                                        class="mb-1 text-xs text-neutral-300 line-clamp-3">{{ $foto->deskripsi }}</p>
+                                    <div class="flex gap-x-1">
+                                        <span class="">
+                                            <svg class="w-3 h-3 text-neutral-200 dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm14-7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm-5-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4Z" />
+                                            </svg>
+                                        </span>
+                                        <p class="text-xs text-neutral-300">
+                                            {{ $foto->created_at->isoFormat('dddd, D MMMM Y') }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-x-2 flex-wrap gap-y-1">
+                                    <button type="button"
+                                        wire:click="priviewFoto('{{ asset('storage/gallery/' . $foto->url_foto) }}')"
+                                        class="inline-block rounded bg-primary-100 px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                                        data-te-toggle="modal" data-te-target="#lihatFoto" data-te-ripple-init
+                                        data-te-ripple-color="light">
+                                        Lihat
                                     </button>
-                                @endcan
-                                @can('edit-galeri')
-                                    @if ($foto->tampilkan_di_beranda)
-                                        <button type="button" wire:click="sembunyikanFoto('{{ $foto->id }}')"
-                                            class="inline-block rounded bg-warning px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
-                                            Sembunyikan
+                                    @can('hapus-galeri')
+                                        <button type="button" wire:click="$set('hapusId', {{ $foto->id }})"
+                                            data-te-toggle="modal" data-te-target="#modalKonfirmasiHapusFoto"
+                                            data-te-ripple-init data-te-ripple-color="light"
+                                            class="inline-block rounded bg-danger px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#dc4c64] transition duration-150 ease-in-out hover:bg-danger-600 hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:bg-danger-600 focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] focus:outline-none focus:ring-0 active:bg-danger-700 active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.3),0_4px_18px_0_rgba(220,76,100,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(220,76,100,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(220,76,100,0.2),0_4px_18px_0_rgba(220,76,100,0.1)]">
+                                            <svg class="w-4 h-4 text-white dark:text-white" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z" />
+                                            </svg>
                                         </button>
-                                    @else
-                                        <button type="button" wire:click="tampilkanFoto('{{ $foto->id }}')"
-                                            class="inline-block rounded bg-success px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]">
-                                            Tampilkan
-                                        </button>
-                                    @endif
-                                @endcan
+                                    @endcan
+                                    @can('edit-galeri')
+                                        @if ($foto->tampilkan_di_beranda)
+                                            <button type="button" wire:click="sembunyikanFoto('{{ $foto->id }}')"
+                                                class="inline-block rounded bg-warning px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#e4a11b] transition duration-150 ease-in-out hover:bg-warning-600 hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:bg-warning-600 focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] focus:outline-none focus:ring-0 active:bg-warning-700 active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.3),0_4px_18px_0_rgba(228,161,27,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(228,161,27,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(228,161,27,0.2),0_4px_18px_0_rgba(228,161,27,0.1)]">
+                                                Sembunyikan
+                                            </button>
+                                        @else
+                                            <button type="button" wire:click="tampilkanFoto('{{ $foto->id }}')"
+                                                class="inline-block rounded bg-success px-4 pb-[5px] pt-[6px] text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]">
+                                                Tampilkan
+                                            </button>
+                                        @endif
+                                    @endcan
+                                </div>
                             </div>
                         </div>
 
