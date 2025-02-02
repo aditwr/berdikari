@@ -6,6 +6,3 @@ Ini adalah web aplikasi yang saya kembangkan untuk melakukan management organisa
 - Pengelolaan Catatan Secara Online (Catatan Rapat, Diskusi, dll)
 - Pengelolaan Artikel (Blog System)
 - Pengelolaan Jabatan (User Role & Permission)
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
